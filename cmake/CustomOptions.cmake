@@ -18,28 +18,32 @@ set(QGC_CUSTOM_DIR
 # ============================================================================
 
 set(QGC_APP_NAME
-    "QGroundControl"
-    CACHE STRING "Application name"
+    "OMJET GidroLog"
+    CACHE STRING "Application name (display, spaces allowed)"
+)
+set(QGC_PROJECT_NAME
+    "OMJETGidroLog"
+    CACHE STRING "CMake project/target name (no spaces)"
 )
 string(TIMESTAMP _copyright_year "%Y")
 set(QGC_APP_COPYRIGHT
-    "Copyright (c) ${_copyright_year} QGroundControl. All rights reserved."
+    "Copyright (c) ${_copyright_year} OMJET. All rights reserved."
     CACHE STRING "Copyright notice"
 )
 set(QGC_APP_DESCRIPTION
-    "Open Source Ground Control App"
+    "OMJET GidroLog - ground control for survey boats"
     CACHE STRING "Application description"
 )
 set(QGC_ORG_NAME
-    "QGroundControl"
+    "OMJET"
     CACHE STRING "Organization name"
 )
 set(QGC_ORG_DOMAIN
-    "qgroundcontrol.com"
+    "omjet.aero"
     CACHE STRING "Organization domain"
 )
 set(QGC_PACKAGE_NAME
-    "org.mavlink.qgroundcontrol"
+    "com.omjet.gidrolog"
     CACHE STRING "Package identifier"
 )
 
@@ -48,7 +52,6 @@ set(QGC_SETTINGS_VERSION
     "9"
     CACHE STRING "Settings schema version"
 )
-
 # ============================================================================
 # Build Configuration
 # ============================================================================

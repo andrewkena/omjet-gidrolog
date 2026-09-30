@@ -124,7 +124,7 @@ endif()
 # Project Declaration
 # ----------------------------------------------------------------------------
 project(
-    ${QGC_APP_NAME}
+    ${QGC_PROJECT_NAME}
     VERSION ${QGC_APP_VERSION}
     DESCRIPTION "${QGC_APP_DESCRIPTION}"
     HOMEPAGE_URL "https://${QGC_ORG_DOMAIN}"
