@@ -164,12 +164,25 @@ TreeView {
         root.forceLayout()
     }
 
+    // GidroLog: "N точек" with Russian plural forms
+    function _ruPoints(count) {
+        const n10 = count % 10
+        const n100 = count % 100
+        let word = qsTr("точек")
+        if (n10 === 1 && n100 !== 11) {
+            word = qsTr("точка")
+        } else if (n10 >= 2 && n10 <= 4 && (n100 < 12 || n100 > 14)) {
+            word = qsTr("точки")
+        }
+        return count + " " + word
+    }
+
     // Subtitle text shown on group headers, varies by node type
     function _groupSubtitle(nodeType) {
         switch (nodeType) {
-        case "planFileGroup":   return planMasterController.currentPlanFileName === "" ? qsTr("<Untitled>") : planMasterController.currentPlanFileName
-        case "missionGroup":    return _missionController.visualItems ? qsTr("%1 items").arg(_missionController.visualItems.count - 1) : ""
-        case "rallyGroup":      return _rallyPointController.points ? qsTr("%1 points").arg(_rallyPointController.points.count) : ""
+        case "planFileGroup":   return planMasterController.currentPlanFileName === "" ? qsTr("<без имени>") : planMasterController.currentPlanFileName
+        case "missionGroup":    return _missionController.visualItems ? _ruPoints(_missionController.visualItems.count - 1) : ""
+        case "rallyGroup":      return _rallyPointController.points ? _ruPoints(_rallyPointController.points.count) : ""
         default:                return ""
         }
     }
@@ -260,7 +273,8 @@ TreeView {
                     })
                     break
                 case "missionItem":
-                    if (delegateRoot.nodeObject) {
+                    // GidroLog: item 0 (Initial Camera Settings) is not shown
+                    if (delegateRoot.nodeObject && delegateRoot.nodeObject.sequenceNumber !== 0) {
                         setSource(delegateRoot._qrcBase + "MissionItemEditor.qml", {
                             objectName:     "planTree_missionItemEditor",
                             width:          Qt.binding(() => delegateRoot.width),
@@ -374,7 +388,15 @@ TreeView {
 
                     QGCLabel {
                         Layout.alignment: Qt.AlignBaseline
-                        text: delegateRoot.nodeObject ? delegateRoot.nodeObject.objectName : ""
+                        // GidroLog: Russian group names
+                        text: {
+                            const name = delegateRoot.nodeObject ? delegateRoot.nodeObject.objectName : ""
+                            const map = { "Transform": qsTr("Преобразование"), "Mission": qsTr("Задание"), "Mission Items": qsTr("Задание"),
+                                          "GeoFence": qsTr("Забор Безопасности"), "Rally Points": qsTr("Резервный порт"),
+                                          "Defaults": qsTr("Параметры по умолчанию"), "Mission Defaults": qsTr("Параметры по умолчанию"),
+                                          "Plan Info": qsTr("Задание: файл"), "Plan": qsTr("Задание: файл") }
+                            return map[name] !== undefined ? map[name] : name
+                        }
                         font.bold: true
                     }
 

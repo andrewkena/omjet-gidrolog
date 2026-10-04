@@ -27,6 +27,48 @@ Rectangle {
     property real _radius: ScreenTools.defaultFontPixelWidth / 2
     property real _fieldSpacing: ScreenTools.defaultFontPixelHeight / 2
 
+    // GidroLog: Russian names of mission command parameters
+    readonly property var _paramRu: ({
+        "Hold":             qsTr("Ожидание"),
+        "Hold time":        qsTr("Время ожидания"),
+        "Acceptance":       qsTr("Радиус достижения"),
+        "Accept Radius":    qsTr("Радиус достижения"),
+        "Acceptance radius": qsTr("Радиус достижения"),
+        "Pass Radius":      qsTr("Радиус прохода"),
+        "Pass radius":      qsTr("Радиус прохода"),
+        "Yaw":              qsTr("Курс"),
+        "Heading":          qsTr("Курс"),
+        "Radius":           qsTr("Радиус"),
+        "Turns":            qsTr("Витки"),
+        "Time":             qsTr("Время"),
+        "Delay":            qsTr("Задержка"),
+        "Speed":            qsTr("Скорость"),
+        "Speed type":       qsTr("Тип скорости"),
+        "Speed Type":       qsTr("Тип скорости"),
+        "Throttle":         qsTr("Газ"),
+        "Distance":         qsTr("Расстояние"),
+        "Mode":             qsTr("Режим"),
+        "Relative":         qsTr("Относительно"),
+        "Direction":        qsTr("Направление"),
+        "Angle":            qsTr("Угол"),
+        "Channel":          qsTr("Канал"),
+        "Servo":            qsTr("Серво"),
+        "PWM":              qsTr("ШИМ"),
+        "Relay":            qsTr("Реле"),
+        "Count":            qsTr("Количество"),
+        "Cycle time":       qsTr("Период"),
+        "Setting":          qsTr("Значение"),
+        "Item #":           qsTr("Точка №"),
+        "Repeat":           qsTr("Повторов"),
+        "Latitude":         qsTr("Широта"),
+        "Longitude":        qsTr("Долгота"),
+        "Altitude":         qsTr("Высота")
+    })
+
+    function _ruName(name) {
+        return _paramRu[name] !== undefined ? _paramRu[name] : name
+    }
+
     QGCPalette { id: qgcPal; colorGroupEnabled: root.enabled }
 
     Column {
@@ -46,25 +88,25 @@ Rectangle {
             visible: missionItem.isTakeoffItem && missionItem.wizardMode // Hack special case for takeoff item
 
             QGCLabel {
-                text: qsTr("Move '%1' %2 to the %3 location. %4")
+                text: qsTr("Перенесите «%1» %2 в %3 точку. %4")
                     .arg(_controllerVehicle.vtol ? qsTr("T") : qsTr("T"))
-                    .arg(_controllerVehicle.vtol ? qsTr("Transition Direction") : qsTr("Takeoff"))
-                    .arg(_controllerVehicle.vtol ? qsTr("desired") : qsTr("climbout"))
-                    .arg(_controllerVehicle.vtol ? (qsTr("Ensure distance from launch to transition direction is far enough to complete transition.")) : "")
+                    .arg(_controllerVehicle.vtol ? qsTr("направление перехода") : qsTr("взлёта"))
+                    .arg(_controllerVehicle.vtol ? qsTr("нужную") : qsTr("начальную"))
+                    .arg(_controllerVehicle.vtol ? (qsTr("Расстояние от старта до направления перехода должно быть достаточным для перехода.")) : "")
                 Layout.fillWidth: true
                 wrapMode: Text.WordWrap
                 visible: !initialClickLabel.visible
             }
 
             QGCLabel {
-                text: qsTr("Ensure clear of obstacles and into the wind.")
+                text: qsTr("Убедитесь, что нет препятствий, и направьте против ветра.")
                 Layout.fillWidth: true
                 wrapMode: Text.WordWrap
                 visible: !initialClickLabel.visible
             }
 
             QGCButton {
-                text: qsTr("Done")
+                text: qsTr("Готово")
                 Layout.fillWidth: true
                 visible: !initialClickLabel.visible
                 onClicked: {
@@ -75,8 +117,8 @@ Rectangle {
             QGCLabel {
                 id: initialClickLabel
                 text: missionItem.launchTakeoffAtSameLocation ?
-                                        qsTr("Click in map to set planned Takeoff location.") :
-                                        qsTr("Click in map to set planned Launch location.")
+                                        qsTr("Нажмите на карту, чтобы задать точку взлёта.") :
+                                        qsTr("Нажмите на карту, чтобы задать точку старта.")
                 Layout.fillWidth: true
                 wrapMode: Text.WordWrap
                 visible: missionItem.isTakeoffItem && !missionItem.launchCoordinate.isValid
@@ -91,11 +133,11 @@ Rectangle {
             QGCTabBar {
                 id: tabBar
                 Layout.fillWidth: true
-                visible: _multipleTabsVisible()
+                visible: false      // GidroLog: no tabs - only the parameters page (basic page only if there is nothing else)
 
-                property bool showBasicItems:    tabBar.visible ? tabBar.currentIndex === 0 : _basicItemsAvailable
-                property bool showCameraItems:   tabBar.visible ? tabBar.currentIndex === 1 : _cameraAvailable
-                property bool showAdvancedItems: tabBar.visible ? tabBar.currentIndex === 2 : _advancedItemsAvailable
+                property bool showBasicItems:    !_advancedItemsAvailable && _basicItemsAvailable
+                property bool showCameraItems:   false
+                property bool showAdvancedItems: _advancedItemsAvailable
 
                 property bool _basicItemsAvailable: _specifiesAltitude || missionItem.speedSection.available || missionItem.comboboxFacts.count > 0 || missionItem.textFieldFacts.count > 0 || missionItem.nanFacts.count > 0
                 property bool _advancedItemsAvailable: missionItem.comboboxFactsAdvanced.count > 0 || missionItem.textFieldFactsAdvanced.count > 0 || missionItem.nanFactsAdvanced.count > 0
@@ -148,7 +190,7 @@ Rectangle {
                 ColumnLayout {
                     Layout.fillWidth: true
                     spacing: _fieldSpacing
-                    visible: _specifiesAltitude
+                    visible: false      // GidroLog: altitude not used on the boat (was _specifiesAltitude)
 
                     RowLayout {
                         Layout.fillWidth: true
@@ -156,7 +198,7 @@ Rectangle {
 
                         QGCLabel {
                             Layout.fillWidth: true
-                            text: qsTr("Alt Frame")
+                            text: qsTr("Опорная высота")
                         }
 
                         AltFrameCombo {
@@ -169,7 +211,7 @@ Rectangle {
                     FactTextFieldSlider {
                         id: altField
                         Layout.fillWidth: true
-                        label: qsTr("Altitude%1").arg(_extraLabelText())
+                        label: qsTr("Высота%1").arg(_extraLabelText())
                         fact: missionItem.altitude
 
                         function _extraLabelText() {
@@ -179,7 +221,7 @@ Rectangle {
 
                     QGCLabel {
                         font.pointSize: ScreenTools.smallFontPointSize
-                        text: qsTr("Actual AMSL alt sent: %1 %2").arg(missionItem.amslAltAboveTerrain.valueString).arg(missionItem.amslAltAboveTerrain.units)
+                        text: qsTr("Отправляемая высота над уровнем моря: %1 %2").arg(missionItem.amslAltAboveTerrain.valueString).arg(missionItem.amslAltAboveTerrain.units)
                         visible: missionItem.altitudeFrame === QGroundControl.AltitudeFrameCalcAboveTerrain
                     }
                 }
@@ -197,7 +239,7 @@ Rectangle {
 
                             QGCLabel {
                                 font.pointSize: ScreenTools.smallFontPointSize
-                                text: object.name
+                                text: root._ruName(object.name)
                                 visible: object.name !== ""
                             }
 
@@ -216,7 +258,7 @@ Rectangle {
 
                     FactTextFieldSlider {
                         Layout.fillWidth: true
-                        label: object.name
+                        label: root._ruName(object.name)
                         fact: object
                         enabled: !object.readOnly
                         warnOnUserMinMaxInvalid: false
@@ -228,7 +270,7 @@ Rectangle {
 
                     FactTextFieldSlider {
                         Layout.fillWidth: true
-                        label: object.name
+                        label: root._ruName(object.name)
                         fact: object
                         showEnableCheckbox: true
                         enableCheckBoxChecked: !isNaN(object.rawValue)
@@ -240,7 +282,7 @@ Rectangle {
 
                 FactTextFieldSlider {
                     Layout.fillWidth: true
-                    label: qsTr("Flight Speed")
+                    label: qsTr("Скорость хода")
                     fact: missionItem.speedSection.flightSpeed
                     showEnableCheckbox: true
                     enableCheckBoxChecked: missionItem.speedSection.specifyFlightSpeed
@@ -277,7 +319,7 @@ Rectangle {
 
                             QGCLabel {
                                 font.pointSize: ScreenTools.smallFontPointSize
-                                text: object.name
+                                text: root._ruName(object.name)
                                 visible: object.name !== ""
                             }
 
@@ -296,7 +338,7 @@ Rectangle {
 
                     FactTextFieldSlider {
                         Layout.fillWidth: true
-                        label: object.name
+                        label: root._ruName(object.name)
                         fact: object
                         enabled: !object.readOnly
                         warnOnUserMinMaxInvalid: false
@@ -308,7 +350,7 @@ Rectangle {
 
                     FactTextFieldSlider {
                         Layout.fillWidth: true
-                        label: object.name
+                        label: root._ruName(object.name)
                         fact: object
                         showEnableCheckbox: true
                         enableCheckBoxChecked: !isNaN(object.rawValue)

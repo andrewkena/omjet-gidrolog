@@ -3,44 +3,22 @@ import QtQuick
 import QGroundControl
 import QGroundControl.Controls
 
-Canvas {
+// GidroLog: boat symbol in the compass instead of the red arrow
+Image {
     id:                 control
     anchors.centerIn:   parent
-    width:              compassSize * 1/3
+    width:              compassSize * 0.42
     height:             width
+    source:             "/qmlimages/vehicleBoatOpaque.svg"
+    sourceSize.width:   width
+    sourceSize.height:  height
+    fillMode:           Image.PreserveAspectFit
+    mipmap:             true
+    smooth:             true
 
     property real compassSize
     property real heading
     property bool simplified:    false
-
-    property var _qgcPal: QGroundControl.globalPalette
-
-    Connections {
-        target:                 _qgcPal
-        function onGlobalThemeChanged() { control.requestPaint() }
-    }
-
-    onPaint: {
-        var ctx = getContext("2d")
-        ctx.strokeStyle = simplified ? "#EE3424" : _qgcPal.text
-        ctx.fillStyle = "#EE3424"
-        ctx.lineWidth = 1
-        ctx.beginPath()
-        ctx.moveTo(width / 2, 0)
-        ctx.lineTo(width, height)
-        ctx.lineTo(width / 2, height * 0.75)
-        ctx.lineTo(width / 2, 0)
-        ctx.fill()
-        ctx.stroke()
-        ctx.fillStyle = "#C72B27"
-        ctx.beginPath()
-        ctx.moveTo(width / 2, 0)
-        ctx.lineTo(0, height)
-        ctx.lineTo(width / 2, height * 0.75)
-        ctx.lineTo(width / 2, 0)
-        ctx.fill()
-        ctx.stroke()
-    }
 
     transform: Rotation {
         origin.x:   control.width / 2

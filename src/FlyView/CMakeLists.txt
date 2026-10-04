@@ -45,6 +45,10 @@ qt_add_qml_module(FlyViewModule
         FlyViewTopRightPanel.qml
         FlyViewVideo.qml
         FlyViewWidgetLayer.qml
+        GidroLogControlPanel.qml
+        GidroLogDepthLegend.qml
+        GidroLogHoldButton.qml
+        GidroLogValuesPanel.qml
         GuidedActionConfirm.qml
         GuidedActionLand.qml
         GuidedActionPause.qml

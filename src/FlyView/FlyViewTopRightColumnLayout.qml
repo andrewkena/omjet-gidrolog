@@ -18,6 +18,7 @@ ColumnLayout {
     // to be null all over the place
     Loader {
         id:                 photoVideoControlLoader
+        active:             false   // GidroLog: camera control panel disabled
         Layout.alignment:   Qt.AlignRight
         sourceComponent:    globals.activeVehicle && globals.activeVehicle.cameraManager ? photoVideoControlComponent : undefined
 

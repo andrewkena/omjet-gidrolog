@@ -6,6 +6,8 @@ target_sources(${CMAKE_PROJECT_NAME}
     PRIVATE
         MockConfiguration.cc
         MockConfiguration.h
+        MockLinkBoatSim.cc
+        MockLinkBoatSim.h
         MockLink.cc
         MockLink.h
         MockLinkCamera.cc

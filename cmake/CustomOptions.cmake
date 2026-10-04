@@ -25,9 +25,18 @@ set(QGC_PROJECT_NAME
     "OMJETGidroLog"
     CACHE STRING "CMake project/target name (no spaces)"
 )
+# GidroLog: own version numbering (bump here for each release)
+set(QGC_GIDROLOG_VERSION
+    "0.1.0"
+    CACHE STRING "OMJET GidroLog version (major.minor.patch)" FORCE
+)
+set(QGC_APP_AUTHOR
+    "Andrew Kena"
+    CACHE STRING "Application author"
+)
 string(TIMESTAMP _copyright_year "%Y")
 set(QGC_APP_COPYRIGHT
-    "Copyright (c) ${_copyright_year} OMJET. All rights reserved."
+    "Copyright (c) ${_copyright_year} Andrew Kena, OMJET. All rights reserved."
     CACHE STRING "Copyright notice"
 )
 set(QGC_APP_DESCRIPTION

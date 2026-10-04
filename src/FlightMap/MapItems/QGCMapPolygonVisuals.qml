@@ -36,8 +36,8 @@ Item {
     property real _zorderSplitHandle:   QGroundControl.zOrderMapItems + 2
     property real _zorderCenterHandle:  QGroundControl.zOrderMapItems + 1   // Lowest such that drag or split takes precedence
 
-    readonly property string _polygonToolsText: qsTr("Polygon Tools")
-    readonly property string _traceText:        qsTr("Click in the map to add vertices. Click 'Done Tracing' when finished.")
+    readonly property string _polygonToolsText: ""     // GidroLog: label removed
+    readonly property string _traceText:        qsTr("Нажимайте на карту, чтобы добавить вершины. По окончании нажмите «Готово».")
 
     function addCommonVisuals() {
         if (_objMgrCommonVisuals.empty) {
@@ -209,7 +209,7 @@ Item {
 
     KMLOrSHPFileDialog {
         id:             kmlOrSHPLoadDialog
-        title:          qsTr("Select Polygon File")
+        title:          qsTr("Выберите файл полигона")
 
         onAcceptedForLoad: (file) => {
             mapPolygon.loadKMLOrSHPFile(file)
@@ -236,7 +236,7 @@ Item {
         QGCMenuItem {
             id:             removeVertexItem
             visible:        !_circleMode
-            text:           qsTr("Remove vertex")
+            text:           qsTr("Удалить вершину")
             onTriggered: {
                 if (menu._editingVertexIndex >= 0) {
                     mapPolygon.removeVertex(menu._editingVertexIndex)
@@ -249,19 +249,19 @@ Item {
         }
 
         QGCMenuItem {
-            text:           qsTr("Set radius..." )
+            text:           qsTr("Задать радиус...")
             visible:        _circleMode
             onTriggered:    editCircleRadiusDialogFactory.open()
         }
 
         QGCMenuItem {
-            text:           qsTr("Edit position..." )
+            text:           qsTr("Изменить координаты...")
             visible:        _circleMode
             onTriggered:    editCenterPositionDialogFactory.open()
         }
 
         QGCMenuItem {
-            text:           qsTr("Edit position..." )
+            text:           qsTr("Изменить координаты...")
             visible:        !_circleMode && menu._editingVertexIndex >= 0
             onTriggered:    editVertexPositionDialogFactory.open()
         }
@@ -523,7 +523,7 @@ Item {
 
         QGCPopupDialog {
             id:         popupDialog
-            title:      qsTr("Set Radius")
+            title:      qsTr("Радиус")
             buttons:    Dialog.Save | Dialog.Cancel
 
             onAccepted: {
@@ -542,7 +542,7 @@ Item {
 
                 QGCLabel {
                     Layout.fillWidth:   true
-                    text:               qsTr("Enter circle radius.")
+                    text:               qsTr("Введите радиус окружности.")
                     wrapMode:           Text.WordWrap
                 }
 
@@ -572,7 +572,7 @@ Item {
         id: editCenterPositionDialog
 
         EditPositionDialog {
-            title:      qsTr("Edit Center Position")
+            title:      qsTr("Координаты центра")
             coordinate: mapPolygon.center
             onCoordinateChanged: {
                 // Prevent spamming signals on vertex changes by setting centerDrag = true when changing center position.
@@ -594,7 +594,7 @@ Item {
         id: editVertexPositionDialog
 
         EditPositionDialog {
-            title:      qsTr("Edit Vertex Position")
+            title:      qsTr("Координаты вершины")
             coordinate: mapPolygon.vertexCoordinate(menu._editingVertexIndex)
             onCoordinateChanged: {
                 mapPolygon.adjustVertex(menu._editingVertexIndex, coordinate)
@@ -648,21 +648,21 @@ Item {
 
             QGCButton {
                 _horizontalPadding: 0
-                text:               qsTr("Basic")
+                text:               qsTr("Прямоугольник")
                 visible:            !mapPolygon.traceMode
                 onClicked:          _resetPolygon()
             }
 
             QGCButton {
                 _horizontalPadding: 0
-                text:               qsTr("Circular")
+                text:               qsTr("Окружность")
                 visible:            !mapPolygon.traceMode
                 onClicked:          _resetCircle()
             }
 
             QGCButton {
                 _horizontalPadding: 0
-                text:               mapPolygon.traceMode ? qsTr("Done Tracing") : qsTr("Trace")
+                text:               mapPolygon.traceMode ? qsTr("Готово") : qsTr("Многоугольник")
                 onClicked: {
                     if (mapPolygon.traceMode) {
                         if (mapPolygon.count < 3) {
@@ -680,7 +680,7 @@ Item {
 
             QGCButton {
                 _horizontalPadding: 0
-                text:               qsTr("Load KML/SHP...")
+                text:               qsTr("Загрузить KML/SHP")
                 onClicked:          kmlOrSHPLoadDialog.openForLoad()
                 visible:            !mapPolygon.traceMode
             }

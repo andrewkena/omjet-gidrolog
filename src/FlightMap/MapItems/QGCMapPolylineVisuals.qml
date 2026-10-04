@@ -28,8 +28,8 @@ Item {
     property bool   _isVertexBeingDragged:  false
     property bool   dragging:               _isVertexBeingDragged
 
-    readonly property string _corridorToolsText:    qsTr("Polyline Tools")
-    readonly property string _traceText:            qsTr("Click in the map to add vertices. Click 'Done Tracing' when finished.")
+    readonly property string _corridorToolsText:    ""     // GidroLog: label removed
+    readonly property string _traceText:            qsTr("Нажимайте на карту, чтобы добавить вершины. По окончании нажмите «Готово».")
 
     function _addCommonVisuals() {
         if (_objMgrCommonVisuals.empty) {
@@ -115,7 +115,7 @@ Item {
 
     KMLOrSHPFileDialog {
         id:             kmlOrSHPLoadDialog
-        title:          qsTr("Select Polyline File")
+        title:          qsTr("Выберите файл линии")
 
         onAcceptedForLoad: (file) => {
             mapPolyline.loadKMLOrSHPFile(file)
@@ -136,12 +136,12 @@ Item {
 
         QGCMenuItem {
             id:             removeVertexItem
-            text:           qsTr("Remove vertex" )
+            text:           qsTr("Удалить вершину")
             onTriggered:    mapPolyline.removeVertex(menu._removeVertexIndex)
         }
 
         QGCMenuItem {
-            text:           qsTr("Edit position..." )
+            text:           qsTr("Изменить координаты...")
             onTriggered:    editPositionDialogFactory.open({ coordinate: mapPolyline.path[menu._removeVertexIndex] })
         }
     }
@@ -394,14 +394,14 @@ Item {
 
             QGCButton {
                 _horizontalPadding: 0
-                text:               qsTr("Basic")
+                text:               qsTr("Прямая")
                 visible:            !mapPolyline.traceMode
                 onClicked:          _resetPolyline()
             }
 
             QGCButton {
                 _horizontalPadding: 0
-                text:               mapPolyline.traceMode ? qsTr("Done Tracing") : qsTr("Trace")
+                text:               mapPolyline.traceMode ? qsTr("Готово") : qsTr("Ломаная")
                 onClicked: {
                     if (mapPolyline.traceMode) {
                         if (mapPolyline.count < 2) {
@@ -418,7 +418,7 @@ Item {
 
             QGCButton {
                 _horizontalPadding: 0
-                text:               qsTr("Load KML/SHP...")
+                text:               qsTr("Загрузить KML/SHP")
                 onClicked:          kmlOrSHPLoadDialog.openForLoad()
                 visible:            !mapPolyline.traceMode
             }

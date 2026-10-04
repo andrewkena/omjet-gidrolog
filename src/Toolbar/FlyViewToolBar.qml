@@ -50,7 +50,7 @@ Item {
 
                     gradient: Gradient {
                         orientation: Gradient.Horizontal
-                        GradientStop { position: 0; color: _mainStatusBGColor }
+                        GradientStop { position: 0; color: _activeVehicle ? _mainStatusBGColor : qgcPal.window }   // GidroLog: no purple gradient when disconnected
                         //GradientStop { position: qgcButton.x + qgcButton.width; color: _mainStatusBGColor }
                         GradientStop { position: 1; color: qgcPal.window }
                     }
@@ -67,7 +67,7 @@ Item {
                 RowLayout {
                     id:         leftPanelLayout
                     height:     parent.height
-                    spacing:    ScreenTools.defaultFontPixelWidth * 2
+                    spacing:    ScreenTools.defaultFontPixelWidth * 1.75     // GidroLog: same gap as the right indicators
 
                     RowLayout {
                         id:         mainStatusLayout
@@ -78,7 +78,7 @@ Item {
                             id:                 qgcButton
                             objectName:         "toolbar_qgcLogo"
                             Layout.fillHeight:  true
-                            icon.source:        "/res/QGCLogoFull.svg"
+                            icon.source:        "/res/GidroLogIcon.png"  // GidroLog
                             logo:               true
                             onClicked:          mainWindow.showToolSelectDialog()
                         }
@@ -88,6 +88,16 @@ Item {
                             objectName:         "toolbar_mainStatusIndicator"
                             Layout.fillHeight:  true
                         }
+                    }
+
+                    // GidroLog: separator
+                    Rectangle {
+                        Layout.alignment:       Qt.AlignVCenter
+                        Layout.preferredWidth:  1
+                        Layout.preferredHeight: parent.height * 0.6
+                        color:                  qgcPal.text
+                        opacity:                0.35
+                        visible:                _activeVehicle
                     }
 
                     QGCButton {
@@ -101,6 +111,16 @@ Item {
                         objectName:         "toolbar_flightModeIndicator"
                         Layout.fillHeight:  true
                         visible:            _activeVehicle
+                    }
+
+                    // GidroLog: separator
+                    Rectangle {
+                        Layout.alignment:       Qt.AlignVCenter
+                        Layout.preferredWidth:  1
+                        Layout.preferredHeight: parent.height * 0.6
+                        color:                  qgcPal.text
+                        opacity:                0.35
+                        visible:                _activeVehicle
                     }
                 }
             }

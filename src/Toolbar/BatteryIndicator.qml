@@ -26,6 +26,27 @@ Item {
     property bool   _showBoth:          _indicatorDisplay.rawValue === 2
     property int    _lowestBatteryId:   -1      // -1: show all batteries, otherwise show only battery with this id
 
+    // GidroLog: Russian texts for the battery popup
+    function _ruChargeState(s) {
+        const map = { "Undefined": "Не определено", "OK": "Норма", "Ok": "Норма", "Low": "Низкий заряд",
+                      "Critical": "Критический", "Emergency": "Аварийный", "Failed": "Отказ",
+                      "Unhealthy": "Неисправна", "Charging": "Заряжается" }
+        return map[s] !== undefined ? map[s] : s
+    }
+    function _ruFunction(s) {
+        const map = { "Unknown": "Неизвестно", "All": "Всё", "Propulsion": "Двигатели", "Avionics": "Электроника",
+                      "Payload": "Полезная нагрузка" }
+        return map[s] !== undefined ? map[s] : s
+    }
+    function _ruUnits(u) {
+        const map = { "v": "В", "V": "В", "mAh": "мА·ч", "A": "А", "C": "°C", "F": "°F", "%": "%" }
+        return map[u] !== undefined ? map[u] : u
+    }
+    function _ruTime(s) {
+        // "00H:00M:09S" -> "00 ч 00 мин 09 с"
+        return String(s).replace(/H:?/, " ч ").replace(/M:?/, " мин ").replace(/S/, " с").trim()
+    }
+
     // Properties to hold the thresholds
     property int threshold1: _batterySettings.threshold1.rawValue
     property int threshold2: _batterySettings.threshold2.rawValue
@@ -177,7 +198,7 @@ Item {
             Loader {
                 Layout.fillHeight:  true
                 sourceComponent:    batteryVisual
-                visible:            control._lowestBatteryId === -1 || object.id.rawValue === control._lowestBatteryId || !control._batterySettings.consolidateMultipleBatteries.rawValue
+                visible:            index === 0     // GidroLog: boat has one battery - show only battery 1
 
                 property var battery: object
             }
@@ -344,6 +365,46 @@ Item {
                     visible:                _showBoth || _showVoltage
                 }
             }
+
+            // GidroLog: voltage, current and consumed mAh next to the battery icon.
+            // Separator with the same gap on both sides as between the voltage and the A / mAh column.
+            Item {
+                anchors.verticalCenter: parent.verticalCenter
+                width:                  ScreenTools.defaultFontPixelWidth * 3 + 1
+                height:                 parent.height
+
+                Rectangle {
+                    anchors.centerIn:   parent
+                    width:              1
+                    height:             parent.height * 0.7
+                    color:              qgcPal.text
+                    opacity:            0.35
+                }
+            }
+
+            QGCLabel {
+                anchors.verticalCenter: parent.verticalCenter
+                color:                  qgcPal.text
+                font.pointSize:         ScreenTools.mediumFontPointSize * 1.5     // GidroLog: voltage 1.5x larger and bold
+                font.bold:              true
+                rightPadding:           ScreenTools.defaultFontPixelWidth * 1.5  // gap to the A / mAh column
+                text:                   isNaN(battery.voltage.rawValue) ? "-- В" : battery.voltage.rawValue.toFixed(1) + " В"
+            }
+
+            Column {
+                anchors.verticalCenter: parent.verticalCenter
+                spacing:                0
+
+                QGCLabel {
+                    color:  qgcPal.text
+                    text:   isNaN(battery.current.rawValue) ? "-- А" : battery.current.rawValue.toFixed(1) + " А"
+                }
+
+                QGCLabel {
+                    color:  qgcPal.text
+                    text:   isNaN(battery.mahConsumed.rawValue) ? "-- мА·ч" : Math.round(battery.mahConsumed.rawValue) + " мА·ч"
+                }
+            }
         }
     }
 
@@ -372,7 +433,8 @@ Item {
                 model: _activeVehicle ? _activeVehicle.batteries : 0
 
                 SettingsGroupLayout {
-                    heading:        qsTr("Battery %1").arg(_activeVehicle.batteries.length === 1 ? qsTr("Status") : object.id.rawValue)
+                    visible:        index === 0     // GidroLog: hide battery 2 and further
+                    heading:        qsTr("Батарея %1").arg(_activeVehicle.batteries.length === 1 ? "" : object.id.rawValue)
                     contentSpacing: 0
                     showDividers:   false
 
@@ -386,43 +448,43 @@ Item {
                     }
 
                     LabelledLabel {
-                        label:  qsTr("Charge State")
-                        labelText:  object.chargeState.enumStringValue
+                        label:  qsTr("Состояние")
+                        labelText:  control._ruChargeState(object.chargeState.enumStringValue)
                         visible:    batteryValuesAvailable.chargeStateAvailable
                     }
 
                     LabelledLabel {
-                        label:      qsTr("Remaining")
-                        labelText:  object.timeRemainingStr.value
+                        label:      qsTr("Осталось времени")
+                        labelText:  control._ruTime(object.timeRemainingStr.value)
                         visible:    batteryValuesAvailable.timeRemainingAvailable
                     }
 
                     LabelledLabel {
-                        label:      qsTr("Remaining")
-                        labelText:  object.percentRemaining.valueString + " " + object.percentRemaining.units
+                        label:      qsTr("Остаток заряда")
+                        labelText:  object.percentRemaining.valueString + " %"
                         visible:    batteryValuesAvailable.percentRemainingAvailable
                     }
 
                     LabelledLabel {
-                        label:      qsTr("Voltage")
-                        labelText:  object.voltage.valueString + " " + object.voltage.units
+                        label:      qsTr("Напряжение")
+                        labelText:  object.voltage.valueString + " " + control._ruUnits(object.voltage.units)
                     }
 
                     LabelledLabel {
-                        label:      qsTr("Consumed")
-                        labelText:  object.mahConsumed.valueString + " " + object.mahConsumed.units
+                        label:      qsTr("Израсходовано")
+                        labelText:  object.mahConsumed.valueString + " " + control._ruUnits(object.mahConsumed.units)
                         visible:    batteryValuesAvailable.mahConsumedAvailable
                     }
 
                     LabelledLabel {
-                        label:      qsTr("Temperature")
-                        labelText:  object.temperature.valueString + " " + object.temperature.units
+                        label:      qsTr("Температура")
+                        labelText:  object.temperature.valueString + " " + control._ruUnits(object.temperature.units)
                         visible:    batteryValuesAvailable.temperatureAvailable
                     }
 
                     LabelledLabel {
-                        label:      qsTr("Function")
-                        labelText:  object.function.enumStringValue
+                        label:      qsTr("Назначение")
+                        labelText:  control._ruFunction(object.function.enumStringValue)
                         visible:    batteryValuesAvailable.showFunction
                     }
                 }
@@ -441,24 +503,24 @@ Item {
             FactPanelController { id: controller }
 
             SettingsGroupLayout {
-                heading:            qsTr("Battery Display")
+                heading:            qsTr("Отображение батареи")
                 Layout.fillWidth:   true
 
                 FactCheckBoxSlider {
                     Layout.fillWidth:   true
                     fact:               _batterySettings.consolidateMultipleBatteries
-                    text:               qsTr("Only show battery with lowest charge")
+                    text:               qsTr("Показывать только самую разряженную")
                     visible:            fact.userVisible
                 }
 
                 LabelledFactComboBox {
-                    label:      qsTr("Value")
+                    label:      qsTr("Значение")
                     fact:       _batterySettings.valueDisplay
                     visible:    fact.userVisible
                 }
 
                 ColumnLayout {
-                    QGCLabel { text: qsTr("Coloring") }
+                    QGCLabel { text: qsTr("Цвета") }
 
                     RowLayout {
                         spacing: ScreenTools.defaultFontPixelWidth
@@ -531,7 +593,7 @@ Item {
                                 fillMode: Image.PreserveAspectFit
                                 color: qgcPal.colorOrange
                             }
-                            QGCLabel { text: qsTr("Low") }
+                            QGCLabel { text: qsTr("Низкий") }
                         }
 
                         // Critical state
@@ -544,7 +606,7 @@ Item {
                                 fillMode: Image.PreserveAspectFit
                                 color: qgcPal.colorRed
                             }
-                            QGCLabel { text: qsTr("Critical") }
+                            QGCLabel { text: qsTr("Критический") }
                         }
                     }
                 }
@@ -560,8 +622,8 @@ Item {
                             QGroundControl.corePlugin.showAdvancedUI
 
                 LabelledButton {
-                    label:      qsTr("Vehicle Power")
-                    buttonText: qsTr("Configure")
+                    label:      qsTr("Питание борта")
+                    buttonText: qsTr("Открыть")
 
                     onClicked: {
                         mainWindow.showKnownVehicleComponentConfigPage(AutoPilotPlugin.KnownPowerVehicleComponent)

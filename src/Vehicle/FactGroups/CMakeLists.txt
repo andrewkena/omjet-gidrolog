@@ -39,6 +39,10 @@ target_sources(${CMAKE_PROJECT_NAME}
         VehicleRPMFactGroup.h
         VehicleSetpointFactGroup.cc
         VehicleSetpointFactGroup.h
+        DepthGrid.cc
+        DepthGrid.h
+        VehicleSounderFactGroup.cc
+        VehicleSounderFactGroup.h
         VehicleTemperatureFactGroup.cc
         VehicleTemperatureFactGroup.h
         VehicleVibrationFactGroup.cc
@@ -61,6 +65,7 @@ set(JSON_FILES
     ClockFact.json
     SubmarineFact.json
     SetpointFact.json
+    SounderFact.json
     DistanceSensorFact.json
     GeneratorFact.json
     HygrometerFact.json

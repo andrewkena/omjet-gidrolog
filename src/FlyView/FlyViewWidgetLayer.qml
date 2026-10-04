@@ -43,8 +43,10 @@ Item {
         leftEdgeTopInset:       toolStrip.leftEdgeTopInset
         leftEdgeCenterInset:    toolStrip.leftEdgeCenterInset
         leftEdgeBottomInset:    virtualJoystickMultiTouch.visible ? virtualJoystickMultiTouch.leftEdgeBottomInset : parentToolInsets.leftEdgeBottomInset
-        rightEdgeTopInset:      topRightPanel.visible ? topRightPanel.rightEdgeTopInset : topRightColumnLayout.rightEdgeTopInset
-        rightEdgeCenterInset:   topRightPanel.visible ? topRightPanel.rightEdgeCenterInset : topRightColumnLayout.rightEdgeCenterInset
+        rightEdgeTopInset:      Math.max(topRightPanel.visible ? topRightPanel.rightEdgeTopInset : topRightColumnLayout.rightEdgeTopInset,
+                                         gidroLogValuesPanel.visible ? gidroLogValuesPanel.width + _layoutMargin * 2 : 0) // GidroLog
+        rightEdgeCenterInset:   Math.max(topRightPanel.visible ? topRightPanel.rightEdgeCenterInset : topRightColumnLayout.rightEdgeCenterInset,
+                                         gidroLogValuesPanel.visible ? gidroLogValuesPanel.width + _layoutMargin * 2 : 0) // GidroLog
         rightEdgeBottomInset:   bottomRightRowLayout.rightEdgeBottomInset
         topEdgeLeftInset:       toolStrip.topEdgeLeftInset
         topEdgeCenterInset:     mapScaleRow.topEdgeCenterInset
@@ -67,14 +69,43 @@ Item {
 
     FlyViewTopRightColumnLayout {
         id:                 topRightColumnLayout
-        anchors.top:        parent.top
+        anchors.top:        gidroLogValuesPanel.bottom   // GidroLog: below the survey panel (was parent.top)
+        anchors.topMargin:  _layoutMargin
         anchors.right:      parent.right
         spacing:            _layoutSpacing
         visible:           !topRightPanel.visible
 
-        property real topEdgeRightInset:    childrenRect.height + _layoutMargin
+        property real topEdgeRightInset:    y + childrenRect.height + _layoutMargin   // GidroLog: y accounts for the survey panel above
         property real rightEdgeTopInset:    width + _layoutMargin
         property real rightEdgeCenterInset: rightEdgeTopInset
+    }
+
+    // GidroLog: survey values panel on the right edge (speed, distance, water temperature, depth)
+    GidroLogValuesPanel {
+        id:                     gidroLogValuesPanel
+        anchors.top:            parent.top
+        anchors.topMargin:      _layoutMargin   // same gap as from the right edge
+        anchors.right:          parent.right
+        anchors.rightMargin:    _layoutMargin
+    }
+
+    // GidroLog: depth color legend + depth label interval slider, level with the survey panel
+    GidroLogDepthLegend {
+        id:                 gidroLogDepthLegend
+        anchors.top:        gidroLogValuesPanel.top
+        anchors.left:       toolStrip.visible ? toolStrip.right : parent.left
+        anchors.leftMargin: _layoutMargin
+        settings:           mapControl ? mapControl.depthColorSettings : null
+        visible:            mapControl ? mapControl.pipState.state !== mapControl.pipState.pipState : false
+    }
+
+    // GidroLog: boat control panel (ARM, STOP, modes, siren/beacon) under the depth legend
+    GidroLogControlPanel {
+        id:                 gidroLogControlPanel
+        anchors.top:        gidroLogDepthLegend.bottom
+        anchors.topMargin:  _layoutMargin
+        anchors.left:       gidroLogDepthLegend.left
+        visible:            gidroLogDepthLegend.visible
     }
 
     FlyViewBottomRightRowLayout {
@@ -153,7 +184,7 @@ Item {
         anchors.top:            parent.top
         z:                      QGroundControl.zOrderWidgets
         maxHeight:              parent.height - y - parentToolInsets.bottomEdgeLeftInset - _toolsMargin
-        visible:                !QGroundControl.videoManager.fullScreen
+        visible:                false   // GidroLog: left tool strip (Land/RTL/...) hidden; was !QGroundControl.videoManager.fullScreen
 
         onDisplayPreFlightChecklist: {
             if (!preFlightChecklistLoader.active) {
@@ -174,9 +205,10 @@ Item {
 
     Row {
         id:                 mapScaleRow
-        anchors.left:       toolStrip.right
-        anchors.leftMargin: _toolsMargin
-        anchors.top:        parent.top
+        anchors.left:       gidroLogControlPanel.right      // GidroLog: map scale below the depth legend, right of the control panel
+        anchors.leftMargin: _layoutMargin
+        anchors.top:        gidroLogDepthLegend.visible ? gidroLogDepthLegend.bottom : parent.top
+        anchors.topMargin:  _layoutMargin
         spacing:            _toolsMargin
 
         property real topEdgeCenterInset: (geoMapControls.visible || mapScale.visible) ? y + height : 0
@@ -202,7 +234,7 @@ Item {
 
     Viewer3DScaleBar {
         objectName:         "viewer3DScaleBar"
-        anchors.left:       toolStrip.right
+        anchors.left:       toolStrip.visible ? toolStrip.right : parent.left   // GidroLog
         anchors.leftMargin: _toolsMargin
         anchors.top:        parent.top
         controller:         _root.viewer3DCameraController

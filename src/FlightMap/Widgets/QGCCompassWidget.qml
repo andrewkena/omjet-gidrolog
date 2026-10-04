@@ -8,9 +8,9 @@ Rectangle {
     width:  size
     height: size
     radius: width / 2
-    color:  qgcPal.window
+    color:  usedByMultipleVehicleList ? qgcPal.window : "#12161B"    // GidroLog: same face as the inclinometers
     border.color:   qgcPal.text
-    border.width:   usedByMultipleVehicleList ? 1 : 0
+    border.width:   1
     opacity:        vehicle && usedByMultipleVehicleList && !vehicle.armed ? 0.5 : 1
 
     property real size:                         _defaultSize
@@ -63,6 +63,8 @@ Rectangle {
         CompassDial {
             anchors.fill:   parent
             visible:        !usedByMultipleVehicleList
+            heading:        _heading
+            lockNoseUp:     _lockNoseUpCompass
         }
 
         CompassHeadingIndicator {
@@ -123,8 +125,11 @@ Rectangle {
 
     QGCLabel {
         anchors.horizontalCenter:   parent.horizontalCenter
-        y:                          size * 0.74
+        y:                          size * 0.6 + height * 0.5   // GidroLog: half a line lower
         text:                       vehicle && !usedByMultipleVehicleList ? _heading.toFixed(0) + "°" : ""
         horizontalAlignment:        Text.AlignHCenter
+        color:                      "white"     // GidroLog: same style as the inclinometer values
+        font.bold:                  true
+        font.pointSize:             ScreenTools.mediumFontPointSize     // same size as the pitch/roll values
     }
 }

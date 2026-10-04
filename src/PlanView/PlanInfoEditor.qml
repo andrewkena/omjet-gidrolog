@@ -174,7 +174,7 @@ Rectangle {
             id: planTemplateSectionHeader
             objectName: "planInfo_templatesSection"
             Layout.fillWidth: true
-            text: qsTr("Plan Templates")
+            text: qsTr("Шаблоны задания")
             visible: _root.planMasterController.showCreateFromTemplate
         }
 
@@ -192,7 +192,13 @@ Rectangle {
                 QGCButton {
                     objectName: "planCreator_" + object.name
                     Layout.fillWidth: true
-                    text: object.name
+                    // GidroLog: Russian names of plan templates
+                    text: {
+                        const map = { "Survey": qsTr("Площадной объект"), "Corridor Scan": qsTr("Линейный объект"),
+                                      "Structure Scan": qsTr("Обследование сооружения"), "Blank": qsTr("Без шаблона"),
+                                      "Empty Plan": qsTr("Без шаблона") }
+                        return map[object.name] !== undefined ? map[object.name] : object.name
+                    }
                     onClicked: {
                         if (object.blankPlan) {
                             _root.planMasterController.userSelectedManualCreation = true

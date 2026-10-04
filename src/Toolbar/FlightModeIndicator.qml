@@ -37,6 +37,7 @@ Item {
             mipmap:                 true
             color:                  qgcPal.text
             source:                 "/qmlimages/FlightModesComponentIcon.png"
+            visible:                false   // GidroLog: mode shown as text only
         }
 
         QGCLabel {

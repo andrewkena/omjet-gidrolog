@@ -207,7 +207,7 @@ Item {
     function _landButtonText() {
         // Must mirror MissionController::insertLandItem: only fixed-wing/VTOL get landing patterns
         if (!_planMasterController.controllerVehicle.fixedWing && !_planMasterController.controllerVehicle.vtol) {
-            return qsTr("Return")
+            return qsTr("Возврат")
         }
         if (_missionController.isInsertLandValid && _missionController.hasLandItem) {
             return qsTr("Alt Land")
@@ -352,6 +352,7 @@ Item {
 
             // Add lines between waypoints
             MissionLineView {
+                targetMap: editorMap // GidroLog: needed for the dashed line
                 showSpecialVisual: _missionController.isROIBeginCurrentItem
                 model: _missionController.simpleFlightPathSegments
                 opacity: _editingLayer == _layerMission ? 1 : editorMap._nonInteractiveOpacity
@@ -504,7 +505,7 @@ Item {
                     },
                     ToolStripAction {
                         objectName: "planToolStrip_patternButton"
-                        text: _singleComplexItem ? _missionController.complexMissionItems[0].translatedName : qsTr("Pattern")
+                        text: qsTr("Полигон")     // GidroLog
                         iconSource: "/qmlimages/MapDrawShape.svg"
                         enabled: _missionController.flyThroughCommandsAllowed
                         visible: toolStrip._isMissionLayer
@@ -518,7 +519,7 @@ Item {
                     ToolStripAction {
                         id: waypointButton
                         objectName: "planToolStrip_waypointButton"
-                        text: qsTr("Waypoint")
+                        text: qsTr("Точка")
                         iconSource: "/res/waypoint.svg"
                         enabled: _missionController.flyThroughCommandsAllowed
                         visible: toolStrip._isMissionLayer
@@ -539,7 +540,7 @@ Item {
                         text: _missionController.isROIActive ? qsTr("Cancel ROI") : qsTr("ROI")
                         iconSource: "/qmlimages/roi.svg"
                         enabled: _missionController.isInsertROIValid
-                        visible: toolStrip._isMissionLayer && _planMasterController.controllerVehicle.supports.roiMode
+                        visible: false      // GidroLog: point of interest not used on the boat
                         checkable: true
                         onTriggered: {
                             _addROIOnClick = !_addROIOnClick
@@ -560,7 +561,7 @@ Item {
                         }
                     },
                     ToolStripAction {
-                        text: qsTr("Stats")
+                        text: qsTr("Статистика")
                         iconSource: "/res/chevron-double-right.svg"
                         visible: missionStatus.hidden && QGroundControl.corePlugin.options.showMissionStatus
                         onTriggered: missionStatus.showMissionStatus()
@@ -743,8 +744,9 @@ Item {
                     implicitWidth: missionStatsButtonLayout._buttonImplicitWidth
                     implicitHeight: implicitWidth
                     color: checked ? QGroundControl.globalPalette.buttonHighlight : QGroundControl.globalPalette.button
+                    visible: false      // GidroLog: no height profile, mission statistics only
 
-                    property bool checked: true
+                    property bool checked: false
 
                     QGCColoredImage {
                         anchors.margins: missionStatsButtonLayout._buttonImageMargins
@@ -767,8 +769,9 @@ Item {
                     implicitWidth: missionStatsButtonLayout._buttonImplicitWidth
                     implicitHeight: implicitWidth
                     color: checked ? QGroundControl.globalPalette.buttonHighlight : QGroundControl.globalPalette.button
+                    visible: false      // GidroLog: statistics is the only page
 
-                    property bool checked: false
+                    property bool checked: true
 
                     QGCColoredImage {
                         anchors.margins: missionStatsButtonLayout._buttonImageMargins
@@ -834,13 +837,20 @@ Item {
         ColumnLayout {
             spacing: ScreenTools.defaultFontPixelWidth * 0.5
 
-            QGCLabel { text: qsTr("Create complex pattern:") }
+            QGCLabel { text: qsTr("Создать полигон:") }
 
             Repeater {
                 model: _missionController.complexMissionItems
 
                 QGCButton {
-                    text: modelData.translatedName
+                    // GidroLog: Russian names of the survey patterns
+                    text: {
+                        const map = { "Survey": qsTr("Площадной объект"), "Corridor Scan": qsTr("Линейный объект"),
+                                      "CorridorScan": qsTr("Линейный объект"), "Structure Scan": qsTr("Обследование сооружения"),
+                                      "StructureScan": qsTr("Обследование сооружения") }
+                        const ru = map[modelData.canonicalName] || map[modelData.translatedName]
+                        return ru ? ru : modelData.translatedName
+                    }
                     Layout.fillWidth: true
 
                     onClicked: {

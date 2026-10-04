@@ -8,7 +8,52 @@ QGCComboBox {
     property Fact fact: Fact { }
     property bool indexModel: fact ? fact.enumValues.length === 0 : true // true: Fact values are indices, false: Fact values are FactMetadata.enumValues
 
-    model: fact ? fact.enumStrings : null
+    model: fact ? _gidroLogTranslate(fact.enumStrings) : null
+
+    // GidroLog: Russian names for common enum values (failsafe actions, display options, ...).
+    // Mode names keep the original in brackets so they match the toolbar / autopilot.
+    readonly property var _gidroLogEnumRu: ({
+        "Warn only":                "Только предупреждение",
+        "Warn Only":                "Только предупреждение",
+        "RTL":                      "Возврат (RTL)",
+        "Hold":                     "Удержание (Hold)",
+        "SmartRTL":                 "Умный возврат (SmartRTL)",
+        "SmartRTL or RTL":          "Умный возврат или возврат",
+        "SmartRTL or Hold":         "Умный возврат или удержание",
+        "RTL or Hold":              "Возврат или удержание",
+        "Hold or RTL":              "Удержание или возврат",
+        "Terminate":                "Аварийное завершение",
+        "Loiter or Hold":           "Кружение или удержание",
+        "Loiter":                   "Кружение (Loiter)",
+        "Land":                     "Посадка",
+        "Disarm":                   "Остановить моторы",
+        "None":                     "Нет",
+        "Disabled":                 "Отключено",
+        "Enabled":                  "Включено",
+        "Percentage":               "Проценты",
+        "Voltage":                  "Напряжение",
+        "Percentage and Voltage":   "Проценты и напряжение",
+        "Always":                   "Всегда",
+        "Never":                    "Никогда",
+        "Auto":                     "Авто",
+        "Manual":                   "Ручной (Manual)",
+        "Acro":                     "Акро (Acro)",
+        "Steering":                 "Рулевой (Steering)",
+        "Guided":                   "Ведомый (Guided)",
+        "Follow":                   "Следование (Follow)",
+        "Simple":                   "Простой (Simple)",
+        "Dock":                     "Причаливание (Dock)",
+        "Circle":                   "Круг (Circle)"
+    })
+
+    function _gidroLogTranslate(list) {
+        const out = []
+        for (let i = 0; i < list.length; i++) {
+            const s = list[i]
+            out.push(_gidroLogEnumRu[s] !== undefined ? _gidroLogEnumRu[s] : s)
+        }
+        return out
+    }
 
     currentIndex: fact ? (indexModel ? fact.value : fact.enumIndex) : 0
 

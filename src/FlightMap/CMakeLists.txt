@@ -31,6 +31,7 @@ qt_add_qml_module(FlightMapModule
         Widgets/CompassHeadingIndicator.qml
         Widgets/HorizontalCompassAttitude.qml
         Widgets/IntegratedAttitudeIndicator.qml
+        Widgets/GidroLogInclinometer.qml
         Widgets/IntegratedCompassAttitude.qml
         Widgets/MapFitFunctions.qml
         Widgets/PhotoVideoControl.qml
@@ -97,6 +98,10 @@ qt_add_resources(${CMAKE_PROJECT_NAME} flightmap_qmlimages
         "${CMAKE_SOURCE_DIR}/src/FlightMap/Images/sub.png"
         "${CMAKE_SOURCE_DIR}/src/FlightMap/Images/vehicleArrowOpaque.svg"
         "${CMAKE_SOURCE_DIR}/src/FlightMap/Images/vehicleArrowOutline.svg"
+        "${CMAKE_SOURCE_DIR}/src/FlightMap/Images/vehicleBoatOpaque.svg"
+        "${CMAKE_SOURCE_DIR}/src/FlightMap/Images/vehicleBoatOutline.svg"
+        "${CMAKE_SOURCE_DIR}/src/FlightMap/Images/GidroLogBoatSide.svg"
+        "${CMAKE_SOURCE_DIR}/src/FlightMap/Images/GidroLogBoatRear.svg"
         "${CMAKE_SOURCE_DIR}/src/FlightMap/Images/ZoomMinus.svg"
         "${CMAKE_SOURCE_DIR}/src/FlightMap/Images/ZoomPlus.svg"
 )

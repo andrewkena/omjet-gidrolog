@@ -37,7 +37,7 @@ Rectangle {
         id: qgcButton
         objectName: "toolbar_qgcLogo"
         height: parent.height
-        icon.source: "/res/QGCLogoFull.svg"
+        icon.source: "/res/GidroLogIcon.png" // GidroLog
         logo: true
         onClicked: mainWindow.showToolSelectDialog()
     }
@@ -106,14 +106,14 @@ Rectangle {
 
         QGCLabel {
             anchors.centerIn: parent
-            text: qsTr("Syncing Mission")
+            text: qsTr("Синхронизация задания")
             font.pointSize: ScreenTools.largeFontPointSize
             visible: _controllerProgressPct !== 1
         }
 
         QGCLabel {
             anchors.centerIn: parent
-            text: qsTr("Done")
+            text: qsTr("Готово")
             font.pointSize: ScreenTools.largeFontPointSize
             visible: _controllerProgressPct === 1
         }
@@ -122,7 +122,7 @@ Rectangle {
             anchors.margins: _margin
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            text: qsTr("Click anywhere to hide")
+            text: qsTr("Нажмите в любом месте, чтобы скрыть")
 
             property real _margin: ScreenTools.defaultFontPixelWidth / 2
         }

@@ -20,7 +20,7 @@ ToolIndicatorPage {
                 objectName: "toolbar_viewFly"
                 implicitHeight: root._toolButtonHeight
                 Layout.fillWidth: true
-                text: qsTr("Fly")
+                text: qsTr("КАРТА")
                 imageResource: "/res/FlyingPaperPlane.svg"
                 onClicked: {
                     if (mainWindow.allowViewSwitch()) {
@@ -34,7 +34,7 @@ ToolIndicatorPage {
                 objectName: "toolbar_viewPlan"
                 implicitHeight: root._toolButtonHeight
                 Layout.fillWidth: true
-                text: qsTr("Plan")
+                text: qsTr("ЗАДАНИЕ")
                 imageResource: "/qmlimages/Plan.svg"
                 onClicked: {
                     if (mainWindow.allowViewSwitch()) {
@@ -48,7 +48,7 @@ ToolIndicatorPage {
                 objectName: "toolbar_viewAnalyze"
                 implicitHeight: root._toolButtonHeight
                 Layout.fillWidth: true
-                text: qsTr("Analyze")
+                text: qsTr("АНАЛИЗ")
                 imageResource: "/qmlimages/Analyze.svg"
                 visible: QGroundControl.corePlugin.showAdvancedUI
                 onClicked: {
@@ -64,7 +64,7 @@ ToolIndicatorPage {
                 objectName: "toolbar_viewConfigure"
                 implicitHeight: root._toolButtonHeight
                 Layout.fillWidth: true
-                text: qsTr("Configure")
+                text: qsTr("ПАРАМЕТРЫ СУДНА")
                 imageResource: "/res/GearWithPaperPlane.svg"
                 onClicked: {
                     if (mainWindow.allowViewSwitch()) {
@@ -79,7 +79,7 @@ ToolIndicatorPage {
                 objectName: "toolbar_viewSettings"
                 implicitHeight: root._toolButtonHeight
                 Layout.fillWidth: true
-                text: qsTr("Settings")
+                text: qsTr("НАСТРОЙКИ ПРОГРАММЫ")
                 imageResource: "/res/QGCLogoWhite.svg"
                 visible: !QGroundControl.corePlugin.options.combineSettingsAndSetup
                 onClicked: {
@@ -95,7 +95,7 @@ ToolIndicatorPage {
                 objectName: "toolbar_viewClose"
                 implicitHeight: root._toolButtonHeight
                 Layout.fillWidth: true
-                text: qsTr("Close")
+                text: qsTr("ВЫХОД")
                 imageResource: "/res/OpenDoor.svg"
                 onClicked: {
                     if (mainWindow.allowViewSwitch()) {
@@ -122,7 +122,7 @@ ToolIndicatorPage {
                     heightFactor: 0.2
                     leftPadding: ScreenTools.defaultFontPixelWidth
                     rightPadding: leftPadding
-                    text: qsTr("Update")
+                    text: qsTr("Обновление")
                     primary: true
                     pointSize: ScreenTools.smallFontPointSize
                     visible: QGroundControl.newStableVersion !== ""
@@ -136,7 +136,7 @@ ToolIndicatorPage {
                     id: versionLabel
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignHCenter
-                    text: qsTr("%1 Version").arg(QGroundControl.appName)
+                    text: qsTr("Версия %1").arg(QGroundControl.appName)
                     font.pointSize: ScreenTools.smallFontPointSize
                     wrapMode: QGCLabel.WordWrap
                 }

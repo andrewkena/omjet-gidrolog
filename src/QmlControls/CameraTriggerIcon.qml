@@ -12,25 +12,16 @@ import QtQuick
 import QGroundControl
 import QGroundControl.Controls
 
-/// Camera glyph used to mark camera trigger points on the map (both engines)
+/// Marks camera trigger (shutter) points on the map (both engines)
+/// GidroLog: solid red dot instead of the grey camera glyph
 Rectangle {
-    width: _radius * 2
-    height: _radius * 2
-    radius: _radius
-    color: "black"
-    opacity: 0.4
+    width:          _radius * 2
+    height:         _radius * 2
+    radius:         _radius
+    color:          "#E53935"
+    border.color:   "#7F0000"
+    border.width:   1
+    antialiasing:   true
 
-    readonly property real _radius: ScreenTools.defaultFontPixelHeight * 0.6
-
-    QGCPalette { id: qgcPal; colorGroupEnabled: true }
-
-    QGCColoredImage {
-        anchors.centerIn: parent
-        anchors.alignWhenCentered: false // Prevents anchors.centerIn from snapping to integer coordinates, which can throw off centering.
-        width: parent.width * 0.65
-        height: width
-        source: "/InstrumentValueIcons/camera.svg"
-        sourceSize.height: height
-        color: qgcPal.window
-    }
+    readonly property real _radius: ScreenTools.defaultFontPixelHeight * 0.3
 }

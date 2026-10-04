@@ -1,3 +1,4 @@
+import QtCore
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
@@ -16,7 +17,21 @@ import QGroundControl.Toolbar
 /// All properties defined here are visible to all QML pages.
 ApplicationWindow {
     id:         mainWindow
+
+    // GidroLog: app-wide settings shared by the settings page and the Fly View panels
+    property alias gidroLogSettings: _gidroLogSettings
+
+    Settings {
+        id:         _gidroLogSettings
+        category:   "GidroLogControl"
+
+        property int sirenChannel:      0       // RC channel 1..16, 0 = not assigned
+        property int sirenThreshold:    1700    // PWM (us) at/above which the siren is on
+        property int beaconChannel:     0
+        property int beaconThreshold:   1700
+    }
     visible:    true
+    title:      "ОМДЖЕТ ГидроЛог " + Qt.application.version.replace(/^v/, "") + "_" + Qt.formatDate(new Date(), "dd.MM.yyyy")  // GidroLog: window title
     // The special casing for android prevents white bars from showing up on the edges of the screen with newer android versions
     flags:      Qt.Window | (ScreenTools.isAndroid ? Qt.ExpandedClientAreaHint | Qt.NoTitleBarBackgroundHint : 0)
 
@@ -154,11 +169,11 @@ ApplicationWindow {
     }
 
     function showAnalyzeTool() {
-        showTool(qsTr("Analyze Tools"), "qrc:/qml/QGroundControl/AnalyzeView/AnalyzeView.qml", "/qmlimages/Analyze.svg")
+        showTool(qsTr("АНАЛИЗ"), "qrc:/qml/QGroundControl/AnalyzeView/AnalyzeView.qml", "/qmlimages/Analyze.svg")
     }
 
     function showVehicleConfig() {
-        showTool(qsTr("Vehicle Configuration"), "qrc:/qml/QGroundControl/VehicleSetup/VehicleConfigView.qml", "/qmlimages/Gears.svg")
+        showTool(qsTr("ПАРАМЕТРЫ СУДНА"), "qrc:/qml/QGroundControl/VehicleSetup/VehicleConfigView.qml", "/qmlimages/Gears.svg")
     }
 
     function showVehicleConfigParametersPage() {
@@ -175,7 +190,7 @@ ApplicationWindow {
     }
 
     function showSettingsTool(settingsPage = "") {
-        showTool(qsTr("Application Settings"), "qrc:/qml/QGroundControl/Controls/AppSettings.qml", "/res/QGCLogoWhite")
+        showTool(qsTr("НАСТРОЙКИ ПРОГРАММЫ"), "qrc:/qml/QGroundControl/Controls/AppSettings.qml", "/res/QGCLogoWhite")
         if (settingsPage !== "") {
             toolDrawerLoader.item.showSettingsPage(settingsPage)
         }
@@ -224,6 +239,7 @@ ApplicationWindow {
 
     property bool _forceClose: false
     property bool suppressCriticalVehicleMessages: false
+    property var  gidroLogInstrumentPanel:          null    // GidroLog: set by FlyViewInstrumentPanel
 
     function finishCloseProcess() {
         _forceClose = true
@@ -450,7 +466,7 @@ ApplicationWindow {
                     id: qgcButton
                     objectName: "toolbar_qgcLogo"
                     height: parent.height
-                    icon.source: "/res/QGCLogoFull.svg"
+                    icon.source: "/res/GidroLogIcon.png" // GidroLog
                     logo: true
                     onClicked: mainWindow.showToolSelectDialog()
                 }
@@ -473,6 +489,159 @@ ApplicationWindow {
     }
 
     //-------------------------------------------------------------------------
+    // GidroLog: Russian translation of autopilot / vehicle messages shown in the orange popup.
+    // Exact phrases and patterns first, then common prefixes. Unknown text is left as is.
+    readonly property var _gidroLogMessageRules: [
+        // ---- Emergency stop / arming ----
+        [ /Emergency Stop released/gi,                      "Аварийная остановка снята" ],
+        [ /Emergency Stop/gi,                               "Аварийная остановка моторов" ],
+        [ /Throttle armed/gi,                               "Моторы запущены" ],
+        [ /Throttle disarmed/gi,                            "Моторы остановлены" ],
+        [ /Arming motors/gi,                                "Запуск моторов" ],
+        [ /Disarming motors/gi,                             "Остановка моторов" ],
+        [ /Arming denied/gi,                                "Запуск запрещён" ],
+        [ /Arm(ing)? failed/gi,                             "Запуск не удался" ],
+        [ /Disarm(ing)? failed/gi,                          "Остановка не удалась" ],
+        [ /Already armed/gi,                                "Уже запущен" ],
+        [ /Motors: Check frame class and type/gi,           "Моторы: проверьте FRAME_CLASS и FRAME_TYPE" ],
+        [ /Motor Emergency Stopped/gi,                      "Моторы аварийно остановлены" ],
+        [ /Hardware safety switch/gi,                       "Аппаратный выключатель безопасности" ],
+        [ /Safety switch/gi,                                "Выключатель безопасности" ],
+        [ /Mode not armable/gi,                             "В этом режиме запуск невозможен" ],
+        [ /Throttle \(RC(\d+)\) is not neutral/gi,          "Газ (RC$1) не в нейтрали" ],
+        [ /Throttle not neutral/gi,                         "Газ не в нейтрали" ],
+        [ /Crash: Disarming/gi,                             "Авария: моторы остановлены" ],
+        [ /Crash: Going to HOLD/gi,                         "Авария: переход в HOLD" ],
+        [ /Crash detected/gi,                               "Обнаружена авария" ],
+
+        // ---- Sensors ----
+        [ /Gyros not calibrated/gi,                         "Гироскопы не откалиброваны" ],
+        [ /Gyros inconsistent/gi,                           "Гироскопы расходятся" ],
+        [ /Gyros not healthy/gi,                            "Гироскопы неисправны" ],
+        [ /Accels not calibrated/gi,                        "Акселерометры не откалиброваны" ],
+        [ /Accels inconsistent/gi,                          "Акселерометры расходятся" ],
+        [ /Accels not healthy/gi,                           "Акселерометры неисправны" ],
+        [ /3D Accel calibration needed/gi,                  "Нужна калибровка акселерометров" ],
+        [ /Compass not healthy/gi,                          "Компас неисправен" ],
+        [ /Compass not calibrated/gi,                       "Компас не откалиброван" ],
+        [ /Compass offsets too high/gi,                     "Слишком большие смещения компаса" ],
+        [ /Compasses inconsistent/gi,                       "Компасы расходятся" ],
+        [ /Check mag field/gi,                              "Проверьте магнитное поле" ],
+        [ /Compass calibration running/gi,                  "Идёт калибровка компаса" ],
+        [ /Baro not healthy/gi,                             "Барометр неисправен" ],
+        [ /Barometer not healthy/gi,                        "Барометр неисправен" ],
+        [ /INS not calibrated/gi,                           "Инерциальная система не откалибрована" ],
+        [ /AHRS not healthy/gi,                             "AHRS неисправна" ],
+        [ /AHRS: waiting for home/gi,                       "AHRS: ожидание точки старта" ],
+        [ /waiting for home/gi,                             "ожидание точки старта" ],
+        [ /EKF attitude is bad/gi,                          "EKF: неверная ориентация" ],
+        [ /EKF variance/gi,                                 "EKF: большой разброс" ],
+        [ /EKF failsafe/gi,                                 "EKF: аварийный режим" ],
+        [ /(EKF\d?) waiting for GPS config data/gi,         "$1: ожидание настроек GPS" ],
+        [ /(EKF\d?) IMU(\d+) is using GPS/gi,               "$1 IMU$2 использует GPS" ],
+        [ /(EKF\d?) IMU(\d+) tilt alignment complete/gi,    "$1 IMU$2: выравнивание по наклону завершено" ],
+        [ /(EKF\d?) IMU(\d+) MAG(\d+) initial yaw alignment complete/gi, "$1 IMU$2 MAG$3: начальный курс выставлен" ],
+        [ /(EKF\d?) IMU(\d+) origin set/gi,                 "$1 IMU$2: начало координат задано" ],
+        [ /Rangefinder (\d+): No Data/gi,                   "Эхолот/дальномер $1: нет данных" ],
+        [ /Rangefinder (\d+): Not Detected/gi,              "Эхолот/дальномер $1: не обнаружен" ],
+        [ /Rangefinder: No Data/gi,                         "Эхолот/дальномер: нет данных" ],
+        [ /Internal errors? (0x[0-9a-fA-F]+)/gi,            "Внутренняя ошибка $1" ],
+
+        // ---- GPS ----
+        [ /GPS (\d+): Bad fix/gi,                           "GPS $1: плохое решение" ],
+        [ /GPS (\d+): was not found/gi,                     "GPS $1: не найден" ],
+        [ /GPS (\d+): not healthy/gi,                       "GPS $1: неисправен" ],
+        [ /Need 3D Fix/gi,                                  "Нужно 3D-решение GPS" ],
+        [ /Bad GPS Position/gi,                             "Плохие координаты GPS" ],
+        [ /GPS and AHRS differ by ([\d.]+)m/gi,             "GPS и AHRS расходятся на $1 м" ],
+        [ /GPS horiz error ([\d.]+)m/gi,                    "Горизонтальная ошибка GPS $1 м" ],
+        [ /GPS vert error ([\d.]+)m/gi,                     "Вертикальная ошибка GPS $1 м" ],
+        [ /GPS speed error ([\d.]+)/gi,                     "Ошибка скорости GPS $1" ],
+        [ /GPS numsats/gi,                                  "Мало спутников GPS" ],
+        [ /High GPS HDOP/gi,                                "Высокий HDOP GPS" ],
+        [ /GPS Glitch cleared/gi,                           "Сбой GPS устранён" ],
+        [ /GPS Glitch/gi,                                   "Сбой GPS" ],
+        [ /GPS not healthy/gi,                              "GPS неисправен" ],
+        [ /Waiting for GPS/gi,                              "Ожидание GPS" ],
+        [ /u-blox (\d+) HW: ([^ ]+) SW: ([^ ]+)/gi,         "u-blox $1 аппарат.: $2 прогр.: $3" ],
+
+        // ---- Battery / power ----
+        [ /Battery (\d+) below minimum arming voltage/gi,   "Батарея $1 ниже минимального напряжения запуска" ],
+        [ /Battery (\d+) below minimum arming capacity/gi,  "Батарея $1 ниже минимальной ёмкости запуска" ],
+        [ /Battery (\d+) is critical/gi,                    "Батарея $1 критически разряжена" ],
+        [ /Battery (\d+) is low/gi,                         "Батарея $1 разряжена" ],
+        [ /Battery (\d+) low voltage failsafe/gi,           "Батарея $1: аварийный режим по напряжению" ],
+        [ /Battery (\d+) critical voltage failsafe/gi,      "Батарея $1: критическое напряжение" ],
+        [ /Battery (\d+) unhealthy/gi,                      "Батарея $1 неисправна" ],
+        [ /Battery failsafe/gi,                             "Аварийный режим по батарее" ],
+        [ /Check battery/gi,                                "Проверьте батарею" ],
+        [ /Board \(([\d.]+)v\) out of range/gi,             "Питание платы ($1 В) вне диапазона" ],
+
+        // ---- RC / GCS / failsafe ----
+        [ /RC not calibrated/gi,                            "Пульт не откалиброван" ],
+        [ /RC not found/gi,                                 "Пульт не найден" ],
+        [ /Waiting for RC/gi,                               "Ожидание пульта" ],
+        [ /Radio Failsafe - Disarming/gi,                   "Потеря пульта — моторы остановлены" ],
+        [ /Radio Failsafe Cleared/gi,                       "Связь с пультом восстановлена" ],
+        [ /Radio Failsafe/gi,                               "Потеря связи с пультом" ],
+        [ /Failsafe: Radio/gi,                              "Аварийный режим: пульт" ],
+        [ /GCS Failsafe Cleared/gi,                         "Связь с наземной станцией восстановлена" ],
+        [ /GCS Failsafe/gi,                                 "Потеря связи с наземной станцией" ],
+        [ /Failsafe Cleared/gi,                             "Аварийный режим снят" ],
+        [ /Failsafe/gi,                                     "Аварийный режим" ],
+        [ /Fence breached/gi,                               "Выход за геозону" ],
+        [ /Fence enabled/gi,                                "Геозона включена" ],
+        [ /Fence disabled/gi,                               "Геозона выключена" ],
+        [ /Fence requires position/gi,                      "Геозоне нужны координаты" ],
+
+        // ---- Mission / modes ----
+        [ /Mission Complete/gi,                             "Задание выполнено" ],
+        [ /Mission: (\d+) WP/gi,                            "Задание: точка $1" ],
+        [ /Reached waypoint #(\d+) dist (\d+)m/gi,          "Достигнута точка №$1, расстояние $2 м" ],
+        [ /Reached waypoint #(\d+)/gi,                      "Достигнута точка №$1" ],
+        [ /Reached destination/gi,                          "Пункт назначения достигнут" ],
+        [ /No Mission/gi,                                   "нет задания" ],
+        [ /Mode change to ([A-Z_]+) failed/gi,              "Не удалось включить режим $1" ],
+        [ /Flight mode change failed/gi,                    "Не удалось сменить режим" ],
+        [ /Mode change failed/gi,                           "Не удалось сменить режим" ],
+        [ /SmartRTL deactivated: bad position/gi,           "Умный возврат отключён: плохие координаты" ],
+        [ /SmartRTL/g,                                      "Умный возврат" ],
+        [ /Home set/gi,                                     "Точка старта задана" ],
+
+        // ---- Logging / storage / scripting ----
+        [ /Logging failed/gi,                               "Ошибка записи лога" ],
+        [ /Logging not started/gi,                          "Запись лога не начата" ],
+        [ /No SD card/gi,                                   "Нет SD-карты" ],
+        [ /SD card not found/gi,                            "SD-карта не найдена" ],
+        [ /Scripting: ([^ ]+) error/gi,                     "Скрипт $1: ошибка" ],
+        [ /Scripting: out of memory/gi,                     "Скрипты: не хватает памяти" ],
+        [ /Lua: (.+)/g,                                     "Lua: $1" ],
+
+        // ---- QGC-side command results ----
+        [ /Vehicle did not respond to command: (.+)/gi,     "Борт не ответил на команду: $1" ],
+        [ /(.+) command temporarily rejected/gi,            "Команда «$1» временно отклонена" ],
+        [ /(.+) command denied/gi,                          "Команда «$1» отклонена" ],
+        [ /(.+) command failed/gi,                          "Команда «$1» не выполнена" ],
+        [ /(.+) command not supported/gi,                   "Команда «$1» не поддерживается" ],
+        [ /Vehicle (\d+): /g,                               "Борт $1: " ],
+
+        // ---- Prefixes ----
+        [ /PreArm: /g,                                      "Предстарт: " ],
+        [ /Arm: /g,                                         "Запуск: " ],
+        [ /Disarm: /g,                                      "Остановка: " ]
+    ]
+
+    function gidroLogTranslateMessage(message) {
+        let text = String(message)
+        for (let i = 0; i < _gidroLogMessageRules.length; i++) {
+            const rule = _gidroLogMessageRules[i]
+            rule[0].lastIndex = 0
+            text = text.replace(rule[0], rule[1])
+        }
+        return text
+    }
+
+    //-------------------------------------------------------------------------
     //-- Critical Vehicle Message Popup
 
     function showCriticalVehicleMessage(message) {
@@ -484,8 +653,9 @@ ApplicationWindow {
             // When the user close the older one drop the message indicator tool so they can see the rest of them.
             criticalVehicleMessagePopup.additionalCriticalMessagesReceived = true
         } else {
-            criticalVehicleMessagePopup.criticalVehicleMessage      = message
+            criticalVehicleMessagePopup.criticalVehicleMessage      = gidroLogTranslateMessage(message)
             criticalVehicleMessagePopup.additionalCriticalMessagesReceived = false
+            criticalVehicleMessagePopup.placeAboveInstruments()
             criticalVehicleMessagePopup.open()
         }
     }
@@ -494,15 +664,32 @@ ApplicationWindow {
     Popup {
         id:                 criticalVehicleMessagePopup
         objectName:         "criticalVehicleMessage_popup"
-        y:                  ScreenTools.toolbarHeight + ScreenTools.defaultFontPixelHeight
-        x:                  Math.round((mainWindow.width - width) * 0.5)
-        width:              mainWindow.width  * 0.55
+        // GidroLog: above the compass / pitch / roll block at the right edge (fallback: top centre)
+        y:                  _anchorBottom > 0 ? Math.round(_anchorBottom - height - ScreenTools.defaultFontPixelHeight) : ScreenTools.toolbarHeight + ScreenTools.defaultFontPixelHeight
+        x:                  _anchorRight > 0 ? Math.round(_anchorRight - width) : Math.round((mainWindow.width - width) * 0.5)
+        width:              _anchorRight > 0 ? _anchorWidth : mainWindow.width  * 0.55
         height:             criticalVehicleMessageText.contentHeight + ScreenTools.defaultFontPixelHeight * 2
         modal:              false
         closePolicy:        Popup.CloseOnPressOutside
 
         property alias  criticalVehicleMessage:             criticalVehicleMessageText.text
         property bool   additionalCriticalMessagesReceived: false
+        property real   _anchorBottom:  0
+        property real   _anchorRight:   0
+        property real   _anchorWidth:   0
+
+        function placeAboveInstruments() {
+            const ip = mainWindow.gidroLogInstrumentPanel
+            if (ip && ip.visible && ip.width > 0) {
+                const p = ip.mapToItem(null, 0, 0)
+                _anchorWidth  = Math.max(ip.width, ScreenTools.defaultFontPixelWidth * 40)
+                _anchorRight  = p.x + ip.width
+                _anchorBottom = p.y
+            } else {
+                _anchorRight  = 0
+                _anchorBottom = 0
+            }
+        }
 
         function acknowledge() {
             close()
@@ -537,7 +724,7 @@ ApplicationWindow {
                 QGCLabel {
                     id:                 vehicleWarningLabel
                     anchors.centerIn:   parent
-                    text:               qsTr("Vehicle Error")
+                    text:               qsTr("Сообщение борта")
                     font.pointSize:     ScreenTools.smallFontPointSize
                     color:              qgcPal.alertText
                 }
@@ -561,7 +748,7 @@ ApplicationWindow {
                 QGCLabel {
                     id:                 additionalErrorsLabel
                     anchors.centerIn:   parent
-                    text:               qsTr("Additional errors received")
+                    text:               qsTr("Есть ещё сообщения")
                     font.pointSize:     ScreenTools.smallFontPointSize
                     color:              qgcPal.alertText
                 }

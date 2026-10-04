@@ -11,7 +11,7 @@ ToolIndicatorPage {
     id: root
     showExpand: true
 
-    property string na: qsTr("N/A", "No data to display")
+    property string na: qsTr("н/д", "No data to display")
     property string valueNA: qsTr("–.––", "No data to display")
     property var rtkSettings: QGroundControl.settingsManager.rtkSettings
     readonly property var _receiver: QGroundControl.gpsManager.gpsRtk
@@ -38,17 +38,17 @@ ToolIndicatorPage {
 
     function errorText() {
         if (!activeVehicle) {
-            return qsTr("Disconnected")
+            return qsTr("Отключено")
         }
         switch (activeVehicle.gps.systemErrors.value) {
-        case 1: return qsTr("Incoming correction")
-        case 2: return qsTr("Configuration")
-        case 4: return qsTr("Software")
-        case 8: return qsTr("Antenna")
-        case 16: return qsTr("Event congestion")
-        case 32: return qsTr("CPU overload")
-        case 64: return qsTr("Output congestion")
-        default: return qsTr("Multiple errors")
+        case 1: return qsTr("Входящие поправки")
+        case 2: return qsTr("Конфигурация")
+        case 4: return qsTr("Программа")
+        case 8: return qsTr("Антенна")
+        case 16: return qsTr("Перегрузка событиями")
+        case 32: return qsTr("Перегрузка процессора")
+        case 64: return qsTr("Перегрузка вывода")
+        default: return qsTr("Несколько ошибок")
         }
     }
 
@@ -67,15 +67,15 @@ ToolIndicatorPage {
             SettingsGroupLayout {
                 Layout.fillWidth: true
                 Layout.minimumWidth: 0
-                heading: qsTr("Vehicle GPS Status")
+                heading: qsTr("GPS борта")
                 visible: root.activeVehicle
 
                 LabelledLabel {
-                    label: qsTr("Satellites")
+                    label: qsTr("Спутники")
                     labelText: root.activeVehicle ? root.activeVehicle.gps.count.valueString : root.na
                 }
                 LabelledLabel {
-                    label: qsTr("GPS Lock")
+                    label: qsTr("Решение GPS")
                     labelText: root.activeVehicle ? root.activeVehicle.gps.lock.enumStringValue : root.na
                 }
                 LabelledLabel {
@@ -87,11 +87,11 @@ ToolIndicatorPage {
                     labelText: root.activeVehicle ? root.activeVehicle.gps.vdop.valueString : root.valueNA
                 }
                 LabelledLabel {
-                    label: qsTr("Course Over Ground")
+                    label: qsTr("Путевой курс")
                     labelText: root.activeVehicle ? root.activeVehicle.gps.courseOverGround.valueString : root.valueNA
                 }
                 LabelledLabel {
-                    label: qsTr("GPS Error")
+                    label: qsTr("Ошибка GPS")
                     labelText: root.errorText()
                     visible: root.activeVehicle && root.activeVehicle.gps.systemErrors.value > 0
                 }
@@ -100,7 +100,7 @@ ToolIndicatorPage {
             SettingsGroupLayout {
                 Layout.fillWidth: true
                 Layout.minimumWidth: 0
-                heading: qsTr("RTK GPS Status")
+                heading: qsTr("Статус RTK GPS")
                 visible: root._rtkConnected || root._receiver.hasReceiver || !root.activeVehicle
 
                 QGCLabel {
@@ -110,35 +110,35 @@ ToolIndicatorPage {
                     Layout.preferredWidth: 0
                     wrapMode: Text.Wrap
                     text: !root._rtkConnected
-                          ? (root._receiver.hasReceiver ? qsTr("Connecting to receiver...")
-                                                       : qsTr("No RTK receiver connected. Expand for settings."))
-                          : root._activePresentation.passive ? qsTr("Passive RTCM/NMEA input connected")
-                          : root._averagingConnected ? qsTr("Receiver-managed averaging — no accuracy guarantee")
-                          : QGroundControl.gpsRtk.active.value ? qsTr("Survey-in Active") : qsTr("Receiver connected")
+                          ? (root._receiver.hasReceiver ? qsTr("Подключение к приёмнику...")
+                                                       : qsTr("RTK-приёмник не подключён. Разверните для настройки."))
+                          : root._activePresentation.passive ? qsTr("Подключён пассивный вход RTCM/NMEA")
+                          : root._averagingConnected ? qsTr("Усреднение приёмником — точность не гарантируется")
+                          : QGroundControl.gpsRtk.active.value ? qsTr("Идёт съёмка базы (Survey-in)") : qsTr("Приёмник подключён")
                 }
                 LabelledLabel {
                     objectName: "rtkSatellitesInView"
                     visible: root._rtkConnected
-                    label: qsTr("Satellites in View")
+                    label: qsTr("Спутников видно")
                     labelText: QGroundControl.gpsRtk.numSatellites.rawValue < 0
                                ? root.na : QGroundControl.gpsRtk.numSatellites.valueString
                 }
                 LabelledLabel {
                     objectName: "rtkSatellitesUsed"
                     visible: root._rtkConnected
-                    label: qsTr("Satellites Used")
+                    label: qsTr("Спутников используется")
                     labelText: QGroundControl.gpsRtk.numSatellitesUsed.rawValue < 0
                                ? root.na : QGroundControl.gpsRtk.numSatellitesUsed.valueString
                 }
                 LabelledLabel {
-                    label: root._activePresentation.acceptedObservationTime ? qsTr("Accepted observation time") : qsTr("Duration")
+                    label: root._activePresentation.acceptedObservationTime ? qsTr("Принятое время наблюдений") : qsTr("Длительность")
                     visible: root._rtkConnected && root._activePresentation.reportsSurveyDuration
                              && !root._averagingConnected
                     //: %1 is Survey-In duration in seconds
-                    labelText: qsTr("%1 s").arg(QGroundControl.gpsRtk.currentDuration.value)
+                    labelText: qsTr("%1 с").arg(QGroundControl.gpsRtk.currentDuration.value)
                 }
                 LabelledLabel {
-                    label: QGroundControl.gpsRtk.valid.value ? qsTr("Accuracy") : qsTr("Current Accuracy")
+                    label: QGroundControl.gpsRtk.valid.value ? qsTr("Точность") : qsTr("Текущая точность")
                     labelText: QGroundControl.gpsRtk.currentAccuracy.valueString + " " + QGroundControl.gpsRtk.currentAccuracy.units
                     visible: root._rtkConnected && !root._activePresentation.passive && !root._averagingConnected
                              && QGroundControl.gpsRtk.currentAccuracy.value > 0

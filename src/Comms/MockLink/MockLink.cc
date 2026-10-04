@@ -4,6 +4,7 @@
 #include "MAVLinkProtocol.h"
 #include "MAVLinkSigning.h"
 #include "SecureMemory.h"
+#include "MockLinkBoatSim.h"
 #include "MockLinkCamera.h"
 #include "MockLinkFTP.h"
 #include "MockLinkGimbal.h"
@@ -234,6 +235,11 @@ MockLink::MockLink(SharedLinkConfigurationPtr &config, QObject *parent)
     _loadParams();
     _runningTime.start();
 
+    // GidroLog: ArduRover MockLink behaves as a survey boat with the Dayu M36 echo sounder
+    if ((_firmwareType == MAV_AUTOPILOT_ARDUPILOTMEGA) && ((_vehicleType == MAV_TYPE_GROUND_ROVER) || (_vehicleType == MAV_TYPE_SURFACE_BOAT))) {
+        _boatSim = new MockLinkBoatSim(this);
+    }
+
     _workerThread = new QThread(this);
     _workerThread->setObjectName(QStringLiteral("Mock_%1").arg(_mockConfig->name()));
     _worker = new MockLinkWorker(this);
@@ -250,6 +256,7 @@ MockLink::~MockLink()
     delete _mockLinkCamera;
     delete _mockLinkGimbal;
     delete _mockLinkPX4Calibration;
+    delete _boatSim;
 
     if (!_logDownloadFilename.isEmpty()) {
         QFile::remove(_logDownloadFilename);
@@ -415,7 +422,9 @@ void MockLink::run1HzTasks()
     _sendBatteryStatus();
     _sendNamedValueFloats();
     _sendSysStatus();
-    _sendADSBVehicles();
+    if (!_boatSim) {
+        _sendADSBVehicles();   // GidroLog: no simulated ADS-B aircraft for the boat
+    }
     if (_vehicleType != MAV_TYPE_SUBMARINE) {
         _sendRemoteIDArmStatus();
     }
@@ -479,6 +488,10 @@ void MockLink::run10HzTasks()
         _sendPositionTargetLocalNed();
 
         _mockLinkPX4Calibration->run10HzTasks();
+
+        if (_boatSim) {
+            _boatSim->run10HzTasks();
+        }
 
         if (_enableCamera) {
             _mockLinkCamera->run10HzTasks();
@@ -2176,6 +2189,14 @@ void MockLink::_handleCommandLong(const mavlink_message_t &msg)
         break;
     case MAV_CMD_MISSION_START:
         commandResult = MAV_RESULT_ACCEPTED;
+        break;
+    case MAV_CMD_DO_AUX_FUNCTION:
+        // GidroLog: motor emergency stop (aux function 31), level HIGH(2) engages, LOW(0) releases
+        if (static_cast<int>(request.param1) == 31) {
+            _motorEStop = static_cast<int>(request.param2) == 2;
+            sendStatusTextMessage(MAV_SEVERITY_WARNING, _motorEStop ? QStringLiteral("Emergency Stop") : QStringLiteral("Emergency Stop released"));
+            commandResult = MAV_RESULT_ACCEPTED;
+        }
         break;
     case MAV_CMD_PREFLIGHT_CALIBRATION:
         _handlePreFlightCalibration(request);

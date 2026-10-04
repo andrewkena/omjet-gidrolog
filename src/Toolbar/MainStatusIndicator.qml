@@ -28,19 +28,32 @@ RowLayout {
     QGCLabel {
         id:                 mainStatusLabel
         Layout.fillHeight:  true
-        Layout.preferredWidth: contentWidth + (vehicleMessagesIcon.visible ? vehicleMessagesIcon.width + control.spacing : 0)
+        // GidroLog: status text | messages icon, with a separator between them
+        Layout.preferredWidth: contentWidth + (vehicleMessagesIcon.visible ? vehicleMessagesIcon.width + (_sepGap * 2) + 1 : 0)
+
+        property real _sepGap: ScreenTools.defaultFontPixelWidth * 1.75
+
+        Rectangle {
+            x:                      mainStatusLabel.contentWidth + mainStatusLabel._sepGap
+            anchors.verticalCenter: parent.verticalCenter
+            width:                  1
+            height:                 parent.height * 0.6
+            color:                  qgcPal.text
+            opacity:                0.35
+            visible:                vehicleMessagesIcon.visible
+        }
         verticalAlignment:  Text.AlignVCenter
         text:               mainStatusText()
         color:              qgcPal.text
         font.pointSize:     ScreenTools.largeFontPointSize
 
-        property string _commLostText:      qsTr("Comms Lost")
-        property string _readyToFlyText:    qsTr("Ready")
-        property string _notReadyToFlyText: qsTr("Not Ready")
-        property string _disconnectedText:  qsTr("Disconnected - Click to manually connect")
-        property string _armedText:         qsTr("Armed")
-        property string _flyingText:        qsTr("Flying")
-        property string _landingText:       qsTr("Landing")
+        property string _commLostText:      qsTr("Нет связи")
+        property string _readyToFlyText:    qsTr("Готов")
+        property string _notReadyToFlyText: qsTr("Не готов")
+        property string _disconnectedText:  qsTr("Не подключено — нажмите, чтобы подключиться")
+        property string _armedText:         qsTr("Запущен")
+        property string _flyingText:        qsTr("На ходу")
+        property string _landingText:       qsTr("Посадка")
 
         function mainStatusText() {
             var statusText
@@ -196,7 +209,7 @@ RowLayout {
 
                 QGCDelayButton {
                     enabled:    _armed || !_healthAndArmingChecksSupported || _activeVehicle.healthAndArmingCheckReport.canArm
-                    text:       _armed ? qsTr("Disarm") : (control._allowForceArm ? qsTr("Force Arm") : qsTr("Arm"))
+                    text:       _armed ? qsTr("Остановить") : (control._allowForceArm ? qsTr("Принудительный запуск") : qsTr("Запустить"))
 
                     onActivated: {
                         if (_armed) {
@@ -216,7 +229,7 @@ RowLayout {
                 LabelledComboBox {
                     id:                 primaryLinkCombo
                     Layout.alignment:   Qt.AlignTop
-                    label:              qsTr("Primary Link")
+                    label:              qsTr("Основной канал")
                     alternateText:      _primaryLinkName
                     visible:            _activeVehicle && _activeVehicle.vehicleLinkManager.linkNames.length > 1
 
@@ -247,7 +260,7 @@ RowLayout {
 
             SettingsGroupLayout {
                 //Layout.fillWidth:   true
-                heading:            qsTr("Vehicle Messages")
+                heading:            qsTr("Сообщения борта")
 
                 VehicleMessageList {
                     id: vehicleMessageList
@@ -255,14 +268,14 @@ RowLayout {
                 }
 
                 QGCLabel {
-                    text: qsTr("No new vehicle messages")
+                    text: qsTr("Новых сообщений нет")
                     visible: vehicleMessageList.noMessages
                 }
             }
 
             SettingsGroupLayout {
                 //Layout.fillWidth:   true
-                heading:            qsTr("Sensor Status")
+                heading:            qsTr("Состояние датчиков")
                 visible:            parametersReady && !_healthAndArmingChecksSupported
 
                 GridLayout {
@@ -285,7 +298,7 @@ RowLayout {
 
             SettingsGroupLayout {
                 //Layout.fillWidth:   true
-                heading:            qsTr("Overall Status")
+                heading:            qsTr("Общее состояние")
                 visible:            parametersReady && _healthAndArmingChecksSupported && _activeVehicle.healthAndArmingCheckReport.problemsForCurrentMode.count > 0
 
                 // List health and arming checks
@@ -366,7 +379,7 @@ RowLayout {
                             id: paramEditorDialogComponent
 
                             ParameterEditorDialog {
-                                title:          qsTr("Edit Parameter")
+                                title:          qsTr("Изменить параметр")
                                 fact:           description.fact
                                 destroyOnClose: true
                             }
@@ -393,13 +406,13 @@ RowLayout {
 
             SettingsGroupLayout {
                 Layout.fillWidth:   true
-                heading:            qsTr("Force Arm")
-                headingDescription: qsTr("Force arming bypasses pre-arm checks. Use with caution.")
+                heading:            qsTr("Принудительный запуск")
+                headingDescription: qsTr("Принудительный запуск пропускает предстартовые проверки. Используйте осторожно.")
                 visible:            _activeVehicle && !_armed
 
                 QGCCheckBoxSlider {
                     Layout.fillWidth:   true
-                    text:               qsTr("Allow Force Arm")
+                    text:               qsTr("Разрешить принудительный запуск")
                     checked:            false
                     onClicked:          _allowForceArm = true
                 }
@@ -415,18 +428,18 @@ RowLayout {
                     columnSpacing:      ScreenTools.defaultFontPixelWidth *2
                     Layout.fillWidth:   true
 
-                    QGCLabel { Layout.fillWidth: true; text: qsTr("Vehicle Parameters") }
+                    QGCLabel { Layout.fillWidth: true; text: qsTr("Параметры борта") }
                     QGCButton {
-                        text: qsTr("Configure")
+                        text: qsTr("Открыть")
                         onClicked: {
                             mainWindow.showVehicleConfigParametersPage()
                             mainWindow.closeIndicatorDrawer()
                         }
                     }
 
-                    QGCLabel { Layout.fillWidth: true; text: qsTr("Vehicle Configuration") }
+                    QGCLabel { Layout.fillWidth: true; text: qsTr("Параметры судна") }
                     QGCButton {
-                        text: qsTr("Configure")
+                        text: qsTr("Открыть")
                         onClicked: {
                             mainWindow.showVehicleConfig()
                             mainWindow.closeIndicatorDrawer()

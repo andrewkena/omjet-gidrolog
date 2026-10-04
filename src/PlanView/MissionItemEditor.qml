@@ -35,6 +35,34 @@ Rectangle {
     property bool   _singleComplexItem:         _missionController.complexMissionItems.length === 1
     property bool   _readyForSave:              missionItem.readyForSaveState === VisualMissionItem.ReadyForSave
 
+    // GidroLog: Russian names of mission commands shown in the item header
+    readonly property var _commandRu: ({
+        "Return To Launch":     qsTr("Возврат"),
+        "Return to launch":     qsTr("Возврат"),
+        "Return":               qsTr("Возврат"),
+        "Waypoint":             qsTr("Путевая точка"),
+        "Loiter":               qsTr("Ожидание"),
+        "Loiter (unlimited)":   qsTr("Ожидание без ограничения"),
+        "Loiter (time)":        qsTr("Ожидание по времени"),
+        "Loiter (turns)":       qsTr("Ожидание (витки)"),
+        "Change Speed":         qsTr("Смена скорости"),
+        "Delay":                qsTr("Задержка"),
+        "Jump To Item":         qsTr("Переход к точке"),
+        "Set Servo":            qsTr("Установить серво"),
+        "Set Relay":            qsTr("Установить реле"),
+        "Repeat Servo":         qsTr("Повтор серво"),
+        "Repeat Relay":         qsTr("Повтор реле"),
+        "Camera Trigger Distance": qsTr("Съёмка по расстоянию"),
+        "Set Home":             qsTr("Точка старта"),
+        "Survey":               qsTr("Площадной объект"),
+        "Corridor Scan":        qsTr("Линейный объект"),
+        "Structure Scan":       qsTr("Обследование сооружения")
+    })
+
+    function _ruCommand(name) {
+        return _commandRu[name] !== undefined ? _commandRu[name] : name
+    }
+
     readonly property real  _editFieldWidth:    Math.min(width - _innerMargin * 2, ScreenTools.defaultFontPixelWidth * 12)
     readonly property real  _margin:            ScreenTools.defaultFontPixelWidth / 2
     readonly property real  _innerMargin:       2
@@ -162,7 +190,7 @@ Rectangle {
 
                 property real _padding: ScreenTools.comboBoxPadding
 
-                QGCLabel { text: missionItem.commandName }
+                QGCLabel { text: _root._ruCommand(missionItem.commandName) }
 
                 QGCColoredImage {
                     height:             ScreenTools.defaultFontPixelWidth
@@ -206,7 +234,7 @@ Rectangle {
             height:                 commandPicker.height
             visible:                !missionItem.isCurrentItem || !missionItem.isSimpleItem || _waypointsOnlyMode || missionItem.isTakeoffItem
             verticalAlignment:      Text.AlignVCenter
-            text:                   missionItem.commandName
+            text:                   _root._ruCommand(missionItem.commandName)
             color:                  _outerTextColor
         }
     }
@@ -224,7 +252,7 @@ Rectangle {
 
                     QGCButton {
                         Layout.fillWidth:   true
-                        text:               qsTr("Move to vehicle position")
+                        text:               qsTr("Перенести к борту")
                         enabled:            _activeVehicle && missionItem.specifiesCoordinate && _activeVehicle.coordinate.isValid
 
                         onClicked: {
@@ -237,7 +265,7 @@ Rectangle {
 
                     QGCButton {
                         Layout.fillWidth:   true
-                        text:               qsTr("Move to previous item position")
+                        text:               qsTr("Перенести к предыдущей точке")
                         enabled:            _missionController.previousCoordinate.isValid
                         onClicked: {
                             missionItem.coordinate = _missionController.previousCoordinate
@@ -247,7 +275,7 @@ Rectangle {
 
                     QGCButton {
                         Layout.fillWidth:   true
-                        text:               qsTr("Edit position...")
+                        text:               qsTr("Изменить координаты...")
                         enabled:            missionItem.specifiesCoordinate
                         onClicked: {
                             const editCenterCoordinate = missionItem.isSurveyItem
@@ -269,7 +297,7 @@ Rectangle {
 
                     QGCCheckBoxSlider {
                         Layout.fillWidth:   true
-                        text:               qsTr("Show all values")
+                        text:               qsTr("Показать все значения")
                         visible:            QGroundControl.corePlugin.showAdvancedUI
                         checked:            missionItem.isSimpleItem ? missionItem.rawEdit : false
                         enabled:            missionItem.isSimpleItem && !_waypointsOnlyMode
@@ -279,7 +307,7 @@ Rectangle {
                             if (missionItem.rawEdit && !missionItem.friendlyEditAllowed) {
                                 missionItem.rawEdit = false
                                 checked = false
-                                QGroundControl.showMessageDialog(_root, qsTr("Mission Edit"), qsTr("You have made changes to the mission item which cannot be shown in Simple Mode"))
+                                QGroundControl.showMessageDialog(_root, qsTr("Редактирование задания"), qsTr("Изменения в этой точке нельзя показать в простом режиме"))
                             }
                             hamburgerMenuDropPanel.close()
                         }
@@ -292,7 +320,7 @@ Rectangle {
                     }
 
                     QGCLabel {
-                        text:       qsTr("Item #%1").arg(missionItem.sequenceNumber)
+                        text:       qsTr("Точка №%1").arg(missionItem.sequenceNumber)
                         enabled:    false
                     }
                 }
@@ -335,8 +363,8 @@ Rectangle {
         anchors.top:            commandPicker.bottom
         visible:                _currentItem && !_readyForSave
         text:                   missionItem.readyForSaveState === VisualMissionItem.NotReadyForSaveTerrain ?
-                                    qsTr("Incomplete: Waiting on terrain data.") :
-                                    qsTr("Incomplete: Item not fully specified.")
+                                    qsTr("Не готово: ожидание данных рельефа.") :
+                                    qsTr("Не готово: точка задана не полностью.")
         wrapMode:               Text.WordWrap
         horizontalAlignment:    Text.AlignHCenter
         color:                  qgcPal.warningText

@@ -76,6 +76,7 @@ qt_add_resources(PlanViewModule planview_resources
         "${CMAKE_SOURCE_DIR}/resources/AdvancedSliders.svg"
         "${CMAKE_SOURCE_DIR}/resources/camera.svg"
         "${CMAKE_SOURCE_DIR}/resources/chevron-double-left.svg"
+        "${CMAKE_SOURCE_DIR}/resources/Download.svg" # GidroLog: "Скачать с борта" button
         "${CMAKE_SOURCE_DIR}/resources/DropArrow.svg"
         "${CMAKE_SOURCE_DIR}/resources/gear-black.svg"
         "${CMAKE_SOURCE_DIR}/resources/RallyPoint.svg"

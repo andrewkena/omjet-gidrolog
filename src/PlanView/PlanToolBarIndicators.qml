@@ -36,8 +36,8 @@ RowLayout {
 
     function _downloadClicked() {
         if (_saveDirty) {
-            QGroundControl.showMessageDialog(root, qsTr("Download"),
-                                         qsTr("You have unsaved changes. Downloading from the Vehicle will lose these changes. Are you sure?"),
+            QGroundControl.showMessageDialog(root, qsTr("Скачать"),
+                                         qsTr("Есть несохранённые изменения. При скачивании с борта они пропадут. Продолжить?"),
                                          Dialog.Yes | Dialog.Cancel,
                                          function() { _planMasterController.loadFromVehicle() })
         } else {
@@ -52,13 +52,13 @@ RowLayout {
         if (_saveDirty || unsentChanges) {
             let msg
             if (_saveDirty && unsentChanges) {
-                msg = qsTr("You have unsaved/unsent changes. Loading a new Plan will lose these changes. Are you sure?")
+                msg = qsTr("Есть несохранённые и не загруженные на борт изменения. При открытии нового задания они пропадут. Продолжить?")
             } else if (_saveDirty) {
-                msg = qsTr("You have unsaved changes. Loading a new Plan will lose these changes. Are you sure?")
+                msg = qsTr("Есть несохранённые изменения. При открытии нового задания они пропадут. Продолжить?")
             } else {
-                msg = qsTr("You have unsent changes. Loading a new Plan will lose these changes. Are you sure?")
+                msg = qsTr("Есть не загруженные на борт изменения. При открытии нового задания они пропадут. Продолжить?")
             }
-            QGroundControl.showMessageDialog(root, qsTr("Open Plan"),
+            QGroundControl.showMessageDialog(root, qsTr("Открыть задание"),
                                         msg,
                                         Dialog.Yes | Dialog.Cancel,
                                         function() { _planMasterController.loadFromSelectedFile() } )
@@ -83,15 +83,15 @@ RowLayout {
     }
 
     function _storageClearButtonClicked() {
-        QGroundControl.showMessageDialog(root, qsTr("Clear"),
-                                     qsTr("Are you sure you want to remove all the items from the plan editor?"),
+        QGroundControl.showMessageDialog(root, qsTr("Очистить"),
+                                     qsTr("Удалить все точки из редактора задания?"),
                                      Dialog.Yes | Dialog.Cancel,
                                      function() { _planMasterController.removeAll(); })
     }
 
     function _vehicleClearButtonClicked() {
-        QGroundControl.showMessageDialog(root, qsTr("Clear"),
-                                     qsTr("Are you sure you want to remove the plan from the vehicle and the plan editor?"),
+        QGroundControl.showMessageDialog(root, qsTr("Очистить"),
+                                     qsTr("Удалить задание с борта и из редактора?"),
                                      Dialog.Yes | Dialog.Cancel,
                                      function() {
                                         _planMasterController.removeAllFromVehicle()
@@ -110,7 +110,7 @@ RowLayout {
 
     QGCButton {
         objectName: "planToolbar_openButton"
-        text: qsTr("Open")
+        text: qsTr("Открыть")
         iconSource: "/qmlimages/Plan.svg"
         enabled: !_planMasterController.syncInProgress
         onClicked: { toolbarButtonClicked(); _openButtonClicked() }
@@ -118,7 +118,7 @@ RowLayout {
 
     QGCButton {
         objectName: "planToolbar_saveButton"
-        text: qsTr("Save")
+        text: qsTr("Сохранить")
         iconSource: "/res/SaveToDisk.svg"
         enabled: !_syncInProgress && _hasPlanItems
         primary: _saveDirty
@@ -128,7 +128,7 @@ RowLayout {
     QGCButton {
         id: uploadButton
         objectName: "planToolbar_uploadButton"
-        text: qsTr("Upload")
+        text: qsTr("Загрузить на борт")
         iconSource: "/res/UploadToVehicle.svg"
         enabled: !_syncInProgress && _hasPlanItems && !_controllerOffline
         visible: !_syncInProgress
@@ -136,9 +136,19 @@ RowLayout {
         onClicked: { toolbarButtonClicked(); _uploadClicked() }
     }
 
+    // GidroLog: download moved from the hamburger menu next to Upload
+    QGCButton {
+        objectName: "planToolbar_downloadButton"
+        text: qsTr("Скачать с борта")
+        iconSource: "/res/Download.svg"
+        enabled: !_syncInProgress && !_controllerOffline
+        visible: !_syncInProgress
+        onClicked: { toolbarButtonClicked(); _downloadClicked() }
+    }
+
     QGCButton {
         objectName: "planToolbar_clearButton"
-        text: qsTr("Clear")
+        text: qsTr("Очистить")
         iconSource: "/res/TrashCan.svg"
         enabled: !_syncInProgress
         onClicked: { toolbarButtonClicked(); _clearClicked() }
@@ -158,7 +168,7 @@ RowLayout {
     }
 
     QGCLabel {
-        text:    qsTr("Click in map to add rally points")
+        text:    qsTr("Нажмите на карту, чтобы добавить точки сбора")
         visible: root.showRallyPointsHelp
         Layout.alignment: Qt.AlignVCenter
     }
@@ -176,7 +186,7 @@ RowLayout {
                     QGCButton {
                         objectName: "planToolbar_saveAsButton"
                         Layout.fillWidth: true
-                        text: qsTr("Save as...")
+                        text: qsTr("Сохранить как...")
                         enabled: !_syncInProgress && _hasPlanItems
 
                         onClicked: {
@@ -187,24 +197,12 @@ RowLayout {
 
                     QGCButton {
                         Layout.fillWidth: true
-                        text: qsTr("Save as KML")
+                        text: qsTr("Сохранить KML")
                         enabled: !_syncInProgress && _hasPlanItems
 
                         onClicked: {
                             dropPanel.close()
                             _saveAsKMLClicked()
-                        }
-                    }
-
-                    QGCButton {
-                        Layout.fillWidth: true
-                        text: qsTr("Download")
-                        enabled: !_syncInProgress && !_controllerOffline
-                        visible: !_syncInProgress
-
-                        onClicked: {
-                            dropPanel.close()
-                            _downloadClicked()
                         }
                     }
                 }

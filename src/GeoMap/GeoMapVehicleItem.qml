@@ -72,7 +72,7 @@ GeoMapItem {
         id: vehicleIcon
 
         anchors.fill: parent
-        source: root.vehicle ? root.vehicle.vehicleImageOpaque : ""
+        source: root.vehicle ? (root.vehicle.rover ? "/qmlimages/vehicleBoatOpaque.svg" : root.vehicle.vehicleImageOpaque) : "" // GidroLog: boat symbol
         mipmap: true
         sourceSize.width: root.size
         fillMode: Image.PreserveAspectFit

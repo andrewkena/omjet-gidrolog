@@ -17,6 +17,7 @@
 #include "VehicleLocalPositionSetpointFactGroup.h"
 #include "VehicleRPMFactGroup.h"
 #include "VehicleSetpointFactGroup.h"
+#include "VehicleSounderFactGroup.h" // GidroLog
 #include "VehicleTemperatureFactGroup.h"
 #include "VehicleVibrationFactGroup.h"
 #include "VehicleWindFactGroup.h"
@@ -360,6 +361,7 @@ void Vehicle::_commonInit(LinkInterface* link)
     _addFactGroup(_rpmFactGroup,               _rpmFactGroupName);
     _addFactGroup(_terrainFactGroup,           _terrainFactGroupName);
     _addFactGroup(_radioStatusFactGroup,       _radioStatusFactGroupName);
+    _addFactGroup(new VehicleSounderFactGroup(this), QStringLiteral("sounder")); // GidroLog: echo sounder (M36)
 
     // Add firmware-specific fact groups, if provided
     QMap<QString, FactGroup*>* fwFactGroups = _firmwarePlugin->factGroups();

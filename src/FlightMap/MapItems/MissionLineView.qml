@@ -5,14 +5,15 @@ import QtPositioning
 import QGroundControl
 
 /// The MissionLineView control is used to add lines between mission items
+/// GidroLog: thin solid green line (was 3 px, palette color)
 MapItemView {
     property bool showSpecialVisual: false
+    property var  targetMap                     ///< kept for compatibility with callers (not needed for a solid line)
+
     delegate: MapPolyline {
-        line.width: 3
+        line.width: 1.5
         // Note: Special visuals for ROI are hacked out for now since they are not working correctly
-        line.color: _terrainCollision ?
-                        "red" :
-                        (false/*showSpecialVisual*/ ? "green" : QGroundControl.globalPalette.mapMissionTrajectory)
+        line.color: _terrainCollision ? "red" : "#00E676"
         z:          QGroundControl.zOrderWaypointLines
         path:       _calcMissionLinePath()
 

@@ -56,7 +56,8 @@ Rectangle {
 
         LabelledButton {
             Layout.fillWidth: true
-            label: qsTr("Alt Frame")
+            label: qsTr("Опорная высота")
+            visible: false      // GidroLog: altitude settings are not used on the boat
             buttonText: QGroundControl.altitudeFrameExtraUnits(_root.missionController.globalAltitudeFrame)
 
             onClicked: {
@@ -85,13 +86,14 @@ Rectangle {
 
         FactTextFieldSlider {
             Layout.fillWidth: true
-            label: qsTr("Waypoints Altitude")
+            label: qsTr("Высота путевых точек")
+            visible: false      // GidroLog
             fact: QGroundControl.settingsManager.appSettings.defaultMissionItemAltitude
         }
 
         FactTextFieldSlider {
             Layout.fillWidth: true
-            label: qsTr("Flight Speed")
+            label: qsTr("Скорость хода")
             fact: _root._settingsItem ? _root._settingsItem.speedSection.flightSpeed : null
             showEnableCheckbox: true
             enableCheckBoxChecked: _root._settingsItem ? _root._settingsItem.speedSection.specifyFlightSpeed : false
@@ -108,7 +110,7 @@ Rectangle {
         SectionHeader {
             id: vehicleSpeedsSectionHeader
             Layout.fillWidth: true
-            text: qsTr("Expected Vehicle Speeds")
+            text: qsTr("Ожидаемые скорости судна")
             visible: _root._showCruiseSpeed || _root._showHoverSpeed || _root._showAscentDescentSpeed
         }
 
@@ -121,12 +123,12 @@ Rectangle {
                 Layout.fillWidth: true
                 wrapMode: Text.WordWrap
                 font.pointSize: ScreenTools.smallFontPointSize
-                text: qsTr("The following speed values are used to calculate total mission time. They do not affect the flight speed for the mission.")
+                text: qsTr("Эти значения скорости используются для расчёта общего времени задания и не влияют на реальную скорость хода.")
             }
 
             FactTextFieldSlider {
                 Layout.fillWidth: true
-                label: _root._isVtol ? qsTr("FW - Flight speed") : qsTr("Flight speed")
+                label: _root._isVtol ? qsTr("FW - Flight speed") : qsTr("Скорость хода")
                 fact: QGroundControl.settingsManager.appSettings.offlineEditingCruiseSpeed
                 visible: _root._showCruiseSpeed
                 enabled: !_root._flightSpeedSpecified
@@ -134,7 +136,7 @@ Rectangle {
 
             FactTextFieldSlider {
                 Layout.fillWidth: true
-                label: _root._isVtol ? qsTr("MR - Flight speed") : qsTr("Flight speed")
+                label: _root._isVtol ? qsTr("MR - Flight speed") : qsTr("Скорость хода")
                 fact: QGroundControl.settingsManager.appSettings.offlineEditingHoverSpeed
                 visible: _root._showHoverSpeed
                 enabled: !_root._flightSpeedSpecified
@@ -142,14 +144,14 @@ Rectangle {
 
             FactTextFieldSlider {
                 Layout.fillWidth: true
-                label: _root._isVtol ? qsTr("MR - Ascent speed") : qsTr("Ascent speed")
+                label: _root._isVtol ? qsTr("MR - Ascent speed") : qsTr("Скорость подъёма")
                 fact: QGroundControl.settingsManager.appSettings.offlineEditingAscentSpeed
                 visible: _root._showAscentDescentSpeed
             }
 
             FactTextFieldSlider {
                 Layout.fillWidth: true
-                label: _root._isVtol ? qsTr("MR - Descent speed") : qsTr("Descent speed")
+                label: _root._isVtol ? qsTr("MR - Descent speed") : qsTr("Скорость спуска")
                 fact: QGroundControl.settingsManager.appSettings.offlineEditingDescentSpeed
                 visible: _root._showAscentDescentSpeed
             }

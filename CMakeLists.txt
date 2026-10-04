@@ -336,6 +336,9 @@ set(QGC_APP_RESOURCES
     "${CMAKE_SOURCE_DIR}/resources/TrashDelete.svg"
     "${CMAKE_SOURCE_DIR}/resources/XDelete.svg"
     "${CMAKE_SOURCE_DIR}/resources/icons/qgroundcontrol.ico"
+    "${CMAKE_SOURCE_DIR}/resources/GidroLogIcon.png" # GidroLog: app icon for the toolbar button
+    "${CMAKE_SOURCE_DIR}/resources/GidroLogSiren.svg" # GidroLog: control panel indicators
+    "${CMAKE_SOURCE_DIR}/resources/GidroLogBeacon.svg"
 )
 qgc_set_qt_resource_alias(${QGC_APP_RESOURCES})
 set_source_files_properties("${CMAKE_SOURCE_DIR}/resources/SplashScreen.png" PROPERTIES QT_RESOURCE_ALIAS

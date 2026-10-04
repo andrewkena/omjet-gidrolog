@@ -92,7 +92,7 @@ MapQuickItem {
 
         Image {
             id:                 vehicleIcon
-            source:             vehicle ? vehicle.vehicleImageOpaque : ""
+            source:             vehicle ? (vehicle.rover ? "/qmlimages/vehicleBoatOpaque.svg" : vehicle.vehicleImageOpaque) : ""  // GidroLog: boat symbol
             mipmap:             true
             width:              _root.size
             sourceSize.width:   _root.size

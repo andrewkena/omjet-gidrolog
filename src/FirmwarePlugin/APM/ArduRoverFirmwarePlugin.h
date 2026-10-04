@@ -36,6 +36,9 @@ public:
     const FirmwarePlugin::remapParamNameMajorVersionMap_t& paramNameRemapMajorVersionMap() const override { return _remapParamName; }
     bool supportsNegativeThrust(Vehicle*) const override { return true; }
     bool supportsSmartRTL() const override { return true; }
+    // GidroLog: boat symbol instead of the arrow on the map
+    QString vehicleImageOpaque(const Vehicle*) const override { return QStringLiteral("/qmlimages/vehicleBoatOpaque.svg"); }
+    QString vehicleImageOutline(const Vehicle*) const override { return QStringLiteral("/qmlimages/vehicleBoatOutline.svg"); }
     QString offlineEditingParamFile(Vehicle *vehicle) const override { Q_UNUSED(vehicle); return QStringLiteral(":/FirmwarePlugin/APM/Rover.OfflineEditing.params"); }
 
     QString pauseFlightMode() const override;

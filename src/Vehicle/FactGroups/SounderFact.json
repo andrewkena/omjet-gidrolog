@@ -1,0 +1,27 @@
+{
+    "version":      1,
+    "fileType":  "FactMetaData",
+    "QGC.MetaData.Facts":
+[
+{
+    "name":             "depth",
+    "shortDesc":        "Depth",
+    "type":             "double",
+    "decimalPlaces":    2,
+    "units":            "m"
+},
+{
+    "name":             "depthHealthy",
+    "shortDesc":        "Depth Valid",
+    "type":             "uint8",
+    "decimalPlaces":    0
+},
+{
+    "name":             "waterTemp",
+    "shortDesc":        "Water Temperature",
+    "type":             "double",
+    "decimalPlaces":    1,
+    "units":            "C"
+}
+]
+}

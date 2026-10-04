@@ -40,6 +40,7 @@ Item {
 
     property double _thermalHeightFactor: 0.85 //-- TODO
 
+        // GidroLog: blue waves placeholder with "NO VIDEO" (resources/NoVideoBackground.jpg replaced)
         Image {
             id:             noVideo
             anchors.fill:   parent
@@ -47,18 +48,9 @@ Item {
             fillMode:       Image.PreserveAspectCrop
             visible:        !_showStreamLoader && !_showUvcLoader
 
-            Rectangle {
-                anchors.centerIn:   parent
-                width:              noVideoLabel.contentWidth + ScreenTools.defaultFontPixelHeight
-                height:             noVideoLabel.contentHeight + ScreenTools.defaultFontPixelHeight
-                radius:             ScreenTools.defaultFontPixelWidth / 2
-                color:              "black"
-                opacity:            0.5
-            }
-
             QGCLabel {
                 id:                 noVideoLabel
-                text:               QGroundControl.settingsManager.videoSettings.streamEnabled.rawValue ? qsTr("WAITING FOR VIDEO") : qsTr("VIDEO DISABLED")
+                text:               qsTr("НЕТ ВИДЕО")
                 font.bold:          true
                 color:              "white"
                 font.pointSize:     useSmallFont ? ScreenTools.smallFontPointSize : ScreenTools.largeFontPointSize

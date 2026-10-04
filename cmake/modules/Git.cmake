@@ -211,6 +211,20 @@ endif()
 # cmake_print_variables(QGC_APP_VERSION QGC_APP_VERSION_MAJOR QGC_APP_VERSION_MINOR QGC_APP_VERSION_PATCH)
 
 # ----------------------------------------------------------------------------
+# GidroLog: own version numbering from QGC_GIDROLOG_VERSION (cmake/CustomOptions.cmake)
+# instead of the upstream QGroundControl git tags. Git hash/branch/dirty info is kept.
+# ----------------------------------------------------------------------------
+if(QGC_GIDROLOG_VERSION MATCHES "^([0-9]+)\\.([0-9]+)\\.([0-9]+)$")
+    set(QGC_APP_VERSION_MAJOR "${CMAKE_MATCH_1}")
+    set(QGC_APP_VERSION_MINOR "${CMAKE_MATCH_2}")
+    set(QGC_APP_VERSION_PATCH "${CMAKE_MATCH_3}")
+    set(QGC_APP_VERSION "${QGC_GIDROLOG_VERSION}")
+    set(QGC_APP_VERSION_STR "v${QGC_GIDROLOG_VERSION}")
+else()
+    message(FATAL_ERROR "QGC: QGC_GIDROLOG_VERSION must be major.minor.patch, got '${QGC_GIDROLOG_VERSION}'")
+endif()
+
+# ----------------------------------------------------------------------------
 # Generate Version Header
 # ----------------------------------------------------------------------------
 configure_file("${CMAKE_SOURCE_DIR}/src/qgc_version.h.in" "${CMAKE_BINARY_DIR}/qgc_version.h" @ONLY)

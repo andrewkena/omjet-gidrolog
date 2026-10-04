@@ -15,6 +15,7 @@ Button {
     checkable:          false
 
     property bool logo: false
+    property bool _rasterLogo: button.icon.source.toString().toLowerCase().endsWith(".png") // GidroLog
 
     property real _horizontalMargin: ScreenTools.defaultFontPixelWidth
 
@@ -33,9 +34,21 @@ Button {
         // Logo buttons render the multi-color SVG natively via VectorImage; non-logo buttons
         // tint their monochrome icon through QGCColoredImage. Plain `Row` skips visible:false items.
         QGCVectorImage {
-            visible:                button.logo
+            visible:                button.logo && !button._rasterLogo
             height:                 ScreenTools.defaultFontPixelHeight * 2
             width:                  height
+            source:                 visible ? button.icon.source : ""
+            anchors.verticalCenter: parent.verticalCenter
+        }
+        // GidroLog: raster (PNG) logos are drawn as-is, without tinting
+        Image {
+            visible:                button.logo && button._rasterLogo
+            height:                 ScreenTools.defaultFontPixelHeight * 2
+            width:                  height
+            sourceSize.height:      height * 2
+            fillMode:               Image.PreserveAspectFit
+            mipmap:                 true
+            smooth:                 true
             source:                 visible ? button.icon.source : ""
             anchors.verticalCenter: parent.verticalCenter
         }

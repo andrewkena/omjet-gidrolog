@@ -33,6 +33,7 @@ HorizontalFactValueGridTemplate {
                 spacing:    ScreenTools.defaultFontPixelWidth * 1.25
 
                 Repeater {
+                    id:    columnRepeater   // GidroLog
                     model: _root.columns
 
                     GridLayout {
@@ -155,6 +156,23 @@ HorizontalFactValueGridTemplate {
                 enabled:                _root.rowCount > 1
                 onClicked:              deleteLastRow()
             }
+        }
+    }
+
+    // GidroLog: vertical separators between value columns
+    Repeater {
+        model: _root.columns.count > 1 ? _root.columns.count - 1 : 0
+
+        Rectangle {
+            property Item nextColumn: columnRepeater.count > index + 1 ? columnRepeater.itemAt(index + 1) : null
+
+            x:          nextColumn ? labelValueColumnLayout.x + nextColumn.x - Math.round(labelValueColumnLayout.spacing / 2) : 0
+            y:          labelValueColumnLayout.y
+            width:      1
+            height:     labelValueColumnLayout.height
+            color:      qgcPal.text
+            opacity:    0.35
+            visible:    nextColumn !== null
         }
     }
 

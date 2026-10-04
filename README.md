@@ -1,63 +1,403 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Dronecode/UX-Design/35d8148a8a0559cd4bcf50bfa2c94614983cce91/QGC/Branding/Deliverables/QGC_RGB_Logo_Horizontal_Positive_PREFERRED/QGC_RGB_Logo_Horizontal_Positive_PREFERRED.svg" alt="QGroundControl Logo" width="500">
-</p>
+# ОМДЖЕТ ГидроЛог (OMJET GidroLog)
 
-<p align="center">
-  <a href="https://github.com/mavlink/QGroundControl/releases"><img src="https://img.shields.io/github/v/release/mavlink/QGroundControl" alt="Latest Release"></a>
-  <a href="https://github.com/mavlink/qgroundcontrol/blob/master/.github/COPYING.md"><img src="https://img.shields.io/github/license/mavlink/QGroundControl" alt="License"></a>
-  <a href="https://github.com/mavlink/QGroundControl/actions/workflows/linux.yml"><img src="https://github.com/mavlink/QGroundControl/actions/workflows/linux.yml/badge.svg" alt="Linux Build"></a>
-  <a href="https://securityscorecards.dev/viewer/?uri=github.com/mavlink/qgroundcontrol"><img src="https://img.shields.io/ossf-scorecard/github.com/mavlink/qgroundcontrol?label=openssf%20scorecard" alt="OpenSSF Scorecard"></a>
-  <a href="https://crowdin.com/project/qgroundcontrol"><img src="https://badges.crowdin.net/qgroundcontrol/localized.svg" alt="Crowdin"></a>
-  <a href="https://discord.com/channels/1022170275984457759/1022185820683255908"><img src="https://img.shields.io/discord/1022170275984457759?logo=discord&logoColor=white&label=Discord" alt="Dronecode Discord"></a>
-  <a href="https://doi.org/10.5281/zenodo.595404"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.595404.svg" alt="DOI"></a>
-</p>
+Наземная станция управления автономными гидрографическими катерами на ArduPilot (ArduRover, режим лодки) с эхолотом Dayu M36.
+Форк [QGroundControl](https://github.com/mavlink/qgroundcontrol), отдельный от OMJET AERO.
 
-**QGroundControl** (QGC) is a Ground Control Station (GCS) for UAVs, providing full flight control
-and mission planning for any *MAVLink-enabled* drone, including *PX4* and *ArduPilot* platforms.
+- **Версия:** 0.1.0
+- **Автор:** Andrew Kena
+- **Организация:** OMJET
+- **Основа:** QGroundControl `master` (5.2.0-dev, коммит `128517c`, 29.09.2026)
+- **Репозиторий:** https://github.com/andrewkena/omjet-gidrolog (ветка `gidrolog`)
+- **Инструкция оператора:** [INSTRUCTION_GIDROLOG.md](INSTRUCTION_GIDROLOG.md)
 
-## Features
+---
 
-- **Mission planning** — plan, edit, and fly autonomous waypoint, survey, and structure-scan missions.
-- **Live Fly View** — real-time flight display with map, instruments, and full vehicle telemetry.
-- **Vehicle setup** — guided wizards for sensor calibration, radio, flight modes, and power.
-- **Parameter tuning** — inspect and edit every vehicle parameter through the Fact System.
-- **Video streaming** — GStreamer-based UDP RTP / RTSP video with recording in the Flight Display.
-- **Multi-vehicle** — connect to and monitor multiple vehicles simultaneously.
-- **MAVLink tooling** — built-in MAVLink Inspector, console, and log download/analysis.
-- **Cross-platform** — Windows, macOS, Linux, Android, and iOS from a single codebase.
+## Содержание
 
-## Download
+1. [Что сделано](#что-сделано)
+2. [Русификация интерфейса](#русификация-интерфейса)
+3. [Сборка](#сборка)
+4. [Release, exe и установщик](#release-exe-и-установщик)
+5. [Проверка без лодки (симулятор)](#проверка-без-лодки-симулятор)
+6. [Работа с реальной лодкой](#работа-с-реальной-лодкой)
+7. [Работа с git и обновление из QGC](#работа-с-git-и-обновление-из-qgc)
+8. [Список изменённых файлов](#список-изменённых-файлов)
+9. [Статус и планы](#статус-и-планы)
 
-Grab the latest stable build for your platform, or see all assets on the
-[releases page](https://github.com/mavlink/QGroundControl/releases/latest):
+---
 
-<p align="center">
-  <a href="https://github.com/mavlink/QGroundControl/releases/latest/download/QGroundControl-installer-AMD64.exe"><img src="https://img.shields.io/badge/Windows-0078D6?logo=windows&logoColor=white" alt="Windows"></a>
-  <a href="https://github.com/mavlink/QGroundControl/releases/latest/download/QGroundControl.dmg"><img src="https://img.shields.io/badge/macOS-000000?logo=apple&logoColor=white" alt="macOS"></a>
-  <a href="https://github.com/mavlink/QGroundControl/releases/latest/download/QGroundControl-x86_64.AppImage"><img src="https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black" alt="Linux (AppImage)"></a>
-  <a href="https://github.com/mavlink/QGroundControl/releases/latest/download/QGroundControl.apk"><img src="https://img.shields.io/badge/Android-3DDC84?logo=android&logoColor=white" alt="Android"></a>
-</p>
+## Что сделано
 
-## Links
+### Имя, версия, автор, иконка
 
-- [Official Website](http://qgroundcontrol.com)
-- [User Manual](https://docs.qgroundcontrol.com/en/)
-- [Developer Guide](https://dev.qgroundcontrol.com/en/) / [Build Instructions](https://dev.qgroundcontrol.com/en/getting_started/)
-- [Discussion & Support](https://docs.qgroundcontrol.com/en/Support/Support.html)
-- [Dronecode Discord](https://discord.com/channels/1022170275984457759/1022185820683255908)
-- [Security Policy](.github/SECURITY.md)
-- [Code of Conduct](.github/CODE_OF_CONDUCT.md)
-- [License](https://github.com/mavlink/qgroundcontrol/blob/master/.github/COPYING.md)
+| Параметр | Значение | Где задаётся |
+|---|---|---|
+| Название приложения | `OMJET GidroLog` | `cmake/CustomOptions.cmake` → `QGC_APP_NAME` |
+| Техническое имя CMake | `OMJETGidroLog` | `QGC_PROJECT_NAME` |
+| Организация | `OMJET` (`omjet.aero`) | `QGC_ORG_NAME`, `QGC_ORG_DOMAIN` |
+| Android-пакет | `com.omjet.gidrolog` | `QGC_PACKAGE_NAME` |
+| Версия | `0.1.0` | `QGC_GIDROLOG_VERSION` (вместо git-тегов QGC, см. `cmake/modules/Git.cmake`) |
+| Автор / копирайт | `Andrew Kena`; `Copyright (c) <год> Andrew Kena, OMJET` | `QGC_APP_AUTHOR`, `QGC_APP_COPYRIGHT` |
+| Заголовок окна | `ОМДЖЕТ ГидроЛог 0.1.0_ДД.ММ.ГГГГ` | `src/MainWindow/MainWindow.qml` (дата берётся при запуске) |
 
-## Contributing
+**Иконка приложения** — синяя плашка «ОМДЖЕТ ГидроЛог» с катером. Где используется:
 
-QGC is open source and welcomes contributions. See [AGENTS.md](AGENTS.md) for build/test/lint
-commands and coding conventions, and [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md) for
-architecture patterns and the contribution workflow.
+- exe, окно Windows и установщик: `deploy/windows/WindowsQGC.ico`, `resources/icons/qgroundcontrol.ico`;
+- кнопка меню в тулбаре: `resources/GidroLogIcon.png`. `QGCToolBarButton` рисует PNG-логотипы без перекраски;
+- Android: обычные и адаптивные `mipmap-*`, фон `#0D5AB0`;
+- macOS и Linux;
+- исходник 1024 px: `resources/GidroLogIcon_1024.png`.
 
-QGC's interface is translated by the community — help translate it into your language on
-[Crowdin](https://crowdin.com/project/qgroundcontrol).
+### Верхняя панель (тулбар)
 
-## Star History
+**Слева:** `[иконка] Статус │ 💬 │ Режим │`
 
-[![Star History Chart](https://star-history.dera.page/svg?repos=mavlink/qgroundcontrol&type=date&legend=top-left)](https://star-history.dera.page/#mavlink/qgroundcontrol&type=date&legend=top-left)
+- Разделители после статуса, после значка сообщений с борта и после режима. Зазоры такие же, как у разделителей справа (1,75 ширины символа).
+- Режим показывается только текстом, без иконки.
+- Пока лодка не подключена, полоса за иконкой и статусом однотонная, без фиолетового градиента. После подключения цвет статуса (зелёный / жёлтый / красный) работает как раньше.
+
+**Справа:**
+
+- Убраны индикаторы Remote ID, ESC Status, Joystick.
+- Между индикаторами стоят вертикальные разделители.
+- **GPS:** справа от спутников и HDOP показываются координаты лодки (7 знаков).
+- **Батарея:** процент │ **напряжение крупно (×1,5) и жирно** │ ток `А` и израсходовано `мА·ч` столбцом. Зазоры у разделителя и до столбца А/мА·ч одинаковые.
+  - Показывается только **батарея 1** — и на панели, и в выпадающем окне.
+- **Телеметрия:** `RSSI пульт / лодка, дБм` и `потери N%` (больше 5% подсвечивается оранжевым). Индикатор появляется только при наличии `RADIO_STATUS`.
+
+### Fly View: панели
+
+**Левая панель инструментов** QGC (Takeoff/Land/RTL/Pause/Actions/Checklist) скрыта. Вместо неё слева сверху:
+
+1. **Легенда глубин** на одном уровне с правой панелью:
+   - поля мин/макс и градиент красный → жёлтый → зелёный → голубой → синий;
+   - ползунок «Подписи глубины: каждые N с» (2–60 с, крайнее правое положение — **выкл**);
+   - кнопка **«Карта глубин»** (вкл/выкл наложения).
+2. **Панель управления** под легендой. Длинные названия переносятся на две строки (кнопка 17 символов шириной).
+
+   | Кнопка | Действие |
+   |---|---|
+   | **ЗАПУСК** | удержание 2 с: арм / дизарм; пока заармлено — красный фон `#F44336` |
+   | **СТОП** | нажатие: аварийная остановка моторов (`MAV_CMD_DO_AUX_FUNCTION` 218, `MOTOR_ESTOP` 31, уровень HIGH). Лодка остаётся заармленной. Пока стоп активен — кнопка мигает красным `#F44336` и подписана **«СНЯТЬ СТОП»**; удержание 2 с снимает стоп (уровень LOW) |
+   | **РУЧНОЕ УПРАВЛЕНИЕ** / **ВЫПОЛНЕНИЕ ЗАДАНИЯ** / **УМНЫЙ ВОЗВРАТ** / **ВОЗВРАТ** | удержание 2 с переключает режим (Manual / Auto / SmartRTL / RTL); текущий режим зелёный `#4CAF50` |
+   | Сирена / мигалка | значки становятся **оранжевыми** `#FF9800`, когда ШИМ назначенного RC-канала ≥ порога |
+
+3. **Линейка масштаба** справа от панели управления, под легендой.
+
+**Правая панель** в правом верхнем углу:
+
+- сверху вниз: Скорость, Пройдено (с арма; после 1000 м в км), Температура воды, Глубина;
+- цифры крупные, единицы на кириллице (м, м/с, км/ч, уз, °C…), всё по центру, между строками разделители;
+- глубина вне диапазона эхолота подсвечивается оранжевым;
+- **цветовая индикация:** клик по любому значению открывает окно «<значение> — цвет значения»:
+  - галочка «Раскрашивать по диапазонам»;
+  - до трёх диапазонов «от … до …» в единицах панели, у каждого цвет: зелёный `#4CAF50`, жёлтый `#FFD54F`, оранжевый `#FF9800`, красный `#F44336`, голубой `#29B6F6`, белый;
+  - пустое поле — без ограничения; берётся первый подходящий диапазон;
+  - хранится в QtCore Settings, категория `GidroLogValueColors` (JSON на каждое значение);
+  - у глубины оранжевый «вне диапазона» главнее диапазонов.
+
+**Приборы справа внизу** — **ТАНГАЖ**, **КРЕН** и компас в одном стиле:
+
+- тёмный круг `#12161B`, кольцо толщиной 4,5% диаметра;
+- креномеры: шкала ±40° через 10°, жёлтая `#FFD54F` для «+», голубая `#29B6F6` для «−»; силуэт катера поворачивается на текущий угол, под ним подпись и цифра;
+- компас: голубое кольцо, северный сектор жёлтый, **деления через 11,25°** (толще через 45°), **подписи градусами 0/45/…/315** вместо N/E/S/W тем же шрифтом, 0 жёлтым; при «нос вверх» подписи остаются горизонтальными; курс под катером белым жирным, размер как у цифр креномеров, на полстроки ниже середины;
+- одинаково во всех вариантах блока (интегрированный, горизонтальный, вертикальный);
+- выбор варианта блока (замок и список по правому клику / долгому нажатию) отключён (`SelectableControl.allowSelection = false`).
+
+**Силуэты катера** — рисунки Андрея (красный корпус, артефакт «иконка катера, 3 вида»):
+
+| Где | Вид | Файл |
+|---|---|---|
+| Карта, компас | сверху, нос вверх | `src/FlightMap/Images/vehicleBoatOpaque.svg`, `vehicleBoatOutline.svg` |
+| ТАНГАЖ | сбоку, нос вправо | `GidroLogBoatSide.svg` |
+| КРЕН | спереди (симметричный) | `GidroLogBoatRear.svg` |
+
+Ватерлиния силуэтов стоит на 82% высоты картинки 100×60 — там же, где голубая линия воды на креномере.
+
+**Окно видео без сигнала:** картинка с синими волнами (`resources/NoVideoBackground.jpg`, 1920×1280) и надпись **«НЕТ ВИДЕО»**.
+
+**Окно сообщений с борта** (оранжевое):
+
+- открывается над блоком тангаж/крен/компас, прижато к правому краю, шириной не меньше этого блока. Если блока нет на экране — сверху по центру, как в QGC. Положение берётся из `mainWindow.gidroLogInstrumentPanel` (его задаёт `FlyViewInstrumentPanel`);
+- шапка «Сообщение борта», внизу «Есть ещё сообщения»;
+- **текст переводится на русский** функцией `gidroLogTranslateMessage()` в `MainWindow.qml`: ~130 правил для типовых сообщений ArduPilot (предстарт, аварийный стоп, датчики, EKF, GPS, батарея, пульт и failsafe, задание и режимы, логи, ответы на команды) плюс префиксы `PreArm:` → «Предстарт:», `Arm:` → «Запуск:». Незнакомый текст остаётся как есть.
+
+### Карта
+
+- **Значок лодки** — силуэт катера вместо стрелки (на карте и в компасе), поворачивается по курсу.
+- **Линии перед лодкой:**
+  - оранжевая — текущий курс (постоянная длина на экране);
+  - голубая `#00B0FF` — курс на текущую точку задания, заканчивается на точке, видна только в арме.
+- **Линия миссии** — сплошная зелёная `#00E676`, 1,5 px.
+- **Трек, раскрашенный по глубине**, вместо красного:
+  - точка раз в секунду при смещении ≥ 1 м;
+  - цвет по шкале легенды, 24 ступени;
+  - серый участок — нет данных эхолота.
+- **Точки с подписью глубины:** с интервалом из ползунка; жёлтая — норма, оранжевая — вне диапазона; подписи видны при зуме ≥ 17.
+- **Карта глубин в реальном времени** (как Lowrance Genesis Live), класс `DepthGrid`:
+  - сетка 1×1 м; в ячейке среднее всех замеров;
+  - до 8 м от замера ячейки заполняются всегда;
+  - до 30 м — только если замеры есть минимум с 3 сторон (между соседними галсами);
+  - отрисовка плитками 256×256, не чаще раза в 0,5 с; цвета общие с треком, прозрачность 60%;
+  - живёт в памяти до отключения лодки.
+- **Точки срабатывания затвора камеры** — красные залитые круги.
+- **Самолёты ADS-B** в симуляторе лодки отключены.
+
+### Раздел «Задание» (Plan View)
+
+- **Верхняя панель:** Открыть │ Сохранить │ **Загрузить на борт** │ **Скачать с борта** │ Очистить │ ☰ (Сохранить как..., Сохранить KML). «Скачать» перенесено из меню ☰ на панель; значок `resources/Download.svg` добавлен в ресурсы `src/PlanView/CMakeLists.txt`.
+- **Кнопки слева:** **Полигон**, **Точка**, **Возврат**; «Точка интереса» (ROI) скрыта; «Статистика» — когда нижняя панель свёрнута.
+- **Меню «Полигон»:** «Создать полигон:» → **Площадной объект** (Survey), **Линейный объект** (Corridor Scan).
+- **Инструменты полигона:** Прямоугольник, Окружность, Многоугольник / Готово, Загрузить KML/SHP; надпись «Polygon Tools» убрана. У линии: Прямая, Ломаная / Готово, Загрузить KML/SHP.
+- **Слои:** **Задание**, **Забор Безопасности** (GeoFence), **Резервный порт** (Rally Points).
+- **Нижняя панель:** график высот убран, показывается только статистика задания.
+- **Правая панель:**
+  - «Шаблоны задания»: Площадной объект, Линейный объект, Без шаблона;
+  - «Задание · N точек» (с русскими падежами), у резервных портов так же;
+  - блок «Initial Camera Settings» (точка 0) скрыт;
+  - «Параметры по умолчанию»: опорная высота и высота путевых точек скрыты; «Скорость хода», «Ожидаемые скорости судна»;
+  - «Преобразование» (Transform): Сместить / Перенести / Повернуть задание — переведено полностью.
+- **Карточка точки:**
+  - заголовок: название команды по-русски (Путевая точка, Возврат, Ожидание, Смена скорости, Задержка, Переход к точке, Установить серво/реле…);
+  - вкладки убраны: показываются только параметры точки (бывшая третья вкладка). Если у команды нет такой вкладки — основные поля без высоты;
+  - высота и камера скрыты;
+  - названия параметров по-русски (Ожидание, Радиус достижения, Радиус прохода, Курс, Задержка, Скорость, Газ, Канал, ШИМ…);
+  - меню ⋮: Перенести к борту, Перенести к предыдущей точке, Изменить координаты..., Показать все значения, «Точка №N».
+
+### Настройки → Общие → «Дополнительно»
+
+- Для **сирены** и **мигалки** задаются RC-канал 1–16 (или «Не назначен») и порог включения в мкс (по умолчанию 1700).
+- Значения хранятся в `mainWindow.gidroLogSettings` (QtCore Settings, категория `GidroLogControl`).
+- Компонент `src/AppSettings/GidroLogExtraSettings.qml`, группа добавлена в `General.SettingsUI.json`.
+
+### Эхолот: приём данных (группа телеметрии `sounder`)
+
+`VehicleSounderFactGroup`, в QML доступна как `vehicle.getFactGroup("sounder")`:
+
+| Факт | Источник |
+|---|---|
+| `depth` (м) | `WATER_DEPTH.distance` (id 0); если его нет — `DISTANCE_SENSOR` с ориентацией вниз |
+| `depthHealthy` | `WATER_DEPTH.healthy` / попадание в min–max |
+| `waterTemp` (°C) | `NAMED_VALUE_FLOAT "M36TEMP"` |
+| `depthGrid` | объект карты глубин (`DepthGrid`) |
+
+Формат совпадает с бортовым скриптом `APM/scripts/m36.lua`: Dayu M36 по RS485/Modbus → `RNGFND1_TYPE=36`, `RNGFND1_ORIENT=25` и `gcs:send_named_float("M36TEMP", t)`.
+
+### Симулятор лодки в MockLink (только Debug)
+
+`MockLinkBoatSim` превращает **APM ArduRover MockLink** в катер с эхолотом:
+
+- **Старт:** 55.040686, 73.128945 (высота 85 м).
+- **AUTO:** идёт по миссии со скоростью 2 м/с (или из `DO_CHANGE_SPEED`), поворачивает не быстрее 60°/с. На каждой точке шлёт `MISSION_ITEM_REACHED`, в конце «Mission Complete» и переходит в HOLD.
+- **RTL:** возвращается к старту и переходит в HOLD.
+- **Телеметрия:** `VFR_HUD`, `MISSION_CURRENT`, `NAV_CONTROLLER_OUTPUT`.
+- **Синтетическое дно:** берег в 120 м к западу, яма до ~11 м к северо-востоку, отмель к юго-западу, русло к востоку.
+- **Эхолот как `m36.lua`:** каждые 350 мс `DISTANCE_SENSOR`, `RANGEFINDER`, `WATER_DEPTH`, `M36TEMP` и сообщения «M36: …».
+- **Аварийный стоп:** принимает `DO_AUX_FUNCTION` 31 (член `MockLink::_motorEStop`). При стопе лодка останавливается накатом, но остаётся в арме; сообщения «Emergency Stop» / «Emergency Stop released».
+
+---
+
+## Русификация интерфейса
+
+Тексты переведены прямо в QML (`qsTr("…")` с русским текстом или словари-функции), без `.ts`-файлов.
+
+| Где | Что переведено | Файл |
+|---|---|---|
+| Меню **Q** | КАРТА, ЗАДАНИЕ, АНАЛИЗ, ПАРАМЕТРЫ СУДНА, НАСТРОЙКИ ПРОГРАММЫ, ВЫХОД; «Версия», «Обновление»; заголовки страниц | `src/Toolbar/SelectViewDropdown.qml`, `MainWindow.qml` |
+| Статус в тулбаре | Готов, Не готов, Запущен, На ходу, Нет связи, Не подключено — нажмите, чтобы подключиться; окно статуса (Запустить / Остановить / Принудительный запуск, Сообщения борта, Состояние датчиков…) | `src/Toolbar/MainStatusIndicator.qml` |
+| Батарея | Батарея 1, Состояние (Норма / Низкий заряд / Критический / Аварийный…), Осталось времени («00 ч 00 мин 09 с»), Остаток заряда, Напряжение В, Израсходовано мА·ч, Температура °C; блок «Отображение батареи» | `src/Toolbar/BatteryIndicator.qml` |
+| Телеметрия | Состояние телеметрии, Сигнал на пульте / на борту, Ошибки приёма, Исправлено ошибок, Буфер передачи, Шум на пульте / на борту, дБм | `src/Toolbar/TelemetryRSSIIndicator.qml` |
+| GPS / RTK | GPS борта, Статус RTK GPS, Настройки RTK GPS — все поля, режимы и пояснения | `src/Toolbar/GPSIndicatorPage.qml`, `GPSReceiverSettings.qml` |
+| Выпадающие списки фактов | Только предупреждение, Возврат (RTL), Удержание (Hold), Умный возврат (SmartRTL), Аварийное завершение, Проценты / Напряжение… (словарь `_gidroLogEnumRu`) | `src/FactSystem/FactControls/FactComboBox.qml` |
+| Сообщения борта | ~130 правил ArduPilot | `MainWindow.qml` → `gidroLogTranslateMessage()` |
+| Завершение задания | Задание выполнено, Удалить задание с борта, Оставить задание на борту, Снято кадров… | `src/FlyView/FlyViewMissionCompleteDialog.qml` |
+| Старт задания | «Начать задание», «Начать выполнение текущего задания» | `src/FlyView/GuidedActionsController.qml` |
+| Раздел «Задание» | см. выше | `src/PlanView/*.qml`, `src/Toolbar/PlanViewToolBar.qml`, `src/FlightMap/MapItems/QGCMapPolygonVisuals.qml`, `QGCMapPolylineVisuals.qml` |
+
+Что ещё на английском: названия команд в списке выбора команды (▼), единицы некоторых фактов (`secs`), «All» в списке RTK-приёмников, голосовые оповещения и список сообщений в окне статуса.
+
+---
+
+## Сборка
+
+| Компонент | Версия |
+|---|---|
+| Qt | 6.11.1 (MSVC2022 64-bit; Android arm64-v8a) |
+| Компилятор | Visual Studio Community 2026 (MSVC 19.51) |
+| CMake | 3.30.5 (из Qt) |
+| Python | 3.12 + **uv** (`python -m pip install uv`) |
+| Android NDK / GStreamer | r27c / 1.28.4 |
+
+Проект лежит в `D:\Dev\omjet-gidrolog`. На диске C: мало места, поэтому всё тяжёлое держим на D:.
+
+### Первичная настройка
+
+```powershell
+cd D:\Dev
+git clone https://github.com/andrewkena/omjet-gidrolog.git
+cd omjet-gidrolog
+git switch gidrolog
+git remote add upstream https://github.com/mavlink/qgroundcontrol.git
+python tools/setup/install_python.py scripts            # tools\.venv для генераторов кода
+
+# Qt Creator не видит комплекты при CMakePresets.json из QGC:
+Rename-Item CMakePresets.json CMakePresets.json.off
+git update-index --skip-worktree CMakePresets.json
+Add-Content .git\info\exclude "CMakePresets.json.off"
+```
+
+### Qt Creator
+
+1. Открыть **Файл → Открыть файл или проект… → `CMakeLists.txt`**. Двойной клик в дереве файлов открывает его как текст, а не как проект.
+2. Выбрать комплект **Desktop Qt 6.11.1 MSVC2022 64bit**, конфигурацию **Отладка**.
+3. **Настроить проект.** Первая конфигурация идёт около 20 минут, сборка около 12 минут.
+4. После правок `CMakeLists.txt` — **Сборка → Запустить CMake**, затем **Ctrl+B**.
+5. Если программа не стартует, смотреть **Вывод приложения** (Alt+3): там видны ошибки QML вида «Тип … недоступен».
+6. Если Qt Creator спрашивает «Файл изменён извне» — **Загрузить заново**, иначе при сборке он сохранит старую версию.
+
+---
+
+## Release, exe и установщик
+
+1. Установить **NSIS 3.x** (https://nsis.sourceforge.io/Download), перезапустить Qt Creator.
+2. Конфигурация **Выпуск** (Release): **Проекты → Сборка → Добавить → Выпуск**, **Ctrl+B**. exe появится в `build\Desktop_Qt_6_11_1_MSVC2022_64bit_Release\` (без Qt-библиотек сам не запустится).
+3. **Проекты → Сборка → Этапы сборки → Подробнее → цели:** отметить **`qgc-package`**, **Ctrl+B**. Результат: `OMJETGidroLog-installer-AMD64.exe` (CPack NSIS, `QGC_BUILD_INSTALLER=ON`, `cmake/install/CPack/CreateCPackNSIS.cmake`). Потом снять галочку.
+4. В Release нет симулятора MockLink.
+5. Шапка установщика `deploy/windows/installheader.bmp` (150×57) пока от QGC.
+
+Коммит и отправка на GitHub — из терминала на ПК:
+
+```bat
+cd /d D:\Dev\omjet-gidrolog
+git status
+git add -A
+git commit -m "GidroLog: ..."
+git push -u origin gidrolog
+```
+
+---
+
+## Проверка без лодки (симулятор)
+
+1. Запустить Debug-сборку.
+2. **Q → НАСТРОЙКИ ПРОГРАММЫ → Mock Link → APM ArduRover Vehicle → Start**.
+3. **ЗАДАНИЕ → Полигон → Площадной объект:** полигон к востоку от лодки, расстояние между галсами 10–30 м → **Загрузить на борт**.
+4. **КАРТА:** удерживать **ЗАПУСК** 2 с, затем **ВЫПОЛНЕНИЕ ЗАДАНИЯ** 2 с.
+5. Что проверить:
+   - растут трек и карта глубин; легенда перекрашивает трек и карту;
+   - креномеры покачиваются, компас крутится;
+   - **СТОП** останавливает лодку без дизарма, появляется «Аварийная остановка моторов» над приборами; удержание 2 с снимает стоп;
+   - клик по скорости / глубине открывает окно цветов.
+
+---
+
+## Работа с реальной лодкой
+
+- Пульт **Skydroid H16 Pro** работает на Android 7.1.2, поэтому GidroLog на него не ставится. Программа запускается на ноутбуке или планшете с Android 9+, а MAVLink приходит по UDP через Wi-Fi или Ethernet пульта (порт 14550).
+- При первом запуске нужно разрешить `OMJETGidroLog.exe` в Windows Firewall для частных сетей.
+- `WATER_DEPTH` ArduRover шлёт в режиме лодки (`FRAME_CLASS=2`). Если его нет, используется `DISTANCE_SENSOR`.
+- **СТОП** использует aux-функцию `MOTOR_ESTOP`. Если тумблер пульта назначен на `RCx_OPTION=31`, действует последнее изменение: тумблера или кнопки.
+
+---
+
+## Работа с git и обновление из QGC
+
+- `master` — чистая копия upstream.
+- `gidrolog` — рабочая ветка, она же ветка по умолчанию на GitHub.
+- Все наши правки в файлах QGC помечены **`GidroLog`**. Найти их все: `git grep -n GidroLog`.
+
+```powershell
+git fetch upstream
+git switch master;   git merge --ff-only upstream/master; git push origin master
+git switch gidrolog; git merge master
+```
+
+При слиянии с upstream больше всего конфликтов ожидается в переведённых QML-файлах (строки `qsTr`).
+
+---
+
+## Список изменённых файлов
+
+### Новые
+
+| Файл | Назначение |
+|---|---|
+| `src/Vehicle/FactGroups/VehicleSounderFactGroup.h/.cc`, `SounderFact.json` | телеметрия эхолота `sounder` |
+| `src/Vehicle/FactGroups/DepthGrid.h/.cc` | карта глубин: сетка, IDW, плитки `DepthGridTile` |
+| `src/FlyView/GidroLogValuesPanel.qml` | правая панель + окно цветовых диапазонов |
+| `src/FlyView/GidroLogDepthLegend.qml` | легенда глубин, ползунок подписей, кнопка «Карта глубин» |
+| `src/FlyView/GidroLogControlPanel.qml`, `GidroLogHoldButton.qml` | панель ЗАПУСК / СТОП / режимы / сирена / мигалка |
+| `src/FlightMap/Widgets/GidroLogInclinometer.qml` | креномер тангажа и крена |
+| `src/FlightMap/Images/vehicleBoat*.svg`, `GidroLogBoatSide/Rear.svg` | силуэты катера (сверху, сбоку, спереди) |
+| `src/AppSettings/GidroLogExtraSettings.qml` | Настройки → Общие → «Дополнительно» |
+| `src/Comms/MockLink/MockLinkBoatSim.h/.cc` | симулятор катера с эхолотом |
+| `resources/GidroLogIcon*.png`, `GidroLogSiren.svg`, `GidroLogBeacon.svg` | иконка приложения, значки сирены и мигалки |
+
+### Изменённые файлы QGC
+
+| Файл | Изменение |
+|---|---|
+| `cmake/CustomOptions.cmake`, `cmake/modules/Git.cmake`, `CMakeLists.txt`, `cmake/platform/Android.cmake` | имя, организация, пакет, версия, автор, ресурсы |
+| `resources/NoVideoBackground.jpg` | заставка «нет видео» (синие волны) |
+| `src/MainWindow/MainWindow.qml` | заголовок окна; `gidroLogSettings`; иконка меню; окно сообщений над приборами и перевод сообщений; заголовки страниц |
+| `src/Toolbar/FlyViewToolBar.qml` | разделители слева, градиент только при подключённой лодке |
+| `src/Toolbar/MainStatusIndicator.qml` | перевод статусов и окна статуса; разделитель перед значком сообщений |
+| `src/Toolbar/FlightModeIndicator.qml` | режим без иконки |
+| `src/Toolbar/BatteryIndicator.qml` | В/А/мА·ч, крупное напряжение, только батарея 1, перевод |
+| `src/Toolbar/FlyViewToolBarIndicators.qml`, `GPSIndicator.qml`, `VehicleGPSIndicator.qml`, `TelemetryRSSIIndicator.qml` | разделители, координаты, RSSI и потери, перевод |
+| `src/Toolbar/GPSIndicatorPage.qml`, `GPSReceiverSettings.qml` | перевод GPS / RTK |
+| `src/Toolbar/SelectViewDropdown.qml`, `PlanViewToolBar.qml` | перевод меню Q и панели задания |
+| `src/QmlControls/QGCToolBarButton.qml`, `HorizontalFactValueGrid.qml`, `CameraTriggerIcon.qml` | PNG-логотип, разделители нижней панели, красные точки затвора |
+| `src/QmlControls/SelectableControl.qml` | свойство `allowSelection` (выключить выбор варианта) |
+| `src/FactSystem/FactControls/FactComboBox.qml` | перевод значений выпадающих списков |
+| `src/FirmwarePlugin/FirmwarePlugin.cc`, `APM/ArduRoverFirmwarePlugin.h` | убраны индикаторы; значок катера |
+| `src/FlyView/FlyViewWidgetLayer.qml` | скрыта левая панель; размещение панелей и линейки |
+| `src/FlyView/FlyViewTopRightColumnLayout.qml` | убрана панель камеры |
+| `src/FlyView/FlyViewMap.qml` | трек по глубине, точки глубины, карта глубин, линии курса |
+| `src/FlyView/FlyViewInstrumentPanel.qml` | без выбора варианта; регистрирует себя для окна сообщений |
+| `src/FlyView/FlightDisplayViewVideo.qml` | заставка и «НЕТ ВИДЕО» |
+| `src/FlyView/FlyViewMissionCompleteDialog.qml`, `GuidedActionsController.qml` | перевод |
+| `src/FlightMap/Widgets/IntegratedCompassAttitude.qml`, `HorizontalCompassAttitude.qml`, `VerticalCompassAttitude.qml` | креномеры + компас во всех вариантах |
+| `src/FlightMap/Widgets/QGCCompassWidget.qml`, `CompassDial.qml`, `CompassHeadingIndicator.qml` | компас в стиле креномеров, катер |
+| `src/FlightMap/MapItems/MissionLineView.qml`, `PlanMapItems.qml`, `VehicleMapItem.qml`, `GeoMap/GeoMapVehicleItem.qml` | зелёная линия миссии, катер вместо стрелки |
+| `src/FlightMap/MapItems/QGCMapPolygonVisuals.qml`, `QGCMapPolylineVisuals.qml` | перевод инструментов полигона и линии |
+| `src/PlanView/PlanView.qml` | только статистика внизу; кнопки слева; ROI скрыт; меню «Полигон» |
+| `src/PlanView/PlanToolBarIndicators.qml`, `CMakeLists.txt` | перевод; «Скачать с борта» на панели; значок `Download.svg` |
+| `src/PlanView/PlanEditLayers.qml`, `PlanTreeView.qml`, `PlanInfoEditor.qml`, `MissionDefaultsEditor.qml`, `TransformEditor.qml`, `MissionItemEditor.qml`, `SimpleItemEditor.qml` | перевод; скрыты камера (точка 0), высоты, вкладки точки |
+| `src/AppSettings/CMakeLists.txt`, `pages/General.SettingsUI.json` | блок «Дополнительно» |
+| `src/Vehicle/Vehicle.cc` | регистрация группы `sounder` |
+| `src/Comms/MockLink/MockLink.h/.cc`, `MockLinkMissionItemHandler.h` | подключение симулятора, старт, ADS-B, аварийный стоп |
+| `deploy/*`, `android/res/*` | иконки |
+
+---
+
+## Статус и планы
+
+**Проверено сборкой и запуском (Debug, симулятор):**
+
+- переименование, сборка и запуск; заголовок окна;
+- правая панель, трек и точки глубины, карта глубин;
+- панель управления, СТОП через `MOTOR_ESTOP`;
+- креномеры и компас, силуэты катера;
+- заставка «нет видео», размер напряжения батареи.
+
+**Ждёт проверки после последних правок:**
+
+- окно цветовых диапазонов на правой панели;
+- окно сообщений над приборами и перевод сообщений;
+- разделители и градиент тулбара, только батарея 1;
+- русификация раздела «Задание», кнопка «Скачать с борта» (после «Запустить CMake»);
+- упрощённая карточка точки;
+- перевод выпадающих списков.
+
+**В планах:**
+
+- изобаты с подписями;
+- сохранение и загрузка карты глубин, экспорт CSV/XYZ/GeoTIFF;
+- фильтры выбросов, поправки draft и уровня воды;
+- сохранение трека;
+- сирена и мигалка через сервовыходы;
+- имитация затвора в симуляторе;
+- перевод списка команд, голосовых оповещений;
+- шапка установщика с логотипом ОМДЖЕТ;
+- сборка APK.

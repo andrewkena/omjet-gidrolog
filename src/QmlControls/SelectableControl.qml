@@ -22,6 +22,7 @@ Control {
     property Fact selectedControl               ///< Fact which has enumStrings/Values where values are the qml file for the control
     property bool selectionUIRightAnchor: false
     property var  innerControl:           loader.item
+    property bool allowSelection:         true    ///< GidroLog: false hides the right-click / long-press variant selector
 
     property bool _showSelectionUI: false
 
@@ -59,12 +60,12 @@ Control {
             acceptedButtons:    Qt.LeftButton | Qt.RightButton
 
             onClicked: (mouse) => {
-                if (!ScreenTools.isMobile && mouse.button === Qt.RightButton) {
+                if (control.allowSelection && !ScreenTools.isMobile && mouse.button === Qt.RightButton) {
                     _showSelectionUI = true
                 }
             }
 
-            onPressAndHold: _showSelectionUI = true
+            onPressAndHold: if (control.allowSelection) _showSelectionUI = true
         }
     }
 }

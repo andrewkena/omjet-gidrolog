@@ -69,6 +69,7 @@ Item {
 
         MapItemGroup {
             MissionLineView {
+                targetMap: _root._map   // GidroLog: needed for the dashed line
                 model: _missionController.simpleFlightPathSegments
             }
 

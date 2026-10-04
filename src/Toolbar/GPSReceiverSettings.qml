@@ -28,7 +28,7 @@ SettingsGroupLayout {
     readonly property bool _editable: !receiver.hasReceiver
 
     implicitWidth: ScreenTools.defaultFontPixelWidth * 56
-    heading: qsTr("RTK GPS Settings")
+    heading: qsTr("Настройки RTK GPS")
 
     onManufacturerChanged: clearConsent()
     onBaseModeChanged: clearConsent()
@@ -109,10 +109,10 @@ SettingsGroupLayout {
         Layout.fillWidth: true
         Layout.minimumWidth: 0
         visible: root.autoConnectFact.userVisible
-        Explanation { text: qsTr("Auto-connect known receivers") }
+        Explanation { text: qsTr("Автоподключение известных приёмников") }
         FactCheckBoxSlider {
             text: ""
-            Accessible.name: qsTr("Auto-connect known receivers")
+            Accessible.name: qsTr("Автоподключение известных приёмников")
             fact: root.autoConnectFact
         }
     }
@@ -121,7 +121,7 @@ SettingsGroupLayout {
         Layout.fillWidth: true
         Layout.minimumWidth: 0
         visible: root.settings.baseReceiverManufacturers.userVisible
-        Explanation { text: qsTr("Receiver / settings") }
+        Explanation { text: qsTr("Приёмник / настройки") }
         FactComboBox {
             objectName: "rtkManufacturer"
             Layout.fillWidth: true
@@ -135,13 +135,13 @@ SettingsGroupLayout {
         Layout.fillWidth: true
         Layout.minimumWidth: 0
         visible: root.receiver.serialSupported
-        Explanation { text: qsTr("Serial device") }
+        Explanation { text: qsTr("Последовательный порт") }
         QGCComboBox {
             objectName: "rtkSerialDevice"
             Layout.fillWidth: true
             Layout.minimumWidth: 0
             enabled: root._editable && root.serialPorts.length > 0
-            model: root.serialPorts.length > 0 ? root.serialPorts : [qsTr("<none available>")]
+            model: root.serialPorts.length > 0 ? root.serialPorts : [qsTr("<нет доступных>")]
             currentIndex: root.serialPorts.length > 0
                           ? root.serialPorts.indexOf(root.settings.serialDevice.valueString) : 0
             onActivated: (index) => {
@@ -156,7 +156,7 @@ SettingsGroupLayout {
         Layout.fillWidth: true
         Layout.minimumWidth: 0
         visible: root.receiver.serialSupported
-        Explanation { text: qsTr("Baud rate") }
+        Explanation { text: qsTr("Скорость порта") }
         QGCComboBox {
             id: baudCombo
             objectName: "rtkSerialBaudRate"
@@ -167,7 +167,7 @@ SettingsGroupLayout {
             readonly property var rates: root.serialBaudRates.filter(rate => Number(rate) >= 1200 && Number(rate) <= 4000000)
             property bool customSelected: rates.indexOf(root.settings.serialBaudRate.valueString) < 0
 
-            model: rates.concat([qsTr("Custom")])
+            model: rates.concat([qsTr("Другая")])
             currentIndex: customSelected ? rates.length : rates.indexOf(root.settings.serialBaudRate.valueString)
             onActivated: (index) => {
                 customSelected = index === rates.length
@@ -179,7 +179,7 @@ SettingsGroupLayout {
     }
 
     SettingField {
-        label: qsTr("Custom baud rate")
+        label: qsTr("Своя скорость порта")
         fact: root.settings.serialBaudRate
         visible: root.receiver.serialSupported && baudCombo.customSelected
         enabled: root._editable
@@ -188,24 +188,24 @@ SettingsGroupLayout {
     Explanation {
         visible: root._editable
         text: !root.presentation.specificReceiver
-              ? qsTr("Select a specific receiver type, device, and baud rate to connect manually.")
-              : qsTr("Connect only the selected receiver. USB adapter identity does not identify its GNSS manufacturer. Manual connections disable auto-connect.")
+              ? qsTr("Выберите тип приёмника, порт и скорость, чтобы подключиться вручную.")
+              : qsTr("Подключается только выбранный приёмник. Тип USB-адаптера не определяет производителя GNSS. Ручное подключение отключает автоподключение.")
     }
 
     Explanation {
         visible: root.presentation.passive
-        text: qsTr("Passive input never configures the receiver. Configure RTCM/NMEA output externally and select its existing baud rate. No survey-in status is inferred.")
+        text: qsTr("Пассивный вход не настраивает приёмник. Настройте вывод RTCM/NMEA заранее и выберите его скорость порта. Статус съёмки базы не определяется.")
     }
 
     Explanation {
         objectName: "rtkPersistentConfigurationWarning"
         visible: root.presentation.restartOnConnect
-        text: qsTr("Without permission to save, Quectel role and base settings must already match settings saved externally. The receiver restarts on connection. Survey-in counts accepted 1 Hz observations; its accuracy limit filters each observation and does not guarantee final position accuracy.")
+        text: qsTr("Без разрешения на сохранение роль и настройки базы Quectel должны заранее совпадать с сохранёнными. При подключении приёмник перезапускается. Съёмка базы считает принятые наблюдения 1 Гц; предел точности фильтрует каждое наблюдение и не гарантирует итоговую точность.")
     }
 
     Explanation {
         visible: root.presentation.surveyMaySavePosition && root.baseMode === BaseModeDefinition.BaseSurveyIn
-        text: qsTr("The Quectel receiver may automatically store the completed survey position in its own memory.")
+        text: qsTr("Приёмник Quectel может сам сохранить полученные координаты базы в своей памяти.")
     }
 
     ColumnLayout {
@@ -216,19 +216,19 @@ SettingsGroupLayout {
 
         ModeButton {
             objectName: "rtkSurveyMode"
-            text: qsTr("Survey-In")
+            text: qsTr("Съёмка базы (Survey-In)")
             checked: root.baseMode === BaseModeDefinition.BaseSurveyIn
             onClicked: root.settings.useFixedBasePosition.rawValue = BaseModeDefinition.BaseSurveyIn
             visible: root.presentation.surveyIn
         }
         ModeButton {
             objectName: "rtkFixedMode"
-            text: qsTr("Specify position")
+            text: qsTr("Задать координаты")
             checked: root.baseMode === BaseModeDefinition.BaseFixed
             onClicked: root.settings.useFixedBasePosition.rawValue = BaseModeDefinition.BaseFixed
         }
         ModeButton {
-            text: qsTr("Receiver-managed averaging")
+            text: qsTr("Усреднение приёмником")
             checked: root.baseMode === BaseModeDefinition.BaseReceiverAveraging
             onClicked: root.settings.useFixedBasePosition.rawValue = BaseModeDefinition.BaseReceiverAveraging
             visible: root.presentation.receiverAveraging
@@ -237,16 +237,16 @@ SettingsGroupLayout {
 
     Explanation {
         visible: !root.modeCompatible
-        text: qsTr("The selected base mode is not supported by this receiver. Choose a supported mode explicitly.")
+        text: qsTr("Выбранный режим базы не поддерживается этим приёмником. Выберите поддерживаемый режим.")
     }
 
     Explanation {
         visible: root.presentation.receiverAveraging && root.baseMode === BaseModeDefinition.BaseReceiverAveraging
-        text: qsTr("The receiver averages its position for up to the maximum time. This is not accuracy-controlled survey-in and does not guarantee a position accuracy.")
+        text: qsTr("Приёмник усредняет координаты в течение максимального времени. Это не съёмка базы с контролем точности, точность не гарантируется.")
     }
 
     SettingField {
-        label: qsTr("Maximum averaging time")
+        label: qsTr("Максимальное время усреднения")
         fact: root.settings.receiverAveragingDuration
         visible: root.presentation.receiverAveraging && root.baseMode === BaseModeDefinition.BaseReceiverAveraging
         enabled: root._editable
@@ -255,7 +255,7 @@ SettingsGroupLayout {
     FactSlider {
         Layout.fillWidth: true
         Layout.minimumWidth: 0
-        label: root.presentation.observationAccuracyFilter ? qsTr("Observation accuracy limit") : qsTr("Accuracy")
+        label: root.presentation.observationAccuracyFilter ? qsTr("Предел точности наблюдения") : qsTr("Точность")
         fact: root.settings.surveyInAccuracyLimit
         majorTickStepSize: 0.1
         enabled: root._editable
@@ -266,7 +266,7 @@ SettingsGroupLayout {
     FactSlider {
         Layout.fillWidth: true
         Layout.minimumWidth: 0
-        label: root.presentation.acceptedObservationTime ? qsTr("Accepted observation time") : qsTr("Min Duration")
+        label: root.presentation.acceptedObservationTime ? qsTr("Принятое время наблюдений") : qsTr("Мин. длительность")
         fact: root.settings.surveyInMinObservationDuration
         majorTickStepSize: 10
         enabled: root._editable
@@ -300,7 +300,7 @@ SettingsGroupLayout {
         Layout.minimumWidth: 0
         visible: root.presentation.rtkBase
         Explanation {
-            text: qsTr("Save the current base position for a later fixed-position connection. This does not change the running receiver's mode.")
+            text: qsTr("Сохранить текущие координаты базы для последующего подключения с заданными координатами. Режим работающего приёмника не меняется.")
         }
         QGCButton {
             objectName: "rtkSaveBasePosition"
@@ -308,11 +308,11 @@ SettingsGroupLayout {
             Layout.minimumWidth: 0
             wrapMode: Text.Wrap
             focusPolicy: Qt.StrongFocus
-            text: root.baseFacts.canSaveCurrentBasePosition ? qsTr("Save Current Base Position")
-                  : !root.baseFacts.valid.rawValue ? qsTr("Not Yet Valid")
+            text: root.baseFacts.canSaveCurrentBasePosition ? qsTr("Сохранить координаты базы")
+                  : !root.baseFacts.valid.rawValue ? qsTr("Ещё не готово")
                   : !Number.isFinite(root.baseFacts.currentAccuracy.rawValue)
-                    || root.baseFacts.currentAccuracy.rawValue < 0 ? qsTr("Accuracy Unavailable")
-                  : qsTr("Invalid Base Position")
+                    || root.baseFacts.currentAccuracy.rawValue < 0 ? qsTr("Точность недоступна")
+                  : qsTr("Неверные координаты базы")
             enabled: root.baseFacts.canSaveCurrentBasePosition
             onClicked: root.saveCurrentBasePosition()
         }
@@ -323,7 +323,7 @@ SettingsGroupLayout {
         objectName: "rtkPersistentChangesCheckBox"
         Layout.fillWidth: true
         Layout.minimumWidth: 0
-        text: qsTr("Allow flash save and restart")
+        text: qsTr("Разрешить запись во флеш и перезапуск")
         focusPolicy: Qt.StrongFocus
         visible: root.receiver.serialSupported && root.presentation.persistentConfiguration
         enabled: root._editable
@@ -340,7 +340,7 @@ SettingsGroupLayout {
     Explanation {
         objectName: "rtkPersistentConsentWarning"
         visible: root.receiver.serialSupported && root.presentation.persistentConfiguration
-        text: qsTr("For this connection only, allow QGroundControl to write requested role or base-setting changes to receiver flash and restart it. Changes may remain saved even if reconnecting fails. No factory reset is performed. Permission is cleared after each attempt and is never used by auto-connect.")
+        text: qsTr("Только для этого подключения разрешить программе записать роль и настройки базы во флеш приёмника и перезапустить его. Изменения могут сохраниться, даже если переподключение не удастся. Сброс к заводским настройкам не выполняется. Разрешение сбрасывается после каждой попытки и не используется автоподключением.")
     }
 
     QGCButton {
@@ -349,7 +349,7 @@ SettingsGroupLayout {
         Layout.minimumWidth: 0
         wrapMode: Text.Wrap
         focusPolicy: Qt.StrongFocus
-        text: root.receiver.hasReceiver ? qsTr("Disconnect") : qsTr("Connect")
+        text: root.receiver.hasReceiver ? qsTr("Отключить") : qsTr("Подключить")
         visible: root.receiver.serialSupported
         enabled: root.receiver.hasReceiver || (root.presentation.specificReceiver && root.modeCompatible)
         onClicked: {

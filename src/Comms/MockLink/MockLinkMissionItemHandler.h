@@ -11,6 +11,7 @@ class MockLink;
 class MockLinkMissionItemHandler : public QObject
 {
     Q_OBJECT
+    friend class MockLinkBoatSim; // GidroLog: reads the uploaded mission
 
 public:
     MockLinkMissionItemHandler(MockLink *mockLink);

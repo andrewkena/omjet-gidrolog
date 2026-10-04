@@ -20,6 +20,7 @@
 #include <array>
 #include <atomic>
 
+class MockLinkBoatSim; // GidroLog
 class MockLinkCamera;
 class MockLinkFTP;
 class MockLinkGimbal;
@@ -31,6 +32,7 @@ class MockLink : public LinkInterface
 {
     Q_OBJECT
     friend class MockLinkFTP;
+    friend class MockLinkBoatSim; // GidroLog
     friend class StandardModesTest;
 
 public:
@@ -377,8 +379,8 @@ private:
     const bool _ftpCapability = false;  ///< Test-only: advertise MAV_PROTOCOL_CAPABILITY_FTP
     const bool _sendRadioStatusEnabled = true; ///< Stream RADIO_STATUS at 1Hz (marks the link as a radio link)
     const uint8_t _vehicleSystemId = 0;
-    const double _vehicleLatitude = 0.0;
-    const double _vehicleLongitude = 0.0;
+    double _vehicleLatitude = 0.0;     // GidroLog: non-const, moved by MockLinkBoatSim
+    double _vehicleLongitude = 0.0;    // GidroLog: non-const, moved by MockLinkBoatSim
     // These are just set for reporting the fields in _respondWithAutopilotVersion()
     // and ensuring that the Vehicle reports the fields in Vehicle::firmwareBoardVendorId etc.
     // They do not control any mock simulation (and it is up to the Custom build to do that).
@@ -389,6 +391,8 @@ private:
     MockLinkGimbal *const _mockLinkGimbal = nullptr;
     MockLinkPX4Calibration *const _mockLinkPX4Calibration = nullptr;
     MockLinkFTP *const _mockLinkFTP = nullptr;
+    MockLinkBoatSim *_boatSim = nullptr; // GidroLog: survey boat + M36 echo sounder simulation
+    std::atomic<bool> _motorEStop = false; // GidroLog: MOTOR_ESTOP aux function engaged
 
     // Written by test thread, read by worker thread in _sendAttitudeQuaternion; one lock so a frame never mixes old and new angles
     struct AttitudeOverride {
@@ -553,9 +557,10 @@ private:
 #else
     // Vehicle position is set close to default Gazebo vehicle location. This allows for multi-vehicle
     // testing of a gazebo vehicle and a mocklink vehicle
-    static constexpr double _defaultVehicleLatitude = 47.397;
-    static constexpr double _defaultVehicleLongitude = 8.5455;
-    static constexpr double _defaultVehicleHomeAltitude = 488.056;
+    // GidroLog: start position at the boat test site (was 47.397, 8.5455, 488.056 m)
+    static constexpr double _defaultVehicleLatitude = 55.040686;
+    static constexpr double _defaultVehicleLongitude = 73.128945;
+    static constexpr double _defaultVehicleHomeAltitude = 85.0;
 #endif
 
     static constexpr const char *_failParam = "COM_FLTMODE6";

@@ -14,6 +14,7 @@ Item {
 
     property var    _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
     property bool   _rtkConnected:  QGroundControl.gpsRtk.connected.value
+    property bool   showCoordinates: false  // GidroLog: show vehicle lat/lon to the right
 
     QGCPalette { id: qgcPal }
 
@@ -66,6 +67,23 @@ Item {
                 id:     hdopValue
                 color:  qgcPal.text
                 text:   _activeVehicle ? _activeVehicle.gps.hdop.value.toFixed(1) : ""
+            }
+        }
+
+        // GidroLog: coordinates
+        Column {
+            anchors.verticalCenter: parent.verticalCenter
+            visible:                control.showCoordinates && _activeVehicle && !isNaN(_activeVehicle.gps.lat.rawValue) && _activeVehicle.gps.lat.rawValue !== 0
+            spacing:                0
+
+            QGCLabel {
+                color:  qgcPal.text
+                text:   _activeVehicle ? _activeVehicle.gps.lat.rawValue.toFixed(7) + "°" : ""
+            }
+
+            QGCLabel {
+                color:  qgcPal.text
+                text:   _activeVehicle ? _activeVehicle.gps.lon.rawValue.toFixed(7) + "°" : ""
             }
         }
     }

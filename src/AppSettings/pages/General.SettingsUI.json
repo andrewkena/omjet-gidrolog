@@ -90,6 +90,11 @@
                     "control": "combobox"
                 }
             ]
+        },
+        {
+            "component": "GidroLogExtraSettings",
+            "sectionName": "Дополнительно",
+            "keywords": ["gidrolog", "siren", "beacon", "сирена", "мигалка", "канал", "дополнительно"]
         }
     ]
 }

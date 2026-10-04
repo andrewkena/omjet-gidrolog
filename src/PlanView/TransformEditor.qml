@@ -50,7 +50,7 @@ Rectangle {
         SectionHeader {
             id:               offsetSection
             Layout.fillWidth: true
-            text:             qsTr("Offset Mission")
+            text:             qsTr("Сместить задание")
             checked:          false
         }
 
@@ -61,7 +61,7 @@ Rectangle {
 
             LabelledFactTextField {
                 id:                      eastField
-                label:                   qsTr("East")
+                label:                   qsTr("Восток")
                 fact:                    positionController.offsetEast
                 textFieldPreferredWidth: _textFieldWidth
                 Layout.fillWidth:        true
@@ -69,7 +69,7 @@ Rectangle {
 
             LabelledFactTextField {
                 id:                      northField
-                label:                   qsTr("North")
+                label:                   qsTr("Север")
                 fact:                    positionController.offsetNorth
                 textFieldPreferredWidth: _textFieldWidth
                 Layout.fillWidth:        true
@@ -77,7 +77,7 @@ Rectangle {
 
             LabelledFactTextField {
                 id:                      upField
-                label:                   qsTr("Up")
+                label:                   qsTr("Вверх")
                 fact:                    positionController.offsetUp
                 textFieldPreferredWidth: _textFieldWidth
                 Layout.fillWidth:        true
@@ -85,12 +85,12 @@ Rectangle {
 
             QGCCheckBox {
                 id:   offsetTakeoffCheck
-                text: qsTr("Also move takeoff items")
+                text: qsTr("Также сместить точки взлёта")
             }
 
             QGCCheckBox {
                 id:   offsetLandingCheck
-                text: qsTr("Also move landing items")
+                text: qsTr("Также сместить точки посадки")
             }
 
             QGCLabel {
@@ -98,12 +98,12 @@ Rectangle {
                 Layout.maximumWidth: _labelWidth + _textFieldWidth
                 wrapMode:            Text.WordWrap
                 font.pointSize:      ScreenTools.smallFontPointSize
-                text:                qsTr("Note: Home altitude is not modified.")
+                text:                qsTr("Высота точки старта не меняется.")
             }
 
             QGCButton {
                 Layout.alignment: Qt.AlignHCenter
-                text:             qsTr("Apply Offset")
+                text:             qsTr("Применить смещение")
                 enabled:          !eastField.textField.validationError
                                   && !northField.textField.validationError
                                   && !upField.textField.validationError
@@ -124,7 +124,7 @@ Rectangle {
         SectionHeader {
             id:               repositionSection
             Layout.fillWidth: true
-            text:             qsTr("Reposition Mission")
+            text:             qsTr("Перенести задание")
             checked:          false
         }
 
@@ -138,7 +138,7 @@ Rectangle {
                 Layout.fillWidth: true
                 wrapMode:         Text.WordWrap
                 font.pointSize:   ScreenTools.smallFontPointSize
-                text:             qsTr("Home position must be set to reposition the mission.")
+                text:             qsTr("Чтобы перенести задание, задайте точку старта.")
                 visible:          !_hasHome
             }
 
@@ -152,21 +152,21 @@ Rectangle {
                 spacing:          0
 
                 QGCLabel {
-                    text: qsTr("Coordinate System")
+                    text: qsTr("Система координат")
                 }
 
                 QGCComboBox {
                     id:               coordinateSystemCombo
                     Layout.fillWidth: true
                     model:            globals.activeVehicle
-                                      ? [ qsTr("Geographic"), qsTr("Universal Transverse Mercator"), qsTr("Military Grid Reference"), qsTr("Vehicle Position") ]
-                                      : [ qsTr("Geographic"), qsTr("Universal Transverse Mercator"), qsTr("Military Grid Reference") ]
+                                      ? [ qsTr("Географическая"), qsTr("UTM"), qsTr("MGRS"), qsTr("Положение борта") ]
+                                      : [ qsTr("Географическая"), qsTr("UTM"), qsTr("MGRS") ]
                 }
             }
 
             LabelledFactTextField {
                 id:                      latitudeField
-                label:                   qsTr("Latitude")
+                label:                   qsTr("Широта")
                 fact:                    positionController.latitude
                 textFieldPreferredWidth: _textFieldWidth
                 Layout.fillWidth:        true
@@ -175,7 +175,7 @@ Rectangle {
 
             LabelledFactTextField {
                 id:                      longitudeField
-                label:                   qsTr("Longitude")
+                label:                   qsTr("Долгота")
                 fact:                    positionController.longitude
                 textFieldPreferredWidth: _textFieldWidth
                 Layout.fillWidth:        true
@@ -184,7 +184,7 @@ Rectangle {
 
             QGCButton {
                 Layout.alignment: Qt.AlignHCenter
-                text:             qsTr("Move to Position")
+                text:             qsTr("Перенести в точку")
                 enabled:          _hasHome && !latitudeField.textField.validationError && !longitudeField.textField.validationError
                 visible:          repositionContent._showGeographic
                 onClicked: {
@@ -195,7 +195,7 @@ Rectangle {
 
             LabelledFactTextField {
                 id:                      zoneField
-                label:                   qsTr("Zone")
+                label:                   qsTr("Зона")
                 fact:                    positionController.zone
                 textFieldPreferredWidth: _textFieldWidth
                 Layout.fillWidth:        true
@@ -203,7 +203,7 @@ Rectangle {
             }
 
             LabelledFactComboBox {
-                label:            qsTr("Hemisphere")
+                label:            qsTr("Полушарие")
                 fact:             positionController.hemisphere
                 indexModel:       false
                 Layout.fillWidth: true
@@ -212,7 +212,7 @@ Rectangle {
 
             LabelledFactTextField {
                 id:                      eastingField
-                label:                   qsTr("Easting")
+                label:                   qsTr("Восточное смещение")
                 fact:                    positionController.easting
                 textFieldPreferredWidth: _textFieldWidth
                 Layout.fillWidth:        true
@@ -221,7 +221,7 @@ Rectangle {
 
             LabelledFactTextField {
                 id:                      northingField
-                label:                   qsTr("Northing")
+                label:                   qsTr("Северное смещение")
                 fact:                    positionController.northing
                 textFieldPreferredWidth: _textFieldWidth
                 Layout.fillWidth:        true
@@ -230,7 +230,7 @@ Rectangle {
 
             QGCButton {
                 Layout.alignment: Qt.AlignHCenter
-                text:             qsTr("Move to Position")
+                text:             qsTr("Перенести в точку")
                 enabled:          _hasHome && !zoneField.textField.validationError && !eastingField.textField.validationError && !northingField.textField.validationError
                 visible:          repositionContent._showUTM
                 onClicked: {
@@ -250,7 +250,7 @@ Rectangle {
 
             QGCButton {
                 Layout.alignment: Qt.AlignHCenter
-                text:             qsTr("Move to Position")
+                text:             qsTr("Перенести в точку")
                 enabled:          _hasHome && !mgrsField.textField.validationError
                 visible:          repositionContent._showMGRS
                 onClicked: {
@@ -261,7 +261,7 @@ Rectangle {
 
             QGCButton {
                 Layout.alignment: Qt.AlignHCenter
-                text:             qsTr("Move to Vehicle Position")
+                text:             qsTr("Перенести к борту")
                 enabled:          _hasHome
                 visible:          repositionContent._showVehicle
                 onClicked: {
@@ -275,7 +275,7 @@ Rectangle {
         SectionHeader {
             id:               rotateSection
             Layout.fillWidth: true
-            text:             qsTr("Rotate Mission")
+            text:             qsTr("Повернуть задание")
             checked:          false
         }
 
@@ -288,13 +288,13 @@ Rectangle {
                 Layout.fillWidth: true
                 wrapMode:         Text.WordWrap
                 font.pointSize:   ScreenTools.smallFontPointSize
-                text:             qsTr("Home position must be set to rotate the mission.")
+                text:             qsTr("Чтобы повернуть задание, задайте точку старта.")
                 visible:          !_hasHome
             }
 
             LabelledFactTextField {
                 id:                      degreesCWField
-                label:                   qsTr("Clockwise")
+                label:                   qsTr("По часовой стрелке")
                 fact:                    positionController.rotateDegreesCW
                 textFieldPreferredWidth: _textFieldWidth
                 Layout.fillWidth:        true
@@ -302,12 +302,12 @@ Rectangle {
 
             QGCCheckBox {
                 id:   rotateTakeoffCheck
-                text: qsTr("Also move takeoff items")
+                text: qsTr("Также сместить точки взлёта")
             }
 
             QGCCheckBox {
                 id:   rotateLandingCheck
-                text: qsTr("Also move landing items")
+                text: qsTr("Также сместить точки посадки")
             }
 
             QGCLabel {
@@ -315,12 +315,12 @@ Rectangle {
                 Layout.maximumWidth: _labelWidth + _textFieldWidth
                 wrapMode:            Text.WordWrap
                 font.pointSize:      ScreenTools.smallFontPointSize
-                text:                qsTr("Note: Complex items are rotated by moving their reference coordinate: their geometry and orientation are not changed.")
+                text:                qsTr("Полигоны поворачиваются переносом их опорной точки: форма и ориентация не меняются.")
             }
 
             QGCButton {
                 Layout.alignment: Qt.AlignHCenter
-                text:             qsTr("Apply Rotation")
+                text:             qsTr("Применить поворот")
                 enabled:          _hasHome && !degreesCWField.textField.validationError
 
                 onClicked: {

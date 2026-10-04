@@ -3,102 +3,81 @@ import QtQuick
 import QGroundControl
 import QGroundControl.Controls
 
-/// This is the dial background for the compass
-
+/// GidroLog: compass dial in the same style as the pitch/roll inclinometers:
+/// dark face, coloured ring with ticks every 11.25 deg (major every 45 deg),
+/// cardinal and intercardinal points labelled in degrees with the inclinometer font.
 Item {
     id: control
 
-    property real offsetRadius: width / 2 - ScreenTools.defaultFontPixelHeight / 2
+    property real heading:      0
+    property bool lockNoseUp:   false
 
-    function translateCenterToAngleX(radius, angle) {
-        return radius * Math.sin(angle * (Math.PI / 180))
-    }
+    readonly property color _yellow:    "#FFD54F"
+    readonly property color _blue:      "#29B6F6"
 
-    function translateCenterToAngleY(radius, angle) {
-        return -radius * Math.cos(angle * (Math.PI / 180))
-    }
+    onWidthChanged:     dialCanvas.requestPaint()
+    onHeightChanged:    dialCanvas.requestPaint()
+    onHeadingChanged:   if (lockNoseUp) dialCanvas.requestPaint()
+    onLockNoseUpChanged: dialCanvas.requestPaint()
 
-    QGCLabel {
-        anchors.centerIn:   parent
-        text:               "N"
-        rotation:           _lockNoseUpCompass ? _heading : 0
+    Canvas {
+        id:             dialCanvas
+        anchors.fill:   parent
 
-        transform: Translate {
-            x: translateCenterToAngleX(control.offsetRadius, 0)
-            y: translateCenterToAngleY(control.offsetRadius, 0)
-        }
-    }
+        onPaint: {
+            const ctx = getContext("2d")
+            ctx.reset()
+            const cx = width / 2
+            const cy = height / 2
+            const lw = width * 0.045
+            const r = (width / 2) - lw
+            const deg = Math.PI / 180
 
-    QGCLabel {
-        anchors.centerIn:   parent
-        text:               "E"
-        rotation:           _lockNoseUpCompass ? _heading : 0
+            // Ring (canvas angle 0 = east, compass 0 = north)
+            ctx.strokeStyle = control._blue
+            ctx.lineWidth = lw
+            ctx.beginPath()
+            ctx.arc(cx, cy, r, 0, 2 * Math.PI)
+            ctx.stroke()
 
-        transform: Translate {
-            x: translateCenterToAngleX(control.offsetRadius, 90)
-            y: translateCenterToAngleY(control.offsetRadius, 90)
-        }
-    }
+            // North sector of the ring highlighted
+            ctx.strokeStyle = control._yellow
+            ctx.beginPath()
+            ctx.arc(cx, cy, r, (-90 - 11.25) * deg, (-90 + 11.25) * deg)
+            ctx.stroke()
 
-    QGCLabel {
-        anchors.centerIn:   parent
-        text:               "S"
-        rotation:           _lockNoseUpCompass ? _heading : 0
-
-        transform: Translate {
-            x: translateCenterToAngleX(control.offsetRadius, 180)
-            y: translateCenterToAngleY(control.offsetRadius, 180)
-        }
-    }
-
-    QGCLabel {
-        anchors.centerIn:   parent
-        text:               "W"
-        rotation:           _lockNoseUpCompass ? _heading : 0
-
-        transform: Translate {
-            x: translateCenterToAngleX(control.offsetRadius, 270)
-            y: translateCenterToAngleY(control.offsetRadius, 270)
-        }
-    }
-
-    // Major tick marks
-    Repeater {
-        model: 4
-
-        Rectangle {
-            x:                  size / 2
-            width:              1
-            height:             ScreenTools.defaultFontPixelHeight * 0.5
-            color:              qgcPal.text
-            antialiasing:       true
-
-            transform: Rotation {
-                origin.x:   0
-                origin.y:   size / 2
-                angle:      45 + (90 * index)
+            // Ticks every 11.25 deg, major ones (every 45 deg) cross the whole ring and go inside
+            ctx.strokeStyle = "#12161B"
+            for (let i = 0; i < 32; i++) {
+                const a = (i * 11.25 - 90) * deg
+                const major = (i % 4) === 0
+                ctx.lineWidth = Math.max(1, width * (major ? 0.016 : 0.012))
+                const r1 = r - lw / 2
+                const r2 = r + lw / 2
+                ctx.beginPath()
+                ctx.moveTo(cx + r1 * Math.cos(a), cy + r1 * Math.sin(a))
+                ctx.lineTo(cx + r2 * Math.cos(a), cy + r2 * Math.sin(a))
+                ctx.stroke()
             }
-        }
-    }
 
-    // Minor tick marks
-    Repeater {
-        model: 8
-
-        Rectangle {
-            x:                  size / 2
-            y:                  _margin
-            width:              1
-            height:             _margin
-            color:              qgcPal.text
-            antialiasing:       true
-
-            property real _margin: ScreenTools.defaultFontPixelHeight * 0.25
-
-            transform: Rotation {
-                origin.x:   0
-                origin.y:   size / 2 - _margin
-                angle:      45 / 2 + (45 * index)
+            // Degree labels at the cardinal and intercardinal points
+            ctx.font = "bold " + Math.round(width * 0.075) + "px sans-serif"
+            ctx.textAlign = "center"
+            ctx.textBaseline = "middle"
+            const lr = r - lw * 1.9
+            for (let i = 0; i < 8; i++) {
+                const compassDeg = i * 45
+                const a = (compassDeg - 90) * deg
+                const x = cx + lr * Math.cos(a)
+                const y = cy + lr * Math.sin(a)
+                ctx.save()
+                ctx.translate(x, y)
+                if (control.lockNoseUp) {
+                    ctx.rotate(control.heading * deg)    // keep labels upright when the dial turns
+                }
+                ctx.fillStyle = compassDeg === 0 ? control._yellow : control._blue
+                ctx.fillText(compassDeg.toString(), 0, 0)
+                ctx.restore()
             }
         }
     }
