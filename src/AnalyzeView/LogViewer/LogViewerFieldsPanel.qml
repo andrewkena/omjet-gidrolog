@@ -61,7 +61,7 @@ Rectangle {
         for (let i = 0; i < fields.length; i++) {
             const fullName = String(fields[i])
             const splitIndex = fullName.indexOf(".")
-            const groupName = splitIndex > 0 ? fullName.substring(0, splitIndex) : qsTr("Other")
+            const groupName = splitIndex > 0 ? fullName.substring(0, splitIndex) : qsTr("Другое")
             const shortName = splitIndex > 0 ? fullName.substring(splitIndex + 1) : fullName
             const haystack = (fullName + " " + groupName + " " + shortName).toLowerCase()
             if (haystack.indexOf(query) === -1) {
@@ -181,7 +181,7 @@ Rectangle {
 
         QGCLabel {
             visible: _isFirmwareLog
-            text: qsTr("Fields: %1  Parameters: %2  Events: %3")
+            text: qsTr("Поля: %1  Параметры: %2  События: %3")
                   .arg(logParser.plottableFields.length)
                   .arg(logParser.parameters.length)
                   .arg(logParser.events.length)
@@ -194,19 +194,19 @@ Rectangle {
                      && logParser.startTime.getTime() > 0
             spacing: ScreenTools.defaultFontPixelWidth
 
-            QGCLabel { text: qsTr("X axis:") }
+            QGCLabel { text: qsTr("Ось X:") }
 
             ButtonGroup { id: _xAxisButtonGroup }
 
             QGCRadioButton {
-                text: qsTr("Elapsed")
+                text: qsTr("Прошло")
                 checked: !control.xAxisShowLocalTime
                 ButtonGroup.group: _xAxisButtonGroup
                 onClicked: QGroundControl.settingsManager.logViewerSettings.xAxisShowLocalTime.rawValue = false
             }
 
             QGCRadioButton {
-                text: qsTr("Local time")
+                text: qsTr("Местное время")
                 checked: control.xAxisShowLocalTime
                 ButtonGroup.group: _xAxisButtonGroup
                 onClicked: QGroundControl.settingsManager.logViewerSettings.xAxisShowLocalTime.rawValue = true
@@ -218,7 +218,7 @@ Rectangle {
             spacing: ScreenTools.defaultFontPixelWidth * 0.5
 
             QGCLabel {
-                text: qsTr("Fields")
+                text: qsTr("Поля")
                 font.bold: true
             }
 
@@ -227,7 +227,7 @@ Rectangle {
                 Layout.fillWidth: true
                 textColor: qgcPal.textFieldText
                 placeholderTextColor: Qt.rgba(qgcPal.textFieldText.r, qgcPal.textFieldText.g, qgcPal.textFieldText.b, 0.7)
-                placeholderText: qsTr("Search fields")
+                placeholderText: qsTr("Поиск полей")
 
                 onTextChanged: {
                     control._fieldSearchText = text
@@ -247,7 +247,7 @@ Rectangle {
             }
 
             QGCButton {
-                text: qsTr("Clear Selected")
+                text: qsTr("Снять выбор")
                 enabled: logViewerController.selectedFields.length > 0
 
                 onClicked: {

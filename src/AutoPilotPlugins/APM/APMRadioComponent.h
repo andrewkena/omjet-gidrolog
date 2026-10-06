@@ -14,7 +14,7 @@ public:
     QStringList setupCompleteChangedTriggerList() const final { return QStringList(); }
 
     QString name() const final { return _name; }
-    QString description() const final { return tr("Configure transmitter calibration and channel assignment."); }
+    QString description() const final { return QStringLiteral("Калибровка пульта и назначение каналов."); }
     QString iconResource() const final { return QStringLiteral("/qmlimages/RadioComponentIcon.png"); }
     bool requiresSetup() const final { return true; }
     bool setupComplete() const final;
@@ -27,7 +27,7 @@ private slots:
 private:
     void _connectSetupTriggers();
 
-    const QString _name = tr("Radio");
+    const QString _name = QStringLiteral("Пульт");
     const QStringList _mapParams = {
         QStringLiteral("RCMAP_ROLL"),
         QStringLiteral("RCMAP_PITCH"),

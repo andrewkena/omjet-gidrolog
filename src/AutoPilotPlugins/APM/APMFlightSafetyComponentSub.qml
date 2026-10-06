@@ -51,14 +51,14 @@ SetupPage {
             property real _comboWidth:      ScreenTools.defaultFontPixelWidth * 30
 
             QGCGroupBox {
-                title:              qsTr("Failsafe Actions")
+                title:              qsTr("Аварийные действия")
 
                 GridLayout {
                     columns:        2
                     rowSpacing:     _margins / 2
                     columnSpacing:  _margins / 2
 
-                    QGCLabel { text: qsTr("GCS Heartbeat") }
+                    QGCLabel { text: qsTr("Связь со станцией") }
                     FactComboBox {
                         Layout.maximumWidth: _comboWidth
                         fact:               _failsafeGCSEnable
@@ -66,7 +66,7 @@ SetupPage {
                         sizeToContents:     true
                     }
 
-                    QGCLabel { text: qsTr("Leak") }
+                    QGCLabel { text: qsTr("Протечка") }
                     FactComboBox {
                         id:                  leakEnableCombo
                         Layout.maximumWidth: _comboWidth
@@ -76,7 +76,7 @@ SetupPage {
                     }
 
                     QGCLabel {
-                        text:    qsTr("Detector Pin")
+                        text:    qsTr("Вывод датчика")
                         visible: leakEnableCombo.currentIndex !== 0
                     }
                     FactComboBox {
@@ -88,7 +88,7 @@ SetupPage {
                     }
 
                     QGCLabel {
-                        text:    qsTr("Logic when Dry")
+                        text:    qsTr("Логика «сухо»")
                         visible: leakEnableCombo.currentIndex !== 0
                     }
                     FactComboBox {
@@ -100,7 +100,7 @@ SetupPage {
                     }
 
                     QGCLabel {
-                        text:    qsTr("Battery")
+                        text:    qsTr("Батарея")
                         visible: !_firmware34
                     }
                     FactComboBox {
@@ -115,13 +115,13 @@ SetupPage {
 
                     QGCLabel {
                         Layout.columnSpan:  2
-                        text:               qsTr("Power module not set up")
+                        text:               qsTr("Модуль питания не настроен")
                         color:              qgcPal.warningText
                         visible:            !_firmware34 && !_batteryDetected
                     }
 
                     QGCLabel {
-                        text:    qsTr("Voltage")
+                        text:    qsTr("Напряжение")
                         visible: !_firmware34 && batteryEnableCombo.currentIndex !== 0
                     }
                     FactTextField {
@@ -131,7 +131,7 @@ SetupPage {
                     }
 
                     QGCLabel {
-                        text:    qsTr("Remaining Capacity")
+                        text:    qsTr("Остаток ёмкости")
                         visible: !_firmware34 && batteryEnableCombo.currentIndex !== 0
                     }
                     FactTextField {
@@ -154,7 +154,7 @@ SetupPage {
                     }
 
                     QGCLabel {
-                        text:    qsTr("Threshold")
+                        text:    qsTr("Порог")
                         visible: !_firmware34 && ekfEnableCombo.currentIndex !== 0
                     }
                     FactTextField {
@@ -164,7 +164,7 @@ SetupPage {
                     }
 
                     QGCLabel {
-                        text:    qsTr("Pilot Input")
+                        text:    qsTr("Команды оператора")
                         visible: !_firmware34
                     }
                     FactComboBox {
@@ -177,7 +177,7 @@ SetupPage {
                     }
 
                     QGCLabel {
-                        text:    qsTr("Timeout")
+                        text:    qsTr("Тайм-аут")
                         visible: !_firmware34 && pilotEnableCombo.currentIndex !== 0
                     }
                     FactTextField {
@@ -186,7 +186,7 @@ SetupPage {
                         fact:                 _failsafePilotTimeout
                     }
 
-                    QGCLabel { text: qsTr("Internal Temperature") }
+                    QGCLabel { text: qsTr("Внутренняя температура") }
                     FactComboBox {
                         id:                  temperatureEnableCombo
                         Layout.maximumWidth: _comboWidth
@@ -196,7 +196,7 @@ SetupPage {
                     }
 
                     QGCLabel {
-                        text:    qsTr("Threshold")
+                        text:    qsTr("Порог")
                         visible: temperatureEnableCombo.currentIndex !== 0
                     }
                     FactTextField {
@@ -205,7 +205,7 @@ SetupPage {
                         fact:                 _failsafeTemperatureThreshold
                     }
 
-                    QGCLabel { text: qsTr("Internal Pressure") }
+                    QGCLabel { text: qsTr("Внутреннее давление") }
                     FactComboBox {
                         id:                  pressureEnableCombo
                         Layout.maximumWidth: _comboWidth
@@ -215,7 +215,7 @@ SetupPage {
                     }
 
                     QGCLabel {
-                        text:    qsTr("Threshold")
+                        text:    qsTr("Порог")
                         visible: pressureEnableCombo.currentIndex !== 0
                     }
                     FactTextField {
@@ -227,7 +227,7 @@ SetupPage {
             } // QGCGroupBox - Failsafe Actions
 
             QGCGroupBox {
-                title:              _armingCheck ? qsTr("Arming Checks") : qsTr("Skip Arming Checks")
+                title:              _armingCheck ? qsTr("Предстартовые проверки") : qsTr("Пропускаемые проверки")
 
                 ColumnLayout {
                     spacing:        _margins
@@ -242,7 +242,7 @@ SetupPage {
                         Layout.fillWidth:   true
                         wrapMode:           Text.WordWrap
                         color:              qgcPal.warningText
-                        text:               qsTr("Warning: Turning off arming checks can lead to loss of Vehicle control.")
+                        text:               qsTr("Внимание: отключение предстартовых проверок может привести к потере управления судном.")
                         visible:            _armingCheck ? _armingCheck.value !== 1 : _armingSkipCheck.value !== 0
                     }
                 }

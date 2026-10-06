@@ -44,7 +44,7 @@ GridLayout {
 
     QGCLabel {
         Layout.columnSpan: parent.columns
-        text: qsTr("Raw Channel Monitor")
+        text: qsTr("Монитор каналов")
     }
 
     Repeater {

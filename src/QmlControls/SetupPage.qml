@@ -40,7 +40,7 @@ Item {
     property bool   _disableDueToArmed:     vehicleComponent ? (!vehicleComponent.allowSetupWhileArmed && _vehicleArmed) : false
     // FIXME: The _vehicleIsRover checkl is a hack to work around https://github.com/PX4/Firmware/issues/10969
     property bool   _disableDueToFlying:    vehicleComponent ? (!_vehicleIsRover && !vehicleComponent.allowSetupWhileFlying && _vehicleFlying) : false
-    property string _disableReason:         _disableDueToArmed ? qsTr("armed") : qsTr("flying")
+    property string _disableReason:         _disableDueToArmed ? qsTr("запущено") : qsTr("в работе")
     property real   _margins:               ScreenTools.defaultFontPixelHeight * 0.5
 
     Component.onCompleted: {
@@ -67,7 +67,7 @@ Item {
 
             QGCCheckBox {
                 id:         advancedCheckBox
-                text:       qsTr("Advanced")
+                text:       qsTr("Дополнительно")
                 visible:    showAdvanced
             }
 
@@ -85,7 +85,7 @@ Item {
                 QGCLabel {
                     Layout.fillWidth:   true
                     wrapMode:           Text.WordWrap
-                    text:               qsTr("Disabled while the vehicle is %1").arg(_disableReason)
+                    text:               qsTr("Недоступно, пока судно %1").arg(_disableReason)
                     color:              qgcPal.warningText
                     visible:            !setupView.enabled && !ScreenTools.isShortScreen
                 }

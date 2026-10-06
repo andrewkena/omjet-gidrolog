@@ -3,7 +3,7 @@
 Наземная станция управления автономными гидрографическими катерами на ArduPilot (ArduRover, режим лодки) с эхолотом Dayu M36.
 Форк [QGroundControl](https://github.com/mavlink/qgroundcontrol), отдельный от OMJET AERO.
 
-- **Версия:** 0.1.2
+- **Версия:** 0.1.3
 - **Автор:** Andrew Kena
 - **Организация:** OMJET
 - **Основа:** QGroundControl `master` (5.2.0-dev, коммит `128517c`, 29.09.2026)
@@ -36,9 +36,9 @@
 | Техническое имя CMake | `OMJETGidroLog` | `QGC_PROJECT_NAME` |
 | Организация | `OMJET` (`omjet.aero`) | `QGC_ORG_NAME`, `QGC_ORG_DOMAIN` |
 | Android-пакет | `com.omjet.gidrolog` | `QGC_PACKAGE_NAME` |
-| Версия | `0.1.2` | `QGC_GIDROLOG_VERSION` (вместо git-тегов QGC, см. `cmake/modules/Git.cmake`) |
+| Версия | `0.1.3` | `QGC_GIDROLOG_VERSION` (вместо git-тегов QGC, см. `cmake/modules/Git.cmake`) |
 | Автор / копирайт | `Andrew Kena`; `Copyright (c) <год> Andrew Kena, OMJET` | `QGC_APP_AUTHOR`, `QGC_APP_COPYRIGHT` |
-| Заголовок окна | `ОМДЖЕТ ГидроЛог 0.1.2_ДД.ММ.ГГГГ` | `src/MainWindow/MainWindow.qml` (дата берётся при запуске) |
+| Заголовок окна | `ОМДЖЕТ ГидроЛог 0.1.3_ДД.ММ.ГГГГ` | `src/MainWindow/MainWindow.qml` (дата берётся при запуске) |
 
 **Иконка приложения** — синяя плашка «ОМДЖЕТ ГидроЛог» с катером. Где используется:
 
@@ -48,7 +48,7 @@
 - macOS и Linux;
 - исходник 1024 px: `resources/GidroLogIcon_1024.png`.
 
-**Меню Q, внизу:** «ОМДЖЕТ ГидроЛог 0.1.2» (версия как в заголовке окна), ниже «Andrew Kena», ниже дата сборки ДД.ММ.ГГГГ (`src/Toolbar/SelectViewDropdown.qml`).
+**Меню Q, внизу:** «ОМДЖЕТ ГидроЛог 0.1.3» (версия как в заголовке окна), ниже «Andrew Kena», ниже дата сборки ДД.ММ.ГГГГ (`src/Toolbar/SelectViewDropdown.qml`).
 
 **Единицы измерения — по-русски везде:** `Fact.units` в QML отдаёт `displayUnits()` = `FactMetaData::gidroLogRuUnits(cookedUnits())` (м, м/с, км/ч, уз, с, мс, мкс, °, В, А, мА·ч, °C, дБм, Гц, Па, кг…). Строки единиц из `QGroundControl.unitsConversion` тоже переводятся. C++-код по-прежнему работает с английскими `cookedUnits()`.
 
@@ -199,6 +199,80 @@
 - **Эхолот как `m36.lua`:** каждые 350 мс `DISTANCE_SENSOR`, `RANGEFINDER`, `WATER_DEPTH`, `M36TEMP` и сообщения «M36: …».
 - **Аварийный стоп:** принимает `DO_AUX_FUNCTION` 31 (член `MockLink::_motorEStop`). При стопе лодка останавливается накатом, но остаётся в арме; сообщения «Emergency Stop» / «Emergency Stop released».
 
+### Версия 0.1.3: что добавлено
+
+**Режимы.** В списке режимов на тулбаре остались только Manual, Acro, Steering, Hold, Loiter, Auto, RTL, Smart RTL, Guided (`src/Toolbar/FlightModeIndicator.qml`).
+
+**Меню Q:**
+
+- свои двухцветные иконки (белый + синий): `resources/GidroLogMenuMap/Plan/Analyze/Vessel/Settings/Exit.svg`;
+- у `SubMenuButton` новое свойство `imageOriginalColors`, чтобы иконка не перекрашивалась в один цвет.
+
+**Карта.** Значок позиции наземной станции заменён схематичным пультом (`resources/QGCLogoFull.svg`, `QGCLogoArrow.svg`).
+
+**Панель управления, значок фото.** В строке с сиреной и мигалкой справа появился значок-пин.
+
+- На каждый снимок он мигает синим `#2196F3` ~1,5 с.
+- Источник — `vehicle.cameraTriggerPoints`: пополняется по `CAMERA_IMAGE_CAPTURED` / `CAMERA_FEEDBACK`.
+- Значок: `resources/GidroLogPhotoPin.svg`.
+
+**Аварийный стоп с пульта.** В «Дополнительно» есть строка «Аварийный стоп (Motor stop)», она связана с кнопкой СТОП.
+
+- «Авто» (по умолчанию) — канал, у которого на борту `RCx_OPTION = 31`.
+- Можно задать «Не назначен» или канал 1–16, а также порог.
+- Значения: `estopChannel`, `estopThreshold` в `gidroLogSettings`.
+- Когда канал включён, кнопка показывает «СНЯТЬ СТОП».
+
+**НАСТРОЙКИ ПРОГРАММЫ.**
+
+Скрыто:
+
+- страницы ADSB Server, PX4 Log Transfer, Remote ID (`pages/SettingsPages.json`, `"visible": "false"`);
+- в FlyView: MAVLink Actions, панель нескольких бортов, DIGICAM_CONTROL;
+- во вкладке «Карты»: блоки «Токены» и «Учётная запись Mapbox».
+
+Изменено:
+
+- **Язык:** только «Русский», English — в списке, но выбрать нельзя (`AppSettings.cc` принудительно ставит `QLocale::Russian`).
+- **Цветовая схема:** Тёмная / Светлая.
+- **Поиск:** «Поиск по настройкам...».
+- **Справка:** вместо ссылок QGC — инструкция оператора, Markdown встроен в `HelpSettings.qml`.
+- **Ширина:** у всех страниц настроек одна ширина — 70 символов, по центру (`src/AppSettings/SettingsPage.qml`).
+- **Перевод:** переведены вкладки Общие, Единицы, Вид карты, Автоподключение, NMEA, Журналы, Карты, RTK (NTRIP), Телеметрия, Видео, Экран 3D и окно журнала.
+  - Значения источника видео (`videoSource`) не переводятся: это ключи логики.
+
+**ПАРАМЕТРЫ СУДНА.**
+
+- Скрыты вкладки «Корпус», «Подвес», «Удалённая поддержка» (`APMAutoPilotPlugin.cc`, компоненты не создаются).
+- Переведены все остальные вкладки и сводка: заголовки, описания, тексты страниц, окна калибровок и расчётов, плашка «Недоступно, пока судно запущено».
+- Вкладка «Параметры»: переведены только кнопки и вкладки. Названия и описания параметров остаются как в ArduPilot.
+- **Значения параметров по-русски.** `Fact` отдаёт в QML `enumStringsRu` / `bitmaskStringsRu` / `enumStringValueRu` через словарь `FactMetaData::gidroLogRuEnum()`.
+  - Только для параметров борта, `SettingsFact` не трогается.
+  - Запись русского значения обратно работает (`setEnumStringValue` ищет и по русскому имени).
+  - C++-логика по-прежнему видит английские строки.
+
+**Генераторы страниц.** `tools/generators/settings_qml/emit.py` и `config_qml/emit.py` допускают русские заголовки секций: из не-ASCII названия делается стабильный id по md5. После правки JSON страниц нужно «Сборка → Запустить CMake».
+
+**Сообщения.**
+
+- Ошибки команд борта: «Команда «Установка точки возврата (MAV_CMD_DO_SET_HOME)» не поддерживается бортом» и т. п. Для ~35 частых команд есть русские названия (`src/Vehicle/MavCommandQueue.cc`).
+- Также переведены:
+  - «Перезапустите программу / Перезагрузите судно, чтобы изменения вступили в силу» (`Fact.cc`);
+  - сообщение о версии прошивки (`FirmwarePlugin.cc`);
+  - меню клика по карте (`FlyViewMapClickDropPanel.qml`);
+  - «Перед выходом нужно завершить настройку судна…» (`AutoPilotPlugin.cc`);
+  - ошибки TCP/UDP/Serial (`src/Comms/*Link.cc`);
+  - заголовок окон сообщений «ОМДЖЕТ ГидроЛог» (`QGCApplication.cc`);
+  - текст про GPS: «Нет устойчивого сигнала позиционирования».
+- Раздел **АНАЛИЗ** переведён целиком (`src/AnalyzeView/*.qml`), как и страница прошивки.
+
+**Установщик.**
+
+- Имя файла и название в «Программах» содержат версию.
+- Контакт — «Andrew Kena, OMJET», ссылка помощи ведёт на GitHub.
+- Шапка `deploy/windows/installheader.bmp` — иконка и «ОМДЖЕТ ГидроЛог».
+- Путь к шапке передаётся в NSIS с обратными слэшами (`file(TO_NATIVE_PATH)`).
+
 ---
 
 ## Русификация интерфейса
@@ -218,8 +292,12 @@
 | Завершение задания | Задание выполнено, Удалить задание с борта, Оставить задание на борту, Снято кадров… | `src/FlyView/FlyViewMissionCompleteDialog.qml` |
 | Старт задания | «Начать задание», «Начать выполнение текущего задания» | `src/FlyView/GuidedActionsController.qml` |
 | Раздел «Задание» | см. выше | `src/PlanView/*.qml`, `src/Toolbar/PlanViewToolBar.qml`, `src/FlightMap/MapItems/QGCMapPolygonVisuals.qml`, `QGCMapPolylineVisuals.qml` |
+| Настройки программы | все вкладки (кроме значений источника видео), поиск, язык, справка | `src/AppSettings/*.qml`, `pages/*.SettingsUI.json`, `src/Settings/*.SettingsGroup.json` |
+| Параметры судна | вкладки, сводка, страницы, калибровки; значения параметров через `gidroLogRuEnum` | `src/AutoPilotPlugins/APM/*`, `Common/*`, `VehicleConfig/*.json`, `src/Vehicle/VehicleSetup/*`, `src/FactSystem/Fact*.{h,cc}` |
+| Анализ | все страницы | `src/AnalyzeView/*.qml` |
+| Ошибки команд и связи | «Команда … не поддерживается бортом», ошибки TCP/UDP/Serial | `MavCommandQueue.cc`, `src/Comms/*Link.cc` |
 
-Что ещё на английском: названия команд в списке выбора команды (▼), «All» в списке RTK-приёмников, голосовые оповещения и список сообщений в окне статуса.
+Что ещё на английском: названия и описания параметров во вкладке «Параметры» (намеренно), редкие значения параметров без записи в словаре, голосовые оповещения.
 
 ---
 
@@ -268,7 +346,7 @@ Add-Content .git\info\exclude "CMakePresets.json.off"
 2. Конфигурация **Выпуск** (Release): **Проекты → Сборка → Добавить → Выпуск**, **Ctrl+B**. exe появится в `build\Desktop_Qt_6_11_1_MSVC2022_64bit_Release\` (без Qt-библиотек сам не запустится).
 3. **Проекты → Сборка → Этапы сборки → Подробнее → цели:** отметить **`qgc-package`**, **Ctrl+B**. Результат: `OMJETGidroLog-installer-AMD64.exe` (CPack NSIS, `QGC_BUILD_INSTALLER=ON`, `cmake/install/CPack/CreateCPackNSIS.cmake`). Потом снять галочку.
 4. В Release нет симулятора MockLink.
-5. Шапка установщика `deploy/windows/installheader.bmp` (150×57) пока от QGC.
+5. Шапка установщика `deploy/windows/installheader.bmp` (150×57) — иконка и «ОМДЖЕТ ГидроЛог». Установщик: `OMJETGidroLog-0.1.3-installer-AMD64.exe`.
 
 Коммит и отправка на GitHub — из терминала на ПК:
 
@@ -337,6 +415,8 @@ git switch gidrolog; git merge master
 | `src/AppSettings/GidroLogExtraSettings.qml` | Настройки → Общие → «Дополнительно» |
 | `src/Comms/MockLink/MockLinkBoatSim.h/.cc` | симулятор катера с эхолотом |
 | `resources/GidroLogIcon*.png`, `GidroLogSiren.svg`, `GidroLogBeacon.svg` | иконка приложения, значки сирены и мигалки |
+| `resources/GidroLogMenu*.svg` | иконки меню Q |
+| `resources/GidroLogPhotoPin.svg` | значок фото на панели управления |
 
 ### Изменённые файлы QGC
 
@@ -397,6 +477,15 @@ git switch gidrolog; git merge master
 - упрощённая карточка точки;
 - перевод выпадающих списков.
 
+**Ждёт проверки (0.1.3):**
+
+- иконки меню Q и значок фото (мигание при съёмке);
+- аварийный стоп с канала пульта («Авто» по `RCx_OPTION = 31`);
+- русские заголовки в настройках и параметрах судна (после «Запустить CMake»);
+- значения параметров по-русски и их запись;
+- скрытые вкладки «Корпус», «Подвес», «Удалённая поддержка»;
+- единая ширина страниц настроек.
+
 **В планах:**
 
 - изобаты с подписями;
@@ -405,6 +494,5 @@ git switch gidrolog; git merge master
 - сохранение трека;
 - сирена и мигалка через сервовыходы;
 - имитация затвора в симуляторе;
-- перевод списка команд, голосовых оповещений;
-- шапка установщика с логотипом ОМДЖЕТ;
+- перевод голосовых оповещений и описаний параметров (по желанию);
 - сборка APK.

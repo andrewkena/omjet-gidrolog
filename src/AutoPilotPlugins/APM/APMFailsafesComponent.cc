@@ -17,13 +17,13 @@ QString APMFailsafesComponent::description() const
 {
     switch (_vehicle->vehicleType()) {
     case MAV_TYPE_SUBMARINE:
-        return tr("Configure failsafe actions and leak detection.");
+        return QStringLiteral("Настройка аварийных действий и датчика протечки.");
     case MAV_TYPE_GROUND_ROVER:
-        return tr("Configure battery, GCS, throttle, and EKF failsafes.");
+        return QStringLiteral("Аварийные режимы: батарея, связь со станцией, газ, EKF.");
     case MAV_TYPE_FIXED_WING:
-        return tr("Configure battery, GCS, and throttle failsafes.");
+        return QStringLiteral("Аварийные режимы: батарея, связь со станцией, газ.");
     default:
-        return tr("Configure battery, GCS, RC, throttle, EKF, and dead reckoning failsafes.");
+        return QStringLiteral("Аварийные режимы: батарея, связь со станцией, пульт, газ, EKF, счисление пути.");
     }
 }
 

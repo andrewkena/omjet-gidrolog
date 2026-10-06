@@ -195,7 +195,7 @@ Item {
                 x: tableView.contentX + (tableView.width - width) / 2
                 y: tableView.contentY + (tableView.height - height) / 2
                 color: qgcPal.colorGrey
-                text: qsTr("No log entries")
+                text: qsTr("Записей нет")
                 visible: tableView.rows === 0
             }
 
@@ -250,7 +250,7 @@ Item {
                     width: Math.max(filterFlickable.width, implicitWidth)
 
                     QGCButton {
-                        text: qsTr("Categories")
+                        text: qsTr("Категории")
 
                         onClicked: filtersDialogFactory.open()
                     }
@@ -258,7 +258,7 @@ Item {
                     QGCComboBox {
                         id: levelCombo
 
-                        model: [qsTr("All Levels"), qsTr("Debug"), qsTr("Info"), qsTr("Warning"), qsTr("Critical"), qsTr("Fatal")]
+                        model: [qsTr("Все уровни"), qsTr("Отладка"), qsTr("Инфо"), qsTr("Предупреждение"), qsTr("Критично"), qsTr("Фатально")]
                         sizeToContents: true
 
                         Component.onCompleted: currentIndex = LogManager.model.filterLevel + 1
@@ -270,7 +270,7 @@ Item {
                     QGCComboBox {
                         id: categoryCombo
 
-                        model: [qsTr("All Categories")].concat(LogManager.model.categoriesList)
+                        model: [qsTr("Все категории")].concat(LogManager.model.categoriesList)
                         sizeToContents: true
 
                         onActivated: index => {
@@ -283,13 +283,13 @@ Item {
 
                         Layout.fillWidth: true
                         Layout.minimumWidth: _margin * 10
-                        placeholderText: qsTr("Search…")
+                        placeholderText: qsTr("Поиск…")
 
                         onTextChanged: LogManager.model.setFilterTextDeferred(text)
                     }
 
                     QGCButton {
-                        ToolTip.text: qsTr("Regex search")
+                        ToolTip.text: qsTr("Поиск по регулярному выражению")
                         ToolTip.visible: hovered
                         checkable: true
                         checked: LogManager.model.filterRegex
@@ -301,7 +301,7 @@ Item {
                     QGCLabel {
                         color: qgcPal.colorRed
                         font.bold: true
-                        text: qsTr("\u26A0 Disk Error")
+                        text: qsTr("\u26A0 Ошибка диска")
                         visible: LogManager.hasError
 
                         QGCMouseArea {
@@ -312,13 +312,13 @@ Item {
                     }
 
                     QGCButton {
-                        text: qsTr("Save")
+                        text: qsTr("Сохранить")
 
                         onClicked: saveFileDialog.openForSave()
                     }
 
                     QGCButton {
-                        text: qsTr("Clear")
+                        text: qsTr("Очистить")
 
                         onClicked: LogManager.model.clear()
                     }
@@ -331,7 +331,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: headerView.height + _margin
         anchors.top: parent.top
-        text: qsTr("Show Latest")
+        text: qsTr("К последним")
         visible: tableView._loadCompleted && !tableView._atBottom && tableView.rows > 0
         opacity: 0.75
 
@@ -357,7 +357,7 @@ Item {
 
         defaultSuffix: _suffixes[QGroundControl.settingsManager.logManagerSettings.saveFormat.rawValue]
         folder: QGroundControl.settingsManager.appSettings.logSavePath
-        title: qsTr("Save app log")
+        title: qsTr("Сохранить лог приложения")
 
         onAcceptedForSave: file => {
             LogManager.writeMessages(file)

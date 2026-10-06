@@ -21,7 +21,8 @@
                     "enableWhen": "useChecklistValue"
                 },
                 {
-                    "setting": "appSettings.enableMultiVehiclePanel"
+                    "setting": "appSettings.enableMultiVehiclePanel",
+                    "showWhen": "false"
                 },
                 {
                     "setting": "flyViewSettings.keepMapCenteredOnVehicle"
@@ -30,7 +31,8 @@
                     "setting": "flyViewSettings.showLogReplayStatusBar"
                 },
                 {
-                    "setting": "flyViewSettings.showSimpleCameraControl"
+                    "setting": "flyViewSettings.showSimpleCameraControl",
+                    "showWhen": "false"
                 },
                 {
                     "setting": "flyViewSettings.updateHomePosition"
@@ -70,6 +72,7 @@
         },
         {
             "component": "MavlinkActionSettings",
+            "showWhen": "false",
             "sectionName": "MAVLink Actions",
             "keywords": [
                 "mavlink action",

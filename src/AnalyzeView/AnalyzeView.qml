@@ -21,6 +21,13 @@ Rectangle {
     // loader clears the source and tears down this component.
     Component.onDestruction: mainWindow.destroyInPanelAnalyzePage()
 
+    // GidroLog: Russian page names (titles come from QGCCorePlugin in C++)
+    function _ruPage(name) {
+        const map = { "Log Viewer": qsTr("Просмотр логов"), "Onboard Logs": qsTr("Логи на борту"), "GeoTag Images": qsTr("Геопривязка снимков"),
+                      "MAVLink Console": qsTr("Консоль MAVLink"), "MAVLink Inspector": qsTr("Инспектор MAVLink"), "Vibration": qsTr("Вибрации") }
+        return map[name] !== undefined ? map[name] : name
+    }
+
     function _loadPage(source) {
         // Clear reference before calling mainWindow.createAnalyzePage (which destroys the old item).
         _currentItem = null
@@ -94,7 +101,7 @@ Rectangle {
                 Component.onCompleted: {
                     if (count > 0) {
                         _currentPage = QGroundControl.corePlugin.analyzePages[0]
-                        panelContainer.title = _currentPage.title
+                        panelContainer.title = _ruPage(_currentPage.title)
                         _updatePanelSource()
                     }
                 }
@@ -102,7 +109,7 @@ Rectangle {
                 SubMenuButton {
                     objectName:         "analyzeButton_" + modelData.title
                     imageResource:      modelData.icon
-                    text:               modelData.title
+                    text:               _ruPage(modelData.title)   // GidroLog
                     width:              buttonColumn._maxButtonWidth
                     checked:            _currentPage === modelData
 
@@ -111,7 +118,7 @@ Rectangle {
                             return
                         }
                         _currentPage        = modelData
-                        panelContainer.title = modelData.title
+                        panelContainer.title = _ruPage(modelData.title)
                         _updatePanelSource()
                     }
                 }
@@ -168,7 +175,7 @@ Rectangle {
 
     QGCLabel {
         anchors.centerIn:   panelContainer
-        text:               qsTr("Requires a connected vehicle")
+        text:               qsTr("Нужно подключение к борту")
         visible:            _currentPage && _currentPage.requiresVehicle && !_activeVehicle
     }
 }

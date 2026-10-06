@@ -18,6 +18,7 @@ Button {
     property var    imageColor:     undefined
     property string imageResource:  "/qmlimages/subMenuButtonImage.png"     ///< Button image
     property bool   largeSize:      false
+    property bool   imageOriginalColors: false                               ///< GidroLog: show multi-colour icon as-is
     property bool   showHighlight:  control.pressed | control.checked
 
     property size   sourceSize:     Qt.size(ScreenTools.defaultFontPixelHeight * 2, ScreenTools.defaultFontPixelHeight * 2)
@@ -60,6 +61,18 @@ Button {
             color:                  imageColor ? imageColor : (control.setupComplete ? titleBar.color : "red")
             source:                 control.imageResource
             sourceSize:             control.sourceSize
+            visible:                !control.imageOriginalColors
+        }
+
+        // GidroLog: two-tone menu icons keep their own colours
+        Image {
+            anchors.fill:           image
+            fillMode:               Image.PreserveAspectFit
+            mipmap:                 true
+            smooth:                 true
+            source:                 control.imageOriginalColors ? control.imageResource : ""
+            sourceSize:             control.sourceSize
+            visible:                control.imageOriginalColors
         }
 
         QGCLabel {

@@ -12,7 +12,7 @@ import QGroundControl.LogViewer
 AnalyzePage {
     id: logViewerPage
     pageComponent: pageComponent
-    pageDescription: qsTr("Open and inspect DataFlash (.bin), PX4 ULog (.ulg), and telemetry (.tlog) logs in a unified workflow.")
+    pageDescription: qsTr("Просмотр логов DataFlash (.bin), PX4 ULog (.ulg) и телеметрии (.tlog).")
     allowPopout: true
 
     Component {
@@ -80,7 +80,7 @@ AnalyzePage {
                     }
 
                     if (!ok) {
-                        QGroundControl.showMessageDialog(logViewerPage, qsTr("Log Viewer"), errorMessage)
+                        QGroundControl.showMessageDialog(logViewerPage, qsTr("Просмотр логов"), errorMessage)
                         pendingBinFile = ""
                         return
                     }
@@ -111,7 +111,7 @@ AnalyzePage {
                 spacing: ScreenTools.defaultFontPixelWidth
 
                 QGCButton {
-                    text: qsTr("Open .bin")
+                    text: qsTr("Открыть .bin")
                     visible: QGroundControl.apmFirmwareSupported
                     onClicked: {
                         openDialog.nameFilters = ["DataFlash Logs (*.bin *.BIN *.log *.LOG)"]
@@ -120,7 +120,7 @@ AnalyzePage {
                 }
 
                 QGCButton {
-                    text: qsTr("Open .ulg")
+                    text: qsTr("Открыть .ulg")
                     onClicked: {
                         openDialog.nameFilters = ["PX4 ULog Files (*.ulg *.ULG)"]
                         openDialog.openForLoad()
@@ -128,11 +128,11 @@ AnalyzePage {
                 }
 
                 QGCButton {
-                    text: qsTr("Open .tlog")
+                    text: qsTr("Открыть .tlog")
                     onClicked: {
                         const activeVehicle = QGroundControl.multiVehicleManager.activeVehicle
                         if (activeVehicle && !activeVehicle.isOfflineEditingVehicle) {
-                            QGroundControl.showMessageDialog(logViewerPage, qsTr("Log Viewer"), qsTr("Close active vehicle connections before starting telemetry replay."))
+                            QGroundControl.showMessageDialog(logViewerPage, qsTr("Просмотр логов"), qsTr("Перед воспроизведением телеметрии закройте подключения к борту."))
                             return
                         }
                         openDialog.nameFilters = ["Telemetry Logs (*.tlog *.TLOG)"]
@@ -141,7 +141,7 @@ AnalyzePage {
                 }
 
                 QGCButton {
-                    text: qsTr("Clear")
+                    text: qsTr("Очистить")
                     enabled: logViewerController.hasLoadedLog
                     onClicked: {
                         clearLoadedLogState(true)
@@ -151,12 +151,12 @@ AnalyzePage {
                 QGCLabel {
                     Layout.fillWidth: true
                     elide: Text.ElideMiddle
-                    text: logViewerController.hasLoadedLog ? logViewerController.currentLogPath.replace(/.*[/\\]/, "") : qsTr("No log selected")
+                    text: logViewerController.hasLoadedLog ? logViewerController.currentLogPath.replace(/.*[/\\]/, "") : qsTr("Лог не выбран")
                 }
 
                 QGCLabel {
                     visible: logViewerController.hasLoadedLog
-                    text: qsTr("Start time:")
+                    text: qsTr("Время начала:")
                 }
 
                 QGCLabel {
@@ -166,12 +166,12 @@ AnalyzePage {
                     visible: logViewerController.hasLoadedLog
                     text: _hasStartTime
                              ? Qt.formatDateTime(logParser.startTime, Qt.locale().dateTimeFormat(Locale.ShortFormat))
-                             : qsTr("N/A")
+                             : qsTr("н/д")
                 }
 
                 QGCLabel {
                     visible: logViewerController.hasLoadedLog && logParser.detectedVehicleType.length > 0
-                    text: qsTr("Vehicle:")
+                    text: qsTr("Борт:")
                 }
 
                 QGCLabel {
@@ -186,7 +186,7 @@ AnalyzePage {
                 spacing: ScreenTools.defaultFontPixelWidth
 
                 QGCLabel {
-                    text: qsTr("Loading...")
+                    text: qsTr("Загрузка...")
                 }
 
                 QGCSlider {
@@ -204,7 +204,7 @@ AnalyzePage {
                 spacing: ScreenTools.defaultFontPixelWidth
 
                 QGCButton {
-                    text: replayController.isPlaying ? qsTr("Pause") : qsTr("Play")
+                    text: replayController.isPlaying ? qsTr("Пауза") : qsTr("Воспроизвести")
                     onClicked: replayController.isPlaying = !replayController.isPlaying
                 }
 
@@ -258,10 +258,10 @@ AnalyzePage {
                 id: mainTabBar
                 Layout.fillWidth: true
 
-                QGCTabButton { text: qsTr("Charting") }
-                QGCTabButton { text: qsTr("Map") }
-                QGCTabButton { text: qsTr("Parameters") }
-                QGCTabButton { text: qsTr("Messages") }
+                QGCTabButton { text: qsTr("Графики") }
+                QGCTabButton { text: qsTr("Карта") }
+                QGCTabButton { text: qsTr("Параметры") }
+                QGCTabButton { text: qsTr("Сообщения") }
             }
 
             StackLayout {
@@ -439,14 +439,14 @@ AnalyzePage {
                             QGCLabel {
                                 anchors.centerIn: parent
                                 visible: logParser.parseComplete && !_mapTab._hasPath
-                                text: qsTr("No GPS data found in this log")
+                                text: qsTr("В логе нет данных GPS")
                                 font.italic: true
                             }
 
                             QGCLabel {
                                 anchors.centerIn: parent
                                 visible: !logParser.parseComplete
-                                text: qsTr("Load a log file to view the flight path")
+                                text: qsTr("Откройте лог, чтобы увидеть трек")
                                 font.italic: true
                             }
 
@@ -458,7 +458,7 @@ AnalyzePage {
                                 transformOrigin: Item.BottomRight
                                 visible: _mapTab._showAltChart
                                 iconSource: _mapTab._altChartCollapsed ? "/res/chevron-double-up.svg" : "/res/chevron-double-down.svg"
-                                Accessible.name: _mapTab._altChartCollapsed ? qsTr("Expand altitude chart") : qsTr("Collapse altitude chart")
+                                Accessible.name: _mapTab._altChartCollapsed ? qsTr("Развернуть график высоты") : qsTr("Свернуть график высоты")
                                 ToolTip.text: Accessible.name
                                 ToolTip.visible: hovered
                                 onClicked: _mapTab._altChartCollapsed = !_mapTab._altChartCollapsed
@@ -527,7 +527,7 @@ AnalyzePage {
 
             QGCFileDialog {
                 id: openDialog
-                title: qsTr("Select log file")
+                title: qsTr("Выберите файл лога")
                 folder: QGroundControl.settingsManager.appSettings.logSavePath
                 selectFolder: false
 
@@ -541,8 +541,8 @@ AnalyzePage {
                         if (!replayLink) {
                             QGroundControl.showMessageDialog(
                                 logViewerPage,
-                                qsTr("Log Viewer"),
-                                qsTr("Failed to start telemetry replay for the selected .tlog file.")
+                                qsTr("Просмотр логов"),
+                                qsTr("Не удалось запустить воспроизведение выбранного .tlog.")
                             )
                             close()
                             return

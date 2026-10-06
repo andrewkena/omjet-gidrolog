@@ -232,44 +232,14 @@ DECLARE_SETTINGSFACT_NO_FUNC(AppSettings, qLocaleLanguage)
         _qLocaleLanguageFact = _createSettingsFact(qLocaleLanguageName);
         connect(_qLocaleLanguageFact, &Fact::rawValueChanged, this, &AppSettings::_qLocaleLanguageChanged);
 
+        // GidroLog: Russian is the working language; English is listed but not selectable yet (translation in progress)
         FactMetaData*   metaData            = _qLocaleLanguageFact->metaData();
-        QStringList     rgEnumStrings;
-        QVariantList    rgEnumValues;
-
-        // System is always an available selection
-        rgEnumStrings.append(_rgLanguageInfo[0].languageName);
-        rgEnumValues.append(_rgLanguageInfo[0].languageId);
-
-        for (const auto& languageInfo: _rgLanguageInfo) {
-            if (_rgReleaseLanguages.contains(languageInfo.languageId)) {
-                rgEnumStrings.append(languageInfo.languageName);
-                rgEnumValues.append(languageInfo.languageId);
-            }
-        }
-        for (const auto& languageInfo: _rgLanguageInfo) {
-            if (_rgPartialLanguages.contains(languageInfo.languageId)) {
-                rgEnumStrings.append(QString(languageInfo.languageName) + AppSettings::tr(" (Partial)"));
-                rgEnumValues.append(languageInfo.languageId);
-            }
-        }
-#ifdef QGC_DAILY_BUILD
-        // Only daily builds include full set of languages for testing purposes
-        for (const auto& languageInfo: _rgLanguageInfo) {
-            if (!_rgReleaseLanguages.contains(languageInfo.languageId) && !_rgPartialLanguages.contains(languageInfo.languageId)) {
-                rgEnumStrings.append(QString(languageInfo.languageName) + AppSettings::tr(" (Test Only)"));
-                rgEnumValues.append(languageInfo.languageId);
-            }
-        }
-#endif
-#ifdef QT_DEBUG
-        // Debug builds include pseudo-localization for UI layout testing
-        rgEnumStrings.append(AppSettings::tr("Pseudo Localization (Test Only)"));
-        rgEnumValues.append(QLocale::Esperanto);
-#endif
+        const QStringList  rgEnumStrings    = { QStringLiteral("Русский"), QStringLiteral("English (перевод в работе, недоступно)") };
+        const QVariantList rgEnumValues     = { QVariant(static_cast<int>(QLocale::Russian)), QVariant(static_cast<int>(QLocale::English)) };
         metaData->setEnumInfo(rgEnumStrings, rgEnumValues);
 
-        if (_qLocaleLanguageFact->enumIndex() == -1) {
-            _qLocaleLanguageFact->setRawValue(QLocale::AnyLanguage);
+        if (_qLocaleLanguageFact->rawValue().toInt() != QLocale::Russian) {
+            _qLocaleLanguageFact->setRawValue(QLocale::Russian);
         }
     }
     return _qLocaleLanguageFact;
@@ -277,6 +247,11 @@ DECLARE_SETTINGSFACT_NO_FUNC(AppSettings, qLocaleLanguage)
 
 void AppSettings::_qLocaleLanguageChanged()
 {
+    // GidroLog: only Russian can be selected for now
+    if (_qLocaleLanguageFact && _qLocaleLanguageFact->rawValue().toInt() != QLocale::Russian) {
+        _qLocaleLanguageFact->setRawValue(QLocale::Russian);
+        return;
+    }
     qgcApp()->setLanguage();
 }
 

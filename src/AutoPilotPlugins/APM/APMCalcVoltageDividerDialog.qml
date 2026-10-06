@@ -7,7 +7,7 @@ import QGroundControl.Controls
 
 QGCPopupDialog {
     id:         popupDialog
-    title:      qsTr("Calculate Voltage Multiplier")
+    title:      qsTr("Расчёт множителя напряжения")
     buttons:    Dialog.Close
 
     property int  batteryIndex: 0
@@ -26,14 +26,14 @@ QGCPopupDialog {
         QGCLabel {
             Layout.preferredWidth:  gridLayout.width
             wrapMode:               Text.WordWrap
-            text:                   qsTr("Measure battery voltage using an external voltmeter and enter the value below. Click Calculate to set the new adjusted voltage multiplier.")
+            text:                   qsTr("Измерьте напряжение батареи внешним вольтметром и введите значение ниже. Нажмите «Рассчитать», чтобы задать новый множитель напряжения.")
         }
 
         QGCLabel {
             Layout.preferredWidth:  gridLayout.width
             wrapMode:               Text.WordWrap
             visible:                !_batteryFactGroup || _batteryFactGroup.voltage.value === 0
-            text:                   qsTr("Vehicle voltage telemetry is not available. Connect to a vehicle with a powered battery to enable automatic calculation.")
+            text:                   qsTr("Нет телеметрии напряжения. Подключитесь к судну с включённой батареей для автоматического расчёта.")
             color:                  qgcPal.warningText
         }
 
@@ -41,11 +41,11 @@ QGCPopupDialog {
             id:         gridLayout
             columns:    2
 
-            QGCLabel { text: qsTr("Measured voltage:") }
+            QGCLabel { text: qsTr("Измеренное напряжение:") }
             QGCTextField { id: measuredVoltage; numericValuesOnly: true }
 
             QGCLabel {
-                text:    qsTr("Vehicle voltage:")
+                text:    qsTr("Напряжение по данным судна:")
                 visible: _batteryFactGroup && _batteryFactGroup.voltage.value !== 0
             }
             QGCLabel {
@@ -53,12 +53,12 @@ QGCPopupDialog {
                 visible: _batteryFactGroup && _batteryFactGroup.voltage.value !== 0
             }
 
-            QGCLabel { text: qsTr("Voltage multiplier:") }
+            QGCLabel { text: qsTr("Множитель напряжения:") }
             FactLabel { fact: batParams.battVoltMult }
         }
 
         QGCButton {
-            text:    qsTr("Calculate And Set")
+            text:    qsTr("Рассчитать и задать")
             enabled: _batteryFactGroup && _batteryFactGroup.voltage.value !== 0
 
             onClicked: {

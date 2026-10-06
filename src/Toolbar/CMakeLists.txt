@@ -44,6 +44,12 @@ qt_add_resources(
     BASE "${CMAKE_SOURCE_DIR}/resources"
     FILES "${CMAKE_SOURCE_DIR}/resources/FlyingPaperPlane.svg" "${CMAKE_SOURCE_DIR}/resources/GearWithPaperPlane.svg"
           "${CMAKE_SOURCE_DIR}/resources/OpenDoor.svg" "${CMAKE_SOURCE_DIR}/resources/VehicleMessages.png"
+          "${CMAKE_SOURCE_DIR}/resources/GidroLogMenuMap.svg"
+          "${CMAKE_SOURCE_DIR}/resources/GidroLogMenuPlan.svg"
+          "${CMAKE_SOURCE_DIR}/resources/GidroLogMenuAnalyze.svg"
+          "${CMAKE_SOURCE_DIR}/resources/GidroLogMenuVessel.svg"
+          "${CMAKE_SOURCE_DIR}/resources/GidroLogMenuSettings.svg"
+          "${CMAKE_SOURCE_DIR}/resources/GidroLogMenuExit.svg"
 )
 
 qt_add_resources(

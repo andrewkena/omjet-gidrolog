@@ -72,6 +72,8 @@ public:
     static QString appSettingsHorizontalDistanceUnitsString();
     /// GidroLog: Russian display name of a units string ("m" -> "м"); unknown units are returned as is
     static QString gidroLogRuUnits(const QString &units);
+    /// GidroLog: Russian display name of an enum/bitmask string; unknown strings are returned as is
+    static QString gidroLogRuEnum(const QString &str);
 
     /// Converts from meters to the user specified vertical distance unit
     static QVariant metersToAppSettingsVerticalDistanceUnits(const QVariant &meters);

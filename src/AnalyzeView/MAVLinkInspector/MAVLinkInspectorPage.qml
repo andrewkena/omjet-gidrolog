@@ -59,7 +59,7 @@ AnalyzePage {
             anchors.left:       parent.left
             anchors.right:      parent.right
             QGCLabel {
-                text:           qsTr("Inspect real time MAVLink messages.")
+                text:           qsTr("Просмотр сообщений MAVLink в реальном времени.")
             }
             RowLayout {
                 Layout.alignment:   Qt.AlignRight
@@ -156,7 +156,7 @@ AnalyzePage {
                         columnSpacing:  ScreenTools.defaultFontPixelWidth
                         rowSpacing:     ScreenTools.defaultFontPixelHeight * 0.25
                         QGCLabel {
-                            text: qsTr("Message:")
+                            text: qsTr("Сообщение:")
                             Layout.minimumWidth: ScreenTools.defaultFontPixelWidth * 20
                         }
                         QGCLabel {
@@ -164,23 +164,23 @@ AnalyzePage {
                             text: curMessage ? curMessage.name + ' (' + curMessage.id + ')' : ""
                         }
 
-                        QGCLabel { text: qsTr("Component:") }
+                        QGCLabel { text: qsTr("Компонент:") }
                         QGCLabel { text: curMessage ? curMessage.compId : "" }
 
-                        QGCLabel { text: qsTr("Count:") }
+                        QGCLabel { text: qsTr("Количество:") }
                         QGCLabel { text: curMessage ? curMessage.count : "" }
 
-                        QGCLabel { text: qsTr("Actual Rate:") }
-                        QGCLabel { text: curMessage ? curMessage.actualRateHz.toFixed(1) + qsTr("Hz") : "" }
+                        QGCLabel { text: qsTr("Фактическая частота:") }
+                        QGCLabel { text: curMessage ? curMessage.actualRateHz.toFixed(1) + qsTr("Гц") : "" }
 
-                        QGCLabel { text: qsTr("Set Rate:") }
+                        QGCLabel { text: qsTr("Задать частоту:") }
                         QGCComboBox {
                             id: msgRateCombo
                             textRole: "text"
                             valueRole: "value"
                             model: [
-                                { value: -1, text: qsTr("Disabled") },
-                                { value: 0, text: qsTr("Default") },
+                                { value: -1, text: qsTr("Отключено") },
+                                { value: 0, text: qsTr("По умолчанию") },
                                 { value: 1, text: qsTr("1Hz") },
                                 { value: 2, text: qsTr("2Hz") },
                                 { value: 3, text: qsTr("3Hz") },
@@ -224,19 +224,19 @@ AnalyzePage {
                         rowSpacing:         0
                         width:              parent.width
                         QGCLabel {
-                            text:       qsTr("Name")
+                            text:       qsTr("Имя")
                         }
                         QGCLabel {
-                            text:       qsTr("Value")
+                            text:       qsTr("Значение")
                         }
                         QGCLabel {
-                            text:       qsTr("Type")
+                            text:       qsTr("Тип")
                         }
                         QGCLabel {
-                            text:       qsTr("Plot 1")
+                            text:       qsTr("График 1")
                         }
                         QGCLabel {
-                            text:       qsTr("Plot 2")
+                            text:       qsTr("График 2")
                         }
 
                         //---------------------------------------------------------

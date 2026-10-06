@@ -10,7 +10,7 @@ import QGroundControl.Controls
 AnalyzePage {
     id:                 vibrationPage
     pageComponent:      pageComponent
-    pageDescription:    qsTr("Analyze vibration associated with your vehicle.")
+    pageDescription:    qsTr("Анализ вибраций борта.")
     allowPopout:        true
 
     property var    _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle : QGroundControl.multiVehicleManager.offlineEditingVehicle
@@ -182,19 +182,19 @@ AnalyzePage {
                 anchors.left:       barRow.right
 
                 QGCLabel {
-                    text: qsTr("Clip count")
+                    text: qsTr("Число клиппингов")
                 }
 
                 QGCLabel {
-                    text: qsTr("Accel 1: %1").arg(_activeVehicle.vibration.clipCount1.rawValue)
+                    text: qsTr("Аксел. 1: %1").arg(_activeVehicle.vibration.clipCount1.rawValue)
                 }
 
                 QGCLabel {
-                    text: qsTr("Accel 2: %1").arg(_activeVehicle.vibration.clipCount2.rawValue)
+                    text: qsTr("Аксел. 2: %1").arg(_activeVehicle.vibration.clipCount2.rawValue)
                 }
 
                 QGCLabel {
-                    text: qsTr("Accel 3: %1").arg(_activeVehicle.vibration.clipCount3.rawValue)
+                    text: qsTr("Аксел. 3: %1").arg(_activeVehicle.vibration.clipCount3.rawValue)
                 }
             }
 
@@ -208,7 +208,7 @@ AnalyzePage {
                     anchors.fill:           parent
                     horizontalAlignment:    Text.AlignHCenter
                     verticalAlignment:      Text.AlignVCenter
-                    text:                   qsTr("Not Available")
+                    text:                   qsTr("Недоступно")
                 }
             }
         }

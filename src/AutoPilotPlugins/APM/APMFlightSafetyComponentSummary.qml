@@ -22,12 +22,12 @@ Item {
         spacing: 0
 
         VehicleSummaryRow {
-            labelText: qsTr("Arming Checks:")
+            labelText: qsTr("Предстартовые проверки:")
             valueText: {
                 if (_armingCheckFact) {
-                    return _armingCheckFact.value & 1 ? qsTr("Enabled") : qsTr("Some disabled")
+                    return _armingCheckFact.value & 1 ? qsTr("Включено") : qsTr("Частично отключены")
                 } else if (_armingSkipCheckFact) {
-                    return _armingSkipCheckFact.value === 0 ? qsTr("Enabled") : qsTr("Some disabled")
+                    return _armingSkipCheckFact.value === 0 ? qsTr("Включено") : qsTr("Частично отключены")
                 }
                 return ""
             }
@@ -38,19 +38,19 @@ Item {
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("GeoFence:")
+            labelText: qsTr("Геозона:")
             valueText: {
                 if(_copterFenceEnable && _copterFenceType) {
                     if(_copterFenceEnable.value == 0 || _copterFenceType.value == 0) {
-                        return qsTr("Disabled")
+                        return qsTr("Отключено")
                     } else {
                         if(_copterFenceType.value == 1) {
-                            return qsTr("Altitude")
+                            return qsTr("Высота")
                         }
                         if(_copterFenceType.value == 2) {
-                            return qsTr("Circle")
+                            return qsTr("Круг")
                         }
-                        return qsTr("Altitude,Circle")
+                        return qsTr("Высота, круг")
                     }
                 }
                 return ""
@@ -59,24 +59,24 @@ Item {
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("GeoFence:")
+            labelText: qsTr("Геозона:")
             valueText: _copterFenceAction ? (_copterFenceAction.value == 0 ?
-                           qsTr("Report only") :
-                           (_copterFenceAction.value == 1 ? qsTr("RTL or Land") : qsTr("Unknown"))) : ""
+                           qsTr("Только сообщать") :
+                           (_copterFenceAction.value == 1 ? qsTr("Возврат или посадка") : qsTr("Неизвестно"))) : ""
             visible: controller.vehicle.multiRotor && _copterFenceEnable && _copterFenceEnable.value !== 0
         }
 
         VehicleSummaryRow {
-            labelText:  qsTr("RTL min alt:")
-            valueText:  fact ? (fact.value == 0 ? qsTr("current") : fact.valueString + " " + fact.units) : ""
+            labelText:  qsTr("Мин. высота возврата:")
+            valueText:  fact ? (fact.value == 0 ? qsTr("текущая") : fact.valueString + " " + fact.units) : ""
             visible:    controller.vehicle.multiRotor
 
             property Fact fact: controller.getParameterFact(-1, "RTL_ALT_M", false /* reportMissing */)
         }
 
         VehicleSummaryRow {
-            labelText:  qsTr("RTL min alt:")
-            valueText:  fact ? (fact.value < 0 ? qsTr("current") : fact.valueString + " " + fact.units) : ""
+            labelText:  qsTr("Мин. высота возврата:")
+            valueText:  fact ? (fact.value < 0 ? qsTr("текущая") : fact.valueString + " " + fact.units) : ""
             visible:    controller.vehicle.fixedWing
 
             property Fact fact: controller.getParameterFact(-1, "RTL_ALTITUDE", false /* reportMissing */)

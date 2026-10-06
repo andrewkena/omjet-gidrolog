@@ -4,48 +4,48 @@
     "QGC.MetaData.Facts": [
         {
             "name": "correctionSource",
-            "shortDesc": "Vehicle correction source",
-            "longDesc": "Automatic selects one fresh stream for vehicles, preferring the local base station, then NTRIP, then UDP. Manual selection never falls back to another source category. All forwards every fresh stream and may mix base stations. NTRIP UDP forwarding is independent.",
+            "shortDesc": "Источник поправок для судна",
+            "longDesc": "«Автоматически» — выбирается один актуальный поток: сначала локальная базовая станция, затем NTRIP, затем UDP. При ручном выборе переключения на другой тип источника нет. «Все источники» — пересылаются все актуальные потоки, базовые станции могут смешиваться. Пересылка NTRIP по UDP работает независимо.",
             "type": "uint8",
-            "enumStrings": "Automatic,Local base station,NTRIP,UDP,All sources",
+            "enumStrings": "Автоматически,Локальная базовая станция,NTRIP,UDP,Все источники",
             "enumValues": "0,1,2,3,4",
             "default": 0,
-            "label": "Vehicle correction source"
+            "label": "Источник поправок для судна"
         },
         {
             "name": "correctionSourceInstance",
-            "shortDesc": "Correction stream",
-            "longDesc": "Leave empty to choose a fresh stream within the selected source category. A specific endpoint remains pinned when unavailable, without fallback to another stream.",
+            "shortDesc": "Поток поправок",
+            "longDesc": "Оставьте пустым, чтобы выбирать актуальный поток в выбранном типе источника. Указанный поток остаётся закреплённым даже при недоступности, без переключения на другой.",
             "type": "string",
             "default": "",
-            "label": "Correction stream"
+            "label": "Поток поправок"
         },
         {
             "name": "rtcmUdpInputEnabled",
-            "shortDesc": "Enable UDP RTCM input",
-            "longDesc": "Listen on a UDP port for incoming RTCM3 correction data and forward it to connected vehicles via MAVLink GPS_RTCM_DATA.",
+            "shortDesc": "Приём RTCM по UDP",
+            "longDesc": "Принимать поправки RTCM3 на UDP-порт и пересылать их на подключённые суда через MAVLink GPS_RTCM_DATA.",
             "type": "bool",
             "default": false,
-            "label": "Enable UDP RTCM input"
+            "label": "Приём RTCM по UDP"
         },
         {
             "name": "rtcmUdpInputPort",
-            "shortDesc": "UDP RTCM input port",
-            "longDesc": "UDP port to listen on for incoming RTCM3 correction data.",
+            "shortDesc": "UDP-порт приёма RTCM",
+            "longDesc": "UDP-порт для приёма поправок RTCM3.",
             "type": "uint32",
             "default": 13320,
             "min": 1024,
             "max": 65535,
             "decimalPlaces": 0,
-            "label": "UDP RTCM input port"
+            "label": "UDP-порт приёма RTCM"
         },
         {
             "name": "rtcmUdpValidate",
-            "shortDesc": "UDP RTCM enable validation",
-            "longDesc": "Enable validation of incoming data as RTCM and drop garbage (improves security).",
+            "shortDesc": "Проверка данных RTCM по UDP",
+            "longDesc": "Проверять, что входящие данные — RTCM, и отбрасывать мусор (повышает безопасность).",
             "type": "bool",
             "default": true,
-            "label": "UDP RTCM enable validation"
+            "label": "Проверка данных RTCM по UDP"
         }
     ]
 }

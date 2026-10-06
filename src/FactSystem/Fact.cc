@@ -180,7 +180,17 @@ int Fact::valueIndex(const QString &value) const
 
 void Fact::setEnumStringValue(const QString &value)
 {
-    const int index = valueIndex(value);
+    int index = valueIndex(value);
+    if (index == -1 && _metaData) {
+        // GidroLog: QML may hand back the Russian display name
+        const QStringList strings = _metaData->enumStrings();
+        for (int i = 0; i < strings.count(); i++) {
+            if (FactMetaData::gidroLogRuEnum(strings[i]) == value) {
+                index = i;
+                break;
+            }
+        }
+    }
     if (index != -1) {
         setCookedValue(_metaData->enumValues()[index]);
     }
@@ -280,7 +290,7 @@ int Fact::enumIndex()
             }
             // Current value is not in list, add it manually. Defer the signal since this can
             // be called from within a QML binding read and a synchronous emit causes binding loops.
-            _metaData->addEnumInfo(tr("Unknown: %1").arg(rawValue().toString()), rawValue());
+            _metaData->addEnumInfo(QStringLiteral("Неизвестно: %1").arg(rawValue().toString()), rawValue());
             QMetaObject::invokeMethod(this, &Fact::enumsChanged, Qt::QueuedConnection);
             return index;
         }
@@ -404,7 +414,7 @@ QString Fact::_variantToString(const QVariant &variant, int decimalPlaces) const
         break;
     }
     case FactMetaData::valueTypeBool:
-        valueString = variant.toBool() ? tr("true") : tr("false");
+        valueString = variant.toBool() ? QStringLiteral("да") : QStringLiteral("нет");
         break;
     case FactMetaData::valueTypeElapsedTimeInSeconds:
     {
@@ -937,9 +947,39 @@ void Fact::_checkForRebootMessaging()
         // showAppMessage() logs during unit tests (and additionally shows the real
         // dialog in UI test mode), so tests assert this messaging via expectAppMessage()
         if (vehicleRebootRequired()) {
-            QGC::showRebootVehicleMessage(tr("Reboot vehicle for changes to take effect."));
+            QGC::showRebootVehicleMessage(QStringLiteral("Перезагрузите судно, чтобы изменения вступили в силу."));
         } else if (qgcRebootRequired()) {
-            QGC::showRebootAppMessage(tr("Restart application for changes to take effect."));
+            QGC::showRebootAppMessage(QStringLiteral("Перезапустите программу, чтобы изменения вступили в силу."));
         }
     }
+}
+
+// GidroLog: Russian names for vehicle parameter enums/bitmasks shown in QML.
+// SettingsFact values are left untouched: some settings logic compares the original strings.
+QStringList Fact::enumStringsRu() const
+{
+    QStringList list = enumStrings();
+    if (!inherits("SettingsFact")) {
+        for (QString &s : list) {
+            s = FactMetaData::gidroLogRuEnum(s);
+        }
+    }
+    return list;
+}
+
+QStringList Fact::bitmaskStringsRu() const
+{
+    QStringList list = bitmaskStrings();
+    if (!inherits("SettingsFact")) {
+        for (QString &s : list) {
+            s = FactMetaData::gidroLogRuEnum(s);
+        }
+    }
+    return list;
+}
+
+QString Fact::enumStringValueRu()
+{
+    const QString s = enumStringValue();
+    return inherits("SettingsFact") ? s : FactMetaData::gidroLogRuEnum(s);
 }

@@ -76,7 +76,7 @@
     },
     "sections": [
         {
-            "title": "Battery Failsafe",
+            "title": "Аварийный режим батареи",
             "keywords": [
                 "voltage",
                 "mah",
@@ -97,46 +97,46 @@
             "controls": [
                 {
                     "param": "FS_LOW_ACT",
-                    "label": "Low action",
+                    "label": "Действие при низком заряде",
                     "control": "combobox",
                     "optional": true,
                     "showWhen": "controller.parameterExists(-1, _fullParamName(\"FS_LOW_ACT\"))"
                 },
                 {
                     "param": "FS_CRT_ACT",
-                    "label": "Critical action",
+                    "label": "Действие при критическом заряде",
                     "control": "combobox",
                     "optional": true,
                     "showWhen": "controller.parameterExists(-1, _fullParamName(\"FS_CRT_ACT\"))"
                 },
                 {
                     "param": "LOW_VOLT",
-                    "label": "Low voltage threshold",
+                    "label": "Порог низкого напряжения",
                     "optional": true,
                     "showWhen": "controller.parameterExists(-1, _fullParamName(\"LOW_VOLT\"))"
                 },
                 {
                     "param": "CRT_VOLT",
-                    "label": "Critical voltage threshold",
+                    "label": "Порог критического напряжения",
                     "optional": true,
                     "showWhen": "controller.parameterExists(-1, _fullParamName(\"CRT_VOLT\"))"
                 },
                 {
                     "param": "LOW_MAH",
-                    "label": "Low mAh threshold",
+                    "label": "Порог низкого остатка (мА·ч)",
                     "optional": true,
                     "showWhen": "controller.parameterExists(-1, _fullParamName(\"LOW_MAH\"))"
                 },
                 {
                     "param": "CRT_MAH",
-                    "label": "Critical mAh threshold",
+                    "label": "Порог критического остатка (мА·ч)",
                     "optional": true,
                     "showWhen": "controller.parameterExists(-1, _fullParamName(\"CRT_MAH\"))"
                 }
             ]
         },
         {
-            "title": "Ground Station Failsafe",
+            "title": "Потеря связи со станцией",
             "keywords": [
                 "gcs",
                 "ground station",
@@ -149,7 +149,7 @@
             "showWhen": "controller.vehicle.multiRotor",
             "controls": [
                 {
-                    "label": "Enabled",
+                    "label": "Включено",
                     "control": "toggleCheckbox",
                     "toggleCheckbox": {
                         "checked": "_copterGcsEnabled",
@@ -159,43 +159,43 @@
                 },
                 {
                     "param": "FS_GCS_TIMEOUT",
-                    "label": "Timeout",
+                    "label": "Тайм-аут",
                     "showWhen": "_copterGcsEnabled"
                 },
                 {
                     "param": "FS_GCS_ENABLE",
-                    "label": "Action:",
+                    "label": "Действие:",
                     "control": "radiogroup",
                     "raw": true,
                     "showWhen": "_copterGcsEnabled",
                     "options": [
                         {
-                            "label": "RTL",
+                            "label": "Возврат",
                             "value": "_copterGcsParamValueRtl",
                             "checked": "_copterGcsEnable.rawValue === _copterGcsParamValueRtl"
                         },
                         {
-                            "label": "Land",
+                            "label": "Посадка",
                             "value": "_copterGcsParamValueLand",
                             "checked": "_copterGcsEnable.rawValue === _copterGcsParamValueLand"
                         },
                         {
-                            "label": "SmartRTL or RTL",
+                            "label": "Умный возврат или возврат",
                             "value": "_copterGcsParamValueSmartRtlOrRtl",
                             "checked": "_copterGcsEnable.rawValue === _copterGcsParamValueSmartRtlOrRtl"
                         },
                         {
-                            "label": "SmartRTL or Land",
+                            "label": "Умный возврат или посадка",
                             "value": "_copterGcsParamValueSmartRtlOrLand",
                             "checked": "_copterGcsEnable.rawValue === _copterGcsParamValueSmartRtlOrLand"
                         },
                         {
-                            "label": "Auto DO_LAND_START or RTL",
+                            "label": "Авто DO_LAND_START или возврат",
                             "value": "_copterGcsParamValueAutoDoLandOrRtl",
                             "checked": "_copterGcsEnable.rawValue === _copterGcsParamValueAutoDoLandOrRtl"
                         },
                         {
-                            "label": "Brake or Land",
+                            "label": "Торможение или посадка",
                             "value": "_copterGcsParamValueBrakeOrLand",
                             "checked": "_copterGcsEnable.rawValue === _copterGcsParamValueBrakeOrLand"
                         }
@@ -203,12 +203,12 @@
                 },
                 {
                     "control": "label",
-                    "label": "Ignore failsafe if:",
+                    "label": "Не срабатывать, если:",
                     "showWhen": "_fsOptionsAvailable && _copterGcsEnabled"
                 },
                 {
                     "param": "FS_OPTIONS",
-                    "label": "In Auto mode",
+                    "label": "В режиме Auto",
                     "control": "bitmaskCheckbox",
                     "bitMask": 2,
                     "indent": true,
@@ -217,7 +217,7 @@
                 },
                 {
                     "param": "FS_OPTIONS",
-                    "label": "In pilot control",
+                    "label": "При ручном управлении",
                     "control": "bitmaskCheckbox",
                     "bitMask": 16,
                     "indent": true,
@@ -227,7 +227,7 @@
             ]
         },
         {
-            "title": "Ground Station Failsafe",
+            "title": "Потеря связи со станцией",
             "keywords": [
                 "gcs",
                 "ground station",
@@ -240,7 +240,7 @@
             "showWhen": "controller.vehicle.fixedWing",
             "controls": [
                 {
-                    "label": "Enabled",
+                    "label": "Включено",
                     "control": "toggleCheckbox",
                     "toggleCheckbox": {
                         "checked": "_planeGcsEnabled",
@@ -250,7 +250,7 @@
                 },
                 {
                     "param": "FS_GCS_ENABL",
-                    "label": "Trigger:",
+                    "label": "Условие:",
                     "control": "radiogroup",
                     "raw": true,
                     "showWhen": "_planeGcsEnabled",
@@ -261,12 +261,12 @@
                             "checked": "_planeGcsEnable && _planeGcsEnable.rawValue === _planeGcsParamValueHeartbeat"
                         },
                         {
-                            "label": "Heartbeat and Remote RSSI",
+                            "label": "Heartbeat и RSSI борта",
                             "value": "_planeGcsParamValueHeartbeatAndRssi",
                             "checked": "_planeGcsEnable && _planeGcsEnable.rawValue === _planeGcsParamValueHeartbeatAndRssi"
                         },
                         {
-                            "label": "Heartbeat and AUTO",
+                            "label": "Heartbeat и AUTO",
                             "value": "_planeGcsParamValueHeartbeatAndAuto",
                             "checked": "_planeGcsEnable && _planeGcsEnable.rawValue === _planeGcsParamValueHeartbeatAndAuto"
                         }
@@ -275,7 +275,7 @@
             ]
         },
         {
-            "title": "Ground Station Failsafe",
+            "title": "Потеря связи со станцией",
             "keywords": [
                 "gcs",
                 "ground station",
@@ -288,7 +288,7 @@
             "showWhen": "_roverFirmware",
             "controls": [
                 {
-                    "label": "Enabled",
+                    "label": "Включено",
                     "control": "toggleCheckbox",
                     "toggleCheckbox": {
                         "checked": "_roverGcsEnabled",
@@ -298,16 +298,16 @@
                 },
                 {
                     "param": "FS_GCS_TIMEOUT",
-                    "label": "Timeout",
+                    "label": "Тайм-аут",
                     "showWhen": "_roverGcsEnabled"
                 },
                 {
                     "control": "label",
-                    "label": "Ignore failsafe if:",
+                    "label": "Не срабатывать, если:",
                     "showWhen": "_roverGcsEnabled"
                 },
                 {
-                    "label": "In Auto mode",
+                    "label": "В режиме Auto",
                     "control": "toggleCheckbox",
                     "indent": true,
                     "showWhen": "_roverGcsEnabled",
@@ -319,7 +319,7 @@
                 },
                 {
                     "param": "FS_OPTIONS",
-                    "label": "In Hold mode",
+                    "label": "В режиме Hold",
                     "control": "bitmaskCheckbox",
                     "bitMask": 1,
                     "indent": true,
@@ -329,7 +329,7 @@
             ]
         },
         {
-            "title": "Failsafe Triggers",
+            "title": "Условия срабатывания",
             "keywords": [
                 "throttle",
                 "pwm",
@@ -340,7 +340,7 @@
             "showWhen": "controller.vehicle.fixedWing",
             "controls": [
                 {
-                    "label": "Throttle PWM threshold",
+                    "label": "Порог ШИМ газа",
                     "control": "toggleCheckbox",
                     "toggleCheckbox": {
                         "checked": "_planeThrEnabled",
@@ -350,44 +350,44 @@
                 },
                 {
                     "param": "THR_FS_VALUE",
-                    "label": "PWM threshold",
+                    "label": "Порог ШИМ",
                     "optional": true,
                     "showWhen": "_planeThrEnabled"
                 },
                 {
                     "param": "FS_SHORT_ACTN",
-                    "label": "Short failsafe action",
+                    "label": "Действие при кратковременной потере",
                     "control": "combobox",
                     "optional": true
                 },
                 {
                     "param": "FS_LONG_ACTN",
-                    "label": "Long failsafe action",
+                    "label": "Действие при длительной потере",
                     "control": "combobox",
                     "optional": true
                 },
                 {
                     "param": "FS_LONG_TIMEOUT",
-                    "label": "Long failsafe timeout",
+                    "label": "Тайм-аут длительной потери",
                     "optional": true
                 },
                 {
                     "param": "Q_TRANS_FAIL_ACT",
-                    "label": "VTOL transition failure action",
+                    "label": "Действие при сбое перехода VTOL",
                     "control": "combobox",
                     "optional": true,
                     "showWhen": "controller.parameterExists(-1, \"Q_TRANS_FAIL\")"
                 },
                 {
                     "param": "Q_TRANS_FAIL",
-                    "label": "VTOL transition failure timeout",
+                    "label": "Тайм-аут сбоя перехода VTOL",
                     "optional": true,
                     "showWhen": "controller.parameterExists(-1, \"Q_TRANS_FAIL\")"
                 }
             ]
         },
         {
-            "title": "RC Failsafe",
+            "title": "Потеря сигнала пульта",
             "keywords": [
                 "radio",
                 "receiver",
@@ -399,16 +399,16 @@
             "controls": [
                 {
                     "control": "label",
-                    "label": "Always enabled"
+                    "label": "Всегда включено"
                 },
                 {
                     "control": "label",
-                    "label": "Ignore failsafe if:",
+                    "label": "Не срабатывать, если:",
                     "showWhen": "_fsOptionsAvailable"
                 },
                 {
                     "param": "FS_OPTIONS",
-                    "label": "In Auto mode",
+                    "label": "В режиме Auto",
                     "control": "bitmaskCheckbox",
                     "bitMask": 1,
                     "indent": true,
@@ -417,7 +417,7 @@
                 },
                 {
                     "param": "FS_OPTIONS",
-                    "label": "In Guided mode",
+                    "label": "В режиме Guided",
                     "control": "bitmaskCheckbox",
                     "bitMask": 4,
                     "indent": true,
@@ -426,7 +426,7 @@
                 },
                 {
                     "param": "FS_OPTIONS",
-                    "label": "Landing",
+                    "label": "Посадка",
                     "control": "bitmaskCheckbox",
                     "bitMask": 8,
                     "indent": true,
@@ -436,7 +436,7 @@
             ]
         },
         {
-            "title": "Throttle Failsafe",
+            "title": "Аварийный режим газа",
             "keywords": [
                 "throttle",
                 "pwm",
@@ -447,7 +447,7 @@
             "showWhen": "controller.vehicle.multiRotor",
             "controls": [
                 {
-                    "label": "Enabled",
+                    "label": "Включено",
                     "control": "toggleCheckbox",
                     "toggleCheckbox": {
                         "checked": "_copterThrEnabled",
@@ -457,43 +457,43 @@
                 },
                 {
                     "param": "FS_THR_VALUE",
-                    "label": "PWM threshold",
+                    "label": "Порог ШИМ",
                     "showWhen": "_copterThrEnabled"
                 },
                 {
                     "param": "FS_THR_ENABLE",
-                    "label": "Action:",
+                    "label": "Действие:",
                     "control": "radiogroup",
                     "raw": true,
                     "showWhen": "_copterThrEnabled",
                     "options": [
                         {
-                            "label": "Always RTL",
+                            "label": "Всегда возврат",
                             "value": "_copterThrParamValueRtl",
                             "checked": "_copterThrEnable.rawValue === _copterThrParamValueRtl"
                         },
                         {
-                            "label": "Always Land",
+                            "label": "Всегда посадка",
                             "value": "_copterThrParamValueLand",
                             "checked": "_copterThrEnable.rawValue === _copterThrParamValueLand"
                         },
                         {
-                            "label": "Always SmartRTL or RTL",
+                            "label": "Всегда умный возврат или возврат",
                             "value": "_copterThrParamValueSmartRtlOrRtl",
                             "checked": "_copterThrEnable.rawValue === _copterThrParamValueSmartRtlOrRtl"
                         },
                         {
-                            "label": "Always SmartRTL or Land",
+                            "label": "Всегда умный возврат или посадка",
                             "value": "_copterThrParamValueSmartRtlOrLand",
                             "checked": "_copterThrEnable.rawValue === _copterThrParamValueSmartRtlOrLand"
                         },
                         {
-                            "label": "Auto DO_LAND_START or RTL",
+                            "label": "Авто DO_LAND_START или возврат",
                             "value": "_copterThrParamValueAutoDoLandOrRtl",
                             "checked": "_copterThrEnable.rawValue === _copterThrParamValueAutoDoLandOrRtl"
                         },
                         {
-                            "label": "Always Brake or Land",
+                            "label": "Всегда торможение или посадка",
                             "value": "_copterThrParamValueBrakeOrLand",
                             "checked": "_copterThrEnable.rawValue === _copterThrParamValueBrakeOrLand"
                         }
@@ -501,12 +501,12 @@
                 },
                 {
                     "control": "label",
-                    "label": "Ignore failsafe if:",
+                    "label": "Не срабатывать, если:",
                     "showWhen": "_fsOptionsAvailable && _copterThrEnabled"
                 },
                 {
                     "param": "FS_OPTIONS",
-                    "label": "In Auto mode",
+                    "label": "В режиме Auto",
                     "control": "bitmaskCheckbox",
                     "bitMask": 1,
                     "indent": true,
@@ -515,7 +515,7 @@
                 },
                 {
                     "param": "FS_OPTIONS",
-                    "label": "In Guided mode",
+                    "label": "В режиме Guided",
                     "control": "bitmaskCheckbox",
                     "bitMask": 4,
                     "indent": true,
@@ -524,7 +524,7 @@
                 },
                 {
                     "param": "FS_OPTIONS",
-                    "label": "Landing",
+                    "label": "Посадка",
                     "control": "bitmaskCheckbox",
                     "bitMask": 8,
                     "indent": true,
@@ -534,7 +534,7 @@
             ]
         },
         {
-            "title": "Throttle Failsafe",
+            "title": "Аварийный режим газа",
             "keywords": [
                 "throttle",
                 "pwm",
@@ -545,7 +545,7 @@
             "showWhen": "_roverFirmware",
             "controls": [
                 {
-                    "label": "Enabled",
+                    "label": "Включено",
                     "control": "toggleCheckbox",
                     "toggleCheckbox": {
                         "checked": "_roverThrEnabled",
@@ -555,56 +555,56 @@
                 },
                 {
                     "param": "FS_THR_VALUE",
-                    "label": "PWM threshold",
+                    "label": "Порог ШИМ",
                     "optional": true,
                     "showWhen": "_roverThrEnabled"
                 },
                 {
                     "param": "FS_TIMEOUT",
-                    "label": "Timeout",
+                    "label": "Тайм-аут",
                     "optional": true,
                     "showWhen": "_roverThrEnabled"
                 },
                 {
                     "param": "FS_ACTION",
-                    "label": "Action:",
+                    "label": "Действие:",
                     "control": "radiogroup",
                     "raw": true,
                     "optional": true,
                     "showWhen": "_roverThrEnabled",
                     "options": [
                         {
-                            "label": "Nothing",
+                            "label": "Ничего",
                             "value": "_roverFsActionParamValueNothing",
                             "checked": "_roverFsAction && _roverFsAction.rawValue === _roverFsActionParamValueNothing"
                         },
                         {
-                            "label": "RTL",
+                            "label": "Возврат",
                             "value": "_roverFsActionParamValueRtl",
                             "checked": "_roverFsAction && _roverFsAction.rawValue === _roverFsActionParamValueRtl"
                         },
                         {
-                            "label": "Hold",
+                            "label": "Стоп (Hold)",
                             "value": "_roverFsActionParamValueHold",
                             "checked": "_roverFsAction && _roverFsAction.rawValue === _roverFsActionParamValueHold"
                         },
                         {
-                            "label": "SmartRTL or RTL",
+                            "label": "Умный возврат или возврат",
                             "value": "_roverFsActionParamValueSmartRtlOrRtl",
                             "checked": "_roverFsAction && _roverFsAction.rawValue === _roverFsActionParamValueSmartRtlOrRtl"
                         },
                         {
-                            "label": "SmartRTL or Hold",
+                            "label": "Умный возврат или Hold",
                             "value": "_roverFsActionParamValueSmartRtlOrHold",
                             "checked": "_roverFsAction && _roverFsAction.rawValue === _roverFsActionParamValueSmartRtlOrHold"
                         },
                         {
-                            "label": "Terminate",
+                            "label": "Аварийное отключение",
                             "value": "_roverFsActionParamValueTerminate",
                             "checked": "_roverFsAction && _roverFsAction.rawValue === _roverFsActionParamValueTerminate"
                         },
                         {
-                            "label": "Loiter or Hold",
+                            "label": "Удержание или Hold",
                             "value": "_roverFsActionParamValueLoiterOrHold",
                             "checked": "_roverFsAction && _roverFsAction.rawValue === _roverFsActionParamValueLoiterOrHold"
                         }
@@ -612,11 +612,11 @@
                 },
                 {
                     "control": "label",
-                    "label": "Ignore failsafe if:",
+                    "label": "Не срабатывать, если:",
                     "showWhen": "_roverThrEnabled"
                 },
                 {
-                    "label": "In Auto mode",
+                    "label": "В режиме Auto",
                     "control": "toggleCheckbox",
                     "indent": true,
                     "showWhen": "_roverThrEnabled",
@@ -628,7 +628,7 @@
                 },
                 {
                     "param": "FS_OPTIONS",
-                    "label": "In Hold mode",
+                    "label": "В режиме Hold",
                     "control": "bitmaskCheckbox",
                     "bitMask": 1,
                     "indent": true,
@@ -638,7 +638,7 @@
             ]
         },
         {
-            "title": "EKF Failsafe",
+            "title": "Аварийный режим EKF",
             "keywords": [
                 "ekf",
                 "extended kalman filter",
@@ -649,7 +649,7 @@
             "showWhen": "controller.vehicle.multiRotor",
             "controls": [
                 {
-                    "label": "Enabled",
+                    "label": "Включено",
                     "control": "toggleCheckbox",
                     "toggleCheckbox": {
                         "checked": "_copterEkfEnabled",
@@ -659,28 +659,28 @@
                 },
                 {
                     "param": "FS_EKF_THRESH",
-                    "label": "Threshold",
+                    "label": "Порог",
                     "showWhen": "_copterEkfEnabled"
                 },
                 {
                     "param": "FS_EKF_ACTION",
-                    "label": "Action:",
+                    "label": "Действие:",
                     "control": "radiogroup",
                     "raw": true,
                     "showWhen": "_copterEkfEnabled",
                     "options": [
                         {
-                            "label": "Land if position required",
+                            "label": "Посадка, если нужна позиция",
                             "value": "_copterEkfParamValueLandIfPosRequired",
                             "checked": "_copterEkfAction.rawValue === _copterEkfParamValueLandIfPosRequired"
                         },
                         {
-                            "label": "AltHold if position required",
+                            "label": "AltHold, если нужна позиция",
                             "value": "_copterEkfParamValueAltHoldIfPosRequired",
                             "checked": "_copterEkfAction.rawValue === _copterEkfParamValueAltHoldIfPosRequired"
                         },
                         {
-                            "label": "Land from all modes",
+                            "label": "Посадка из всех режимов",
                             "value": "_copterEkfParamValueLandAllModes",
                             "checked": "_copterEkfAction.rawValue === _copterEkfParamValueLandAllModes"
                         }
@@ -688,12 +688,12 @@
                 },
                 {
                     "control": "label",
-                    "label": "Ignore failsafe if:",
+                    "label": "Не срабатывать, если:",
                     "showWhen": "_fsOptionsAvailable && _copterEkfEnabled"
                 },
                 {
                     "param": "FS_OPTIONS",
-                    "label": "Landing",
+                    "label": "Посадка",
                     "control": "bitmaskCheckbox",
                     "bitMask": 8,
                     "indent": true,
@@ -703,7 +703,7 @@
             ]
         },
         {
-            "title": "EKF Failsafe",
+            "title": "Аварийный режим EKF",
             "keywords": [
                 "ekf",
                 "extended kalman filter",
@@ -714,7 +714,7 @@
             "showWhen": "_roverFirmware",
             "controls": [
                 {
-                    "label": "Enabled",
+                    "label": "Включено",
                     "control": "toggleCheckbox",
                     "toggleCheckbox": {
                         "checked": "_roverEkfEnabled",
@@ -724,25 +724,25 @@
                 },
                 {
                     "param": "FS_EKF_THRESH",
-                    "label": "Threshold",
+                    "label": "Порог",
                     "optional": true,
                     "showWhen": "_roverEkfEnabled"
                 },
                 {
                     "param": "FS_EKF_ACTION",
-                    "label": "Action:",
+                    "label": "Действие:",
                     "control": "radiogroup",
                     "raw": true,
                     "optional": true,
                     "showWhen": "_roverEkfEnabled",
                     "options": [
                         {
-                            "label": "Hold",
+                            "label": "Стоп (Hold)",
                             "value": "_roverEkfParamValueHold",
                             "checked": "_roverEkfAction && _roverEkfAction.rawValue === _roverEkfParamValueHold"
                         },
                         {
-                            "label": "Report only",
+                            "label": "Только сообщать",
                             "value": "_roverEkfParamValueReportOnly",
                             "checked": "_roverEkfAction && _roverEkfAction.rawValue === _roverEkfParamValueReportOnly"
                         }
@@ -751,7 +751,7 @@
             ]
         },
         {
-            "title": "Dead Reckoning Failsafe",
+            "title": "Аварийный режим счисления пути",
             "keywords": [
                 "dead reckoning",
                 "gps loss",
@@ -761,7 +761,7 @@
             "showWhen": "controller.vehicle.multiRotor && controller.parameterExists(-1, \"FS_DR_ENABLE\")",
             "controls": [
                 {
-                    "label": "Enabled",
+                    "label": "Включено",
                     "control": "toggleCheckbox",
                     "toggleCheckbox": {
                         "checked": "_drEnabled",
@@ -771,39 +771,39 @@
                 },
                 {
                     "param": "FS_DR_TIMEOUT",
-                    "label": "Timeout",
+                    "label": "Тайм-аут",
                     "optional": true,
                     "showWhen": "_drEnabled"
                 },
                 {
                     "param": "FS_DR_ENABLE",
-                    "label": "Action:",
+                    "label": "Действие:",
                     "control": "radiogroup",
                     "raw": true,
                     "showWhen": "_drEnabled",
                     "options": [
                         {
-                            "label": "Land",
+                            "label": "Посадка",
                             "value": "_drParamValueLand",
                             "checked": "_drEnable.rawValue === _drParamValueLand"
                         },
                         {
-                            "label": "RTL",
+                            "label": "Возврат",
                             "value": "_drParamValueRtl",
                             "checked": "_drEnable.rawValue === _drParamValueRtl"
                         },
                         {
-                            "label": "SmartRTL or RTL",
+                            "label": "Умный возврат или возврат",
                             "value": "_drParamValueSmartRtlOrRtl",
                             "checked": "_drEnable.rawValue === _drParamValueSmartRtlOrRtl"
                         },
                         {
-                            "label": "SmartRTL or Land",
+                            "label": "Умный возврат или посадка",
                             "value": "_drParamValueSmartRtlOrLand",
                             "checked": "_drEnable.rawValue === _drParamValueSmartRtlOrLand"
                         },
                         {
-                            "label": "Auto Land/Return or RTL",
+                            "label": "Автопосадка/возврат или возврат",
                             "value": "_drParamValueAutoLandOrRtl",
                             "checked": "_drEnable.rawValue === _drParamValueAutoLandOrRtl"
                         }
@@ -811,12 +811,12 @@
                 },
                 {
                     "control": "label",
-                    "label": "Ignore failsafe if:",
+                    "label": "Не срабатывать, если:",
                     "showWhen": "_fsOptionsAvailable && _drEnabled"
                 },
                 {
                     "param": "FS_OPTIONS",
-                    "label": "Landing",
+                    "label": "Посадка",
                     "control": "bitmaskCheckbox",
                     "bitMask": 8,
                     "indent": true,
@@ -826,7 +826,7 @@
             ]
         },
         {
-            "title": "Other Failsafe Options",
+            "title": "Другие аварийные настройки",
             "keywords": [
                 "crash",
                 "vibration",
@@ -836,18 +836,18 @@
             "controls": [
                 {
                     "param": "FS_CRASH_CHECK",
-                    "label": "Crash check failsafe",
+                    "label": "Проверка столкновения",
                     "control": "checkbox"
                 },
                 {
                     "param": "FS_VIBE_ENABLE",
-                    "label": "Vibration failsafe",
+                    "label": "Аварийный режим вибрации",
                     "control": "checkbox",
                     "optional": true
                 },
                 {
                     "param": "FS_OPTIONS",
-                    "label": "Release gripper on any failsafe",
+                    "label": "Открывать захват при любом аварийном режиме",
                     "control": "bitmaskCheckbox",
                     "bitMask": 32,
                     "optional": true,
@@ -856,7 +856,7 @@
             ]
         },
         {
-            "title": "Other Failsafe Options",
+            "title": "Другие аварийные настройки",
             "keywords": [
                 "crash",
                 "vibration",
@@ -865,7 +865,7 @@
             "showWhen": "_roverFirmware",
             "controls": [
                 {
-                    "label": "Crash check failsafe",
+                    "label": "Проверка столкновения",
                     "control": "toggleCheckbox",
                     "toggleCheckbox": {
                         "checked": "_roverCrashEnabled",
@@ -875,18 +875,18 @@
                 },
                 {
                     "param": "FS_CRASH_CHECK",
-                    "label": "Action:",
+                    "label": "Действие:",
                     "control": "radiogroup",
                     "raw": true,
                     "showWhen": "_roverCrashEnabled",
                     "options": [
                         {
-                            "label": "Hold",
+                            "label": "Стоп (Hold)",
                             "value": "_roverCrashParamValueHold",
                             "checked": "_roverCrashCheck.rawValue === _roverCrashParamValueHold"
                         },
                         {
-                            "label": "Hold and Disarm",
+                            "label": "Hold и остановка",
                             "value": "_roverCrashParamValueHoldAndDisarm",
                             "checked": "_roverCrashCheck.rawValue === _roverCrashParamValueHoldAndDisarm"
                         }

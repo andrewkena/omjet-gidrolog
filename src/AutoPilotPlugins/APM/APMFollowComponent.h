@@ -10,7 +10,7 @@ public:
     explicit APMFollowComponent(Vehicle *vehicle, AutoPilotPlugin *autopilot, QObject *parent = nullptr);
 
     QString name() const final { return _name; }
-    QString description() const final { return tr("Configure the vehicle to track the ground station position."); }
+    QString description() const final { return QStringLiteral("Настройка следования судна за наземной станцией."); }
     QString iconResource() const final { return QStringLiteral("/qmlimages/FlightModesComponentIcon.png"); }
     bool requiresSetup() const final { return false; }
     bool setupComplete() const final { return true; }
@@ -22,5 +22,5 @@ public:
     QStringList setupCompleteChangedTriggerList() const final { return QStringList(); }
 
 private:
-    const QString _name = tr("Follow Me");
+    const QString _name = QStringLiteral("Следование");
 };

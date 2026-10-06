@@ -4,7 +4,7 @@
     "groups": [
         {
             "component": "NtripConnectionSettings",
-            "sectionName": "Connection",
+            "sectionName": "Подключение",
             "keywords": [
                 "ntrip",
                 "rtk",
@@ -14,7 +14,7 @@
         },
         {
             "component": "NtripServerSettings",
-            "sectionName": "Server Settings",
+            "sectionName": "Сервер",
             "keywords": [
                 "ntrip server",
                 "rtk",
@@ -28,7 +28,7 @@
         },
         {
             "component": "NtripMountpointBrowser",
-            "sectionName": "Mountpoint Browser",
+            "sectionName": "Точки подключения",
             "keywords": [
                 "mountpoint",
                 "browse",
@@ -36,8 +36,15 @@
             ]
         },
         {
-            "heading": "GGA Position Reporting",
-            "keywords": ["gga", "vrs", "nmea", "position", "network rtk", "ntrip"],
+            "heading": "Передача позиции GGA",
+            "keywords": [
+                "gga",
+                "vrs",
+                "nmea",
+                "position",
+                "network rtk",
+                "ntrip"
+            ],
             "controls": [
                 {
                     "setting": "ntripSettings.ntripGgaPositionSource"
@@ -48,18 +55,28 @@
             ]
         },
         {
-            "heading": "Options",
-            "keywords": ["rtcm", "whitelist", "message filter", "ntrip"],
+            "heading": "Параметры",
+            "keywords": [
+                "rtcm",
+                "whitelist",
+                "message filter",
+                "ntrip"
+            ],
             "controls": [
                 {
                     "setting": "ntripSettings.ntripWhitelist",
-                    "placeholder": "e.g. 1005,1077,1087"
+                    "placeholder": "напр. 1005,1077,1087"
                 }
             ]
         },
         {
-            "heading": "NTRIP UDP Forwarding",
-            "keywords": ["udp forward", "relay", "corrections forward", "rtcm"],
+            "heading": "Пересылка NTRIP по UDP",
+            "keywords": [
+                "udp forward",
+                "relay",
+                "corrections forward",
+                "rtcm"
+            ],
             "controls": [
                 {
                     "setting": "ntripSettings.ntripUdpForwardEnabled"
@@ -75,9 +92,11 @@
             ]
         },
         {
-            "heading": "UDP RTCM Input",
+            "heading": "Приём RTCM по UDP",
             "showWhen": "QGroundControl.settingsManager.gpsCorrectionSettings.userVisible",
-            "keywords": ["udp rtcm"],
+            "keywords": [
+                "udp rtcm"
+            ],
             "controls": [
                 {
                     "setting": "gpsCorrectionSettings.rtcmUdpInputEnabled"
@@ -94,15 +113,31 @@
         },
         {
             "component": "CorrectionRoutingSettings",
-            "sectionName": "Correction Routing",
+            "sectionName": "Маршрутизация поправок",
             "showWhen": "QGroundControl.settingsManager.gpsCorrectionSettings.userVisible && (QGroundControl.settingsManager.gpsCorrectionSettings.correctionSource as SettingsFact).userVisible",
-            "keywords": ["corrections", "rtcm", "source", "stream", "routing", "automatic"]
+            "keywords": [
+                "corrections",
+                "rtcm",
+                "source",
+                "stream",
+                "routing",
+                "automatic"
+            ]
         },
         {
             "component": "CorrectionDiagnostics",
-            "sectionName": "Correction Diagnostics",
+            "sectionName": "Диагностика поправок",
             "showWhen": "QGroundControl.settingsManager.gpsCorrectionSettings.userVisible",
-            "keywords": ["corrections", "rtcm", "diagnostics", "events", "queued", "written", "unconfirmed", "dropped"]
+            "keywords": [
+                "corrections",
+                "rtcm",
+                "diagnostics",
+                "events",
+                "queued",
+                "written",
+                "unconfirmed",
+                "dropped"
+            ]
         }
     ]
 }

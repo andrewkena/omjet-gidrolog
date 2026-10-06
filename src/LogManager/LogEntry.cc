@@ -114,13 +114,13 @@ QVariant LogEntry::columnHeaderData(int section)
 {
     switch (static_cast<Column>(section)) {
         case TimestampColumn:
-            return QStringLiteral("Time");
+            return QStringLiteral("Время");
         case CategoryColumn:
-            return QStringLiteral("Category");
+            return QStringLiteral("Категория");
         case MessageColumn:
-            return QStringLiteral("Message");
+            return QStringLiteral("Сообщение");
         case SourceColumn:
-            return QStringLiteral("Source");
+            return QStringLiteral("Источник");
         case ColumnCount:
             break;
     }

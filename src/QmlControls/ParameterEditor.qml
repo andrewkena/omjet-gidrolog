@@ -40,56 +40,56 @@ Item {
     QGCMenu {
         id:                 toolsMenu
         QGCMenuItem {
-            text:           qsTr("Refresh")
+            text:           qsTr("Обновить")
             onTriggered:	controller.refresh()
         }
         QGCMenuItem {
-            text:           qsTr("Reset all to firmware's defaults")
-            onTriggered:    QGroundControl.showMessageDialog(_root, qsTr("Reset All"),
-                                                         qsTr("Select Reset to reset all parameters to their defaults.\n\nNote that this will also completely reset everything, including UAVCAN nodes, all vehicle settings, setup and calibrations."),
+            text:           qsTr("Сбросить всё к значениям прошивки")
+            onTriggered:    QGroundControl.showMessageDialog(_root, qsTr("Сбросить всё"),
+                                                         qsTr("Нажмите «Сбросить», чтобы вернуть все параметры к значениям по умолчанию.\n\nБудет сброшено всё, включая узлы UAVCAN, настройки судна и калибровки."),
                                                          Dialog.Cancel | Dialog.Reset,
                                                          function() { controller.resetAllToDefaults() })
         }
         QGCMenuItem {
-            text:           qsTr("Reset to vehicle's configuration defaults")
+            text:           qsTr("Сбросить к значениям конфигурации судна")
             visible:        !_activeVehicle.apmFirmware
-            onTriggered:    QGroundControl.showMessageDialog(_root, qsTr("Reset All"),
-                                                         qsTr("Select Reset to reset all parameters to the vehicle's configuration defaults."),
+            onTriggered:    QGroundControl.showMessageDialog(_root, qsTr("Сбросить всё"),
+                                                         qsTr("Нажмите «Сбросить», чтобы вернуть все параметры к значениям конфигурации судна."),
                                                          Dialog.Cancel | Dialog.Reset,
                                                          function() { controller.resetAllToVehicleConfiguration() })
         }
         QGCMenuSeparator { }
         QGCMenuItem {
             objectName:     "parameterEditor_toolLoadFromFile"
-            text:           qsTr("Load from file for review...")
+            text:           qsTr("Загрузить из файла для просмотра...")
             onTriggered: {
-                fileDialog.title =          qsTr("Load Parameters")
+                fileDialog.title =          qsTr("Загрузка параметров")
                 fileDialog.openForLoad()
             }
         }
         QGCMenuItem {
-            text:           qsTr("Save to file...")
+            text:           qsTr("Сохранить в файл...")
             onTriggered: {
-                fileDialog.title =          qsTr("Save Parameters")
+                fileDialog.title =          qsTr("Сохранение параметров")
                 fileDialog.openForSave()
             }
         }
         QGCMenuSeparator { }
         QGCMenuItem {
-            text:           qsTr("Clear all favorites")
+            text:           qsTr("Очистить избранное")
             onTriggered:    controller.clearAllFavorites()
         }
         QGCMenuSeparator { visible: _showRCToParam }
         QGCMenuItem {
-            text:           qsTr("Clear all RC to Param")
+            text:           qsTr("Очистить все привязки RC к параметрам")
             onTriggered:	_activeVehicle.clearAllParamMapRC()
             visible:        _showRCToParam
         }
         QGCMenuSeparator { }
         QGCMenuItem {
-            text:           qsTr("Reboot Vehicle")
-            onTriggered:    QGroundControl.showMessageDialog(_root, qsTr("Reboot Vehicle"),
-                                                         qsTr("Select Ok to reboot vehicle."),
+            text:           qsTr("Перезагрузить судно")
+            onTriggered:    QGroundControl.showMessageDialog(_root, qsTr("Перезагрузить судно"),
+                                                         qsTr("Нажмите OK для перезагрузки судна."),
                                                          Dialog.Cancel | Dialog.Ok,
                                                          function() { _activeVehicle.rebootVehicle() })
         }
@@ -99,7 +99,7 @@ Item {
     QGCFileDialog {
         id:             fileDialog
         folder:         _appSettings.parameterSavePath
-        nameFilters:    [ qsTr("Parameter Files (*.%1)").arg(_appSettings.parameterFileExtension), qsTr("Mission Planner Files (*.param)"), qsTr("All Files (*)") ]
+        nameFilters:    [ qsTr("Файлы параметров (*.%1)").arg(_appSettings.parameterFileExtension), qsTr("Файлы Mission Planner (*.param)"), qsTr("Все файлы (*)") ]
 
         onAcceptedForSave: (file) => {
             controller.saveToFile(file)
@@ -154,12 +154,12 @@ Item {
 
             QGCTextField {
                 id:                     searchText
-                placeholderText:        qsTr("Search")
+                placeholderText:        qsTr("Поиск")
                 onDisplayTextChanged:   controller.searchText = displayText
             }
 
             QGCButton {
-                text: qsTr("Clear")
+                text: qsTr("Очистить")
                 onClicked: {
                     if(ScreenTools.isMobile) {
                         Qt.inputMethod.hide();
@@ -169,7 +169,7 @@ Item {
             }
 
             QGCCheckBox {
-                text:       qsTr("Hide read-only")
+                text:       qsTr("Скрыть только для чтения")
                 checked:    controller.hideReadOnly
                 onClicked:  controller.hideReadOnly = checked
             }
@@ -178,7 +178,7 @@ Item {
         QGCButton {
             Layout.alignment:   Qt.AlignRight
             objectName:         "parameterEditor_toolsButton"
-            text:               qsTr("Tools")
+            text:               qsTr("Инструменты")
             onClicked:          toolsMenu.popup()
         }
     }
@@ -190,9 +190,9 @@ Item {
         anchors.top:        header.bottom
         anchors.topMargin:  _margins
 
-        QGCTabButton { text: qsTr("Full List") }
-        QGCTabButton { text: qsTr("Modified") }
-        QGCTabButton { text: qsTr("Favorites") }
+        QGCTabButton { text: qsTr("Все") }
+        QGCTabButton { text: qsTr("Изменённые") }
+        QGCTabButton { text: qsTr("Избранное") }
 
         onCurrentIndexChanged: {
             controller.showModifiedOnly  = (currentIndex === 1)

@@ -4,110 +4,110 @@
     "QGC.MetaData.Facts": [
         {
             "name": "autoConnectUDP",
-            "shortDesc": "Automatically connect to vehicles detected on UDP network connections.",
+            "shortDesc": "Автоматически подключаться к бортам, обнаруженным по UDP.",
             "longDesc": "If this option is enabled GroundControl will automatically connect to a vehicle which is detected on a UDP communication link.",
             "type": "bool",
             "default": true,
-            "label": "Automatically open a connection over UDP",
+            "label": "Автоподключение по UDP",
             "keywords": "auto connect,udp"
         },
         {
             "name": "autoConnectPixhawk",
-            "shortDesc": "Automatically connect to Pixhawk autopilots detected on USB.",
+            "shortDesc": "Автоматически подключаться к автопилотам Pixhawk по USB.",
             "longDesc": "If this option is enabled GroundControl will automatically connect to a Pixhawk board which is connected via USB.",
             "type": "bool",
             "default": true,
-            "label": "Automatically connect to a Pixhawk board",
+            "label": "Автоподключение Pixhawk",
             "keywords": "auto connect,pixhawk,usb"
         },
         {
             "name": "autoConnectSiKRadio",
-            "shortDesc": "Automatically connect to SiK radio modules detected on serial/USB.",
+            "shortDesc": "Автоматически подключаться к радиомодемам SiK по последовательному порту/USB.",
             "longDesc": "If this option is enabled GroundControl will automatically connect to a vehicle which is detected on a SiK Radio communication link.",
             "type": "bool",
             "default": true,
-            "label": "Automatically connect to a SiK Radio",
+            "label": "Автоподключение радиомодема SiK",
             "keywords": "auto connect,sik radio"
         },
         {
             "name": "autoConnectRTKGPS",
-            "shortDesc": "Automatically connect to RTK GPS receivers detected on USB.",
+            "shortDesc": "Автоматически подключаться к приёмникам RTK GPS по USB.",
             "longDesc": "If this option is enabled GroundControl will automatically connect to an RTK GPS which is connected via USB.",
             "type": "bool",
             "default": true,
-            "label": "Automatically connect to an RTK GPS",
+            "label": "Автоподключение RTK GPS",
             "keywords": "auto connect,rtk gps"
         },
         {
             "name": "autoConnectLibrePilot",
-            "shortDesc": "Automatically connect to LibrePilot autopilots detected on USB.",
+            "shortDesc": "Автоматически подключаться к автопилотам LibrePilot по USB.",
             "longDesc": "If this option is enabled GroundControl will automatically connect to a LibrePilot board which is connected via USB.",
             "type": "bool",
             "default": true,
-            "label": "Automatically connect to a LibrePilot",
+            "label": "Автоподключение LibrePilot",
             "keywords": "auto connect,librepilot"
         },
         {
             "name": "nmeaSource",
-            "shortDesc": "NMEA GPS source for GCS position",
-            "longDesc": "NMEA GPS source for GCS position",
+            "shortDesc": "Источник NMEA GPS для позиции станции",
+            "longDesc": "Источник NMEA GPS для позиции станции",
             "type": "uint32",
-            "enumStrings": "Disabled,UDP Port,Serial Port",
+            "enumStrings": "Отключено,UDP-порт,Последовательный порт",
             "enumValues": "0,1,2",
             "default": 0,
-            "label": "NMEA GPS source for GCS position"
+            "label": "Источник NMEA GPS для позиции станции"
         },
         {
             "name": "autoConnectNmeaPort",
-            "shortDesc": "NMEA GPS serial device for GCS position",
-            "longDesc": "NMEA GPS serial device for GCS position",
+            "shortDesc": "Порт NMEA GPS для позиции станции",
+            "longDesc": "Порт NMEA GPS для позиции станции",
             "type": "string",
             "default": "",
-            "label": "NMEA GPS serial device for GCS position"
+            "label": "Порт NMEA GPS для позиции станции"
         },
         {
             "name": "autoConnectNmeaBaud",
-            "shortDesc": "NMEA GPS Baudrate",
-            "longDesc": "NMEA GPS Baudrate",
+            "shortDesc": "Скорость порта NMEA GPS",
+            "longDesc": "Скорость порта NMEA GPS",
             "type": "uint32",
             "default": 4800,
-            "label": "NMEA GPS Baudrate"
+            "label": "Скорость порта NMEA GPS"
         },
         {
             "name": "autoConnectZeroConf",
-            "shortDesc": "Automatically open a connection with Zero-Conf",
+            "shortDesc": "Автоподключение через Zero-Conf",
             "longDesc": "If this option is enabled GroundControl will automatically connect to a vehicle which is detected over Zero-Conf.",
             "type": "bool",
             "default": true,
-            "label": "Automatically open a connection with Zero-Conf"
+            "label": "Автоподключение через Zero-Conf"
         },
         {
             "name": "udpListenPort",
-            "shortDesc": "UDP port for autoconnect",
+            "shortDesc": "UDP-порт автоподключения",
             "type": "uint32",
             "default": 14550,
-            "label": "UDP port for autoconnect"
+            "label": "UDP-порт автоподключения"
         },
         {
             "name": "udpTargetHostIP",
-            "shortDesc": "UDP target host IP for autoconnect",
+            "shortDesc": "IP узла для автоподключения по UDP",
             "type": "string",
             "default": "",
-            "label": "UDP target host IP for autoconnect"
+            "label": "IP узла для автоподключения по UDP"
         },
         {
             "name": "udpTargetHostPort",
-            "shortDesc": "UDP target host port for autoconnect",
+            "shortDesc": "Порт узла для автоподключения по UDP",
             "type": "uint32",
             "default": 14550,
-            "label": "UDP target host port for autoconnect"
+            "label": "Порт узла для автоподключения по UDP"
         },
         {
             "name": "nmeaUdpPort",
-            "shortDesc": "Udp port to receive NMEA streams",
+            "shortDesc": "UDP-порт для приёма NMEA",
             "type": "uint32",
             "default": 14401,
-            "label": "Udp port to receive NMEA streams"
+            "label": "UDP-порт для приёма NMEA"
         }
     ]
 }

@@ -30,8 +30,8 @@ Item {
 
         SettingsGroupLayout {
             Layout.fillWidth:   true
-            heading:            qsTr("Offline Maps")
-            headingDescription: qsTr("Download map tiles for use when offline")
+            heading:            qsTr("Офлайн-карты")
+            headingDescription: qsTr("Скачайте тайлы карты для работы без интернета")
 
             Repeater {
                 model: _mapEngineManager.tileSets
@@ -44,15 +44,15 @@ Item {
             }
 
             LabelledButton {
-                label:      qsTr("Add New Set")
-                buttonText: qsTr("Add")
+                label:      qsTr("Новый набор")
+                buttonText: qsTr("Добавить")
                 enabled:    !_currentlyImportOrExporting
                 onClicked:  offlineMapEditorComponent.createObject(mainWindow.contentItem).addNewSet()
             }
 
             LabelledButton {
-                label:      qsTr("Import Map Tiles")
-                buttonText: qsTr("Import")
+                label:      qsTr("Импорт тайлов")
+                buttonText: qsTr("Импорт")
                 visible:    QGroundControl.corePlugin.options.showOfflineMapImport
                 enabled:    !_currentlyImportOrExporting
                 onClicked: {
@@ -62,8 +62,8 @@ Item {
             }
 
             LabelledButton {
-                label:      qsTr("Export Map Tiles")
-                buttonText: qsTr("Export")
+                label:      qsTr("Экспорт тайлов")
+                buttonText: qsTr("Экспорт")
                 visible:    QGroundControl.corePlugin.options.showOfflineMapExport
                 enabled:    !_currentlyImportOrExporting
                 onClicked:  exportDialogFactory.open()
@@ -75,7 +75,7 @@ Item {
 
                 QGCLabel {
                     Layout.fillWidth:   true
-                    text:               _mapEngineManager.importAction === QGCMapEngineManager.ImportAction.ActionExporting ? qsTr("Exporting") : qsTr("Importing")
+                    text:               _mapEngineManager.importAction === QGCMapEngineManager.ImportAction.ActionExporting ? qsTr("Экспорт...") : qsTr("Импорт...")
                     font.bold:          true
                 }
                 ProgressBar {
@@ -91,7 +91,7 @@ Item {
     QGCFileDialog {
         id:             fileDialog
         folder:         _appSettings.missionSavePath
-        nameFilters:    [ qsTr("Tile Sets (*.%1)").arg(defaultSuffix) ]
+        nameFilters:    [ qsTr("Наборы тайлов (*.%1)").arg(defaultSuffix) ]
         defaultSuffix:  _appSettings.tilesetFileExtension
 
         onAcceptedForSave: (file) => {
@@ -114,12 +114,12 @@ Item {
         id: exportDialogComponent
 
         QGCPopupDialog {
-            title:      qsTr("Export Selected Tile Sets")
+            title:      qsTr("Экспорт выбранных наборов")
             buttons:    Dialog.Ok | Dialog.Cancel
 
             onAccepted: {
                 close()
-                fileDialog.title = qsTr("Export Tiles")
+                fileDialog.title = qsTr("Экспорт тайлов")
                 fileDialog.openForSave()
             }
 
@@ -148,12 +148,12 @@ Item {
         id: importDialogComponent
 
         QGCPopupDialog {
-            title:      qsTr("Import TileSets")
+            title:      qsTr("Импорт наборов")
             buttons:    Dialog.Ok | Dialog.Cancel
 
             onAccepted: {
                 close()
-                fileDialog.title = qsTr("Import Tiles")
+                fileDialog.title = qsTr("Импорт тайлов")
                 fileDialog.openForLoad()
             }
 
@@ -161,12 +161,12 @@ Item {
                 spacing: ScreenTools.defaultFontPixelWidth / 2
 
                 QGCRadioButton {
-                    text:       qsTr("Append to existing sets")
+                    text:       qsTr("Добавить к существующим")
                     checked:    !_mapEngineManager.importReplace
                     onClicked:  _mapEngineManager.importReplace = !checked
                 }
                 QGCRadioButton {
-                    text:       qsTr("Replace existing sets")
+                    text:       qsTr("Заменить существующие")
                     checked:    _mapEngineManager.importReplace
                     onClicked:  _mapEngineManager.importReplace = checked
                 }
@@ -183,7 +183,7 @@ Item {
         id: errorDialogComponent
 
         QGCSimpleMessageDialog {
-            title:      qsTr("Error Message")
+            title:      qsTr("Ошибка")
             text:       _mapEngineManager.errorMessage
             buttons:    Dialog.Close
         }

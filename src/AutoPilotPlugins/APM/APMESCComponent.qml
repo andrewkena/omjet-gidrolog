@@ -49,21 +49,21 @@ SetupPage {
             property bool _escCalibrationAvailable: controller.parameterExists(-1, _escCalParam)
             property Fact _escCalibration: controller.getParameterFact(-1, _escCalParam, false /* reportMissing */)
 
-            property string _restartRequired: qsTr("Requires vehicle reboot")
+            property string _restartRequired: qsTr("Требуется перезагрузка судна")
             property real _fieldWidth: ScreenTools.defaultFontPixelWidth * 15
             property real _comboWidth: ScreenTools.defaultFontPixelWidth * 30
 
             QGCPalette { id: qgcPal; colorGroupEnabled: true }
 
             QGCGroupBox {
-                title: qsTr("Configuration")
+                title: qsTr("Конфигурация")
                 visible: _motPwmTypeAvailable
 
                 ColumnLayout {
                     spacing: _margins
 
                     LabelledFactComboBox {
-                        label: qsTr("Output type")
+                        label: qsTr("Тип выхода")
                         fact: _motPwmType
                         indexModel: false
                         comboBoxPreferredWidth: _comboWidth
@@ -75,35 +75,35 @@ SetupPage {
                     }
 
                     LabelledFactTextField {
-                        label: qsTr("Output PWM min")
+                        label: qsTr("Мин. ШИМ выхода")
                         fact: _motPwmMin
                         textFieldPreferredWidth: _fieldWidth
                         visible: _motPwmMinAvailable
                     }
 
                     LabelledFactTextField {
-                        label: qsTr("Output PWM max")
+                        label: qsTr("Макс. ШИМ выхода")
                         fact: _motPwmMax
                         textFieldPreferredWidth: _fieldWidth
                         visible: _motPwmMaxAvailable
                     }
 
                     LabelledFactTextField {
-                        label: qsTr("Spin when armed")
+                        label: qsTr("Вращение при запуске")
                         fact: _motSpinArm
                         textFieldPreferredWidth: _fieldWidth
                         visible: _motSpinArmAvailable
                     }
 
                     LabelledFactTextField {
-                        label: qsTr("Spin minimum")
+                        label: qsTr("Мин. вращение")
                         fact: _motSpinMin
                         textFieldPreferredWidth: _fieldWidth
                         visible: _motSpinMinAvailable
                     }
 
                     LabelledFactTextField {
-                        label: qsTr("Spin maximum")
+                        label: qsTr("Макс. вращение")
                         fact: _motSpinMax
                         textFieldPreferredWidth: _fieldWidth
                         visible: _motSpinMaxAvailable
@@ -111,7 +111,7 @@ SetupPage {
 
                     // DShot settings - visible when a DShot protocol is selected
                     LabelledFactComboBox {
-                        label: qsTr("DShot ESC type")
+                        label: qsTr("Тип ESC DShot")
                         fact: _servoDshotEsc
                         indexModel: false
                         comboBoxPreferredWidth: _comboWidth
@@ -119,7 +119,7 @@ SetupPage {
                     }
 
                     LabelledFactComboBox {
-                        label: qsTr("DShot output rate")
+                        label: qsTr("Частота DShot")
                         fact: _servoDshotRate
                         indexModel: false
                         comboBoxPreferredWidth: _comboWidth
@@ -129,14 +129,14 @@ SetupPage {
             }
 
             QGCGroupBox {
-                title: qsTr("Calibration")
+                title: qsTr("Калибровка")
                 visible: _escCalibrationAvailable
 
                 ColumnLayout {
                     spacing: _margins
 
                     QGCLabel {
-                        text: qsTr("WARNING: Remove props prior to calibration!")
+                        text: qsTr("ВНИМАНИЕ: перед калибровкой снимите винты!")
                         color: qgcPal.warningText
                     }
 
@@ -144,22 +144,22 @@ SetupPage {
                         spacing: _margins
 
                         QGCButton {
-                            text: qsTr("Calibrate")
+                            text: qsTr("Калибровать")
                             enabled: _escCalibration && _escCalibration.rawValue === 0
                             onClicked: if(_escCalibration) _escCalibration.rawValue = 3
                         }
 
                         ColumnLayout {
                             enabled: _escCalibration && _escCalibration.rawValue === 3
-                            QGCLabel { text: _escCalibration ? (_escCalibration.rawValue === 3 ? qsTr("Now perform these steps:") : qsTr("Click Calibrate to start, then:")) : "" }
-                            QGCLabel { text: qsTr("- Disconnect USB and battery so flight controller powers down") }
-                            QGCLabel { text: qsTr("- Connect the battery") }
-                            QGCLabel { text: qsTr("- The arming tone will be played (if the vehicle has a buzzer attached)") }
-                            QGCLabel { text: qsTr("- If using a flight controller with a safety button press it until it displays solid red") }
-                            QGCLabel { text: qsTr("- You will hear a musical tone then two beeps") }
-                            QGCLabel { text: qsTr("- A few seconds later you should hear a number of beeps (one for each battery cell you're using)") }
-                            QGCLabel { text: qsTr("- And finally a single long beep indicating the end points have been set and the ESC is calibrated") }
-                            QGCLabel { text: qsTr("- Disconnect the battery and power up again normally") }
+                            QGCLabel { text: _escCalibration ? (_escCalibration.rawValue === 3 ? qsTr("Теперь выполните шаги:") : qsTr("Нажмите «Калибровать», затем:")) : "" }
+                            QGCLabel { text: qsTr("- Отключите USB и батарею, чтобы автопилот выключился") }
+                            QGCLabel { text: qsTr("- Подключите батарею") }
+                            QGCLabel { text: qsTr("- Прозвучит сигнал запуска (если подключён зуммер)") }
+                            QGCLabel { text: qsTr("- Если есть кнопка безопасности, удерживайте её, пока она не загорится красным") }
+                            QGCLabel { text: qsTr("- Прозвучит мелодия, затем два сигнала") }
+                            QGCLabel { text: qsTr("- Через несколько секунд — серия сигналов (по одному на каждую банку батареи)") }
+                            QGCLabel { text: qsTr("- В конце — один длинный сигнал: пределы заданы, ESC откалиброван") }
+                            QGCLabel { text: qsTr("- Отключите батарею и включите судно как обычно") }
                         }
                     }
                 }

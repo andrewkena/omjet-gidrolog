@@ -4,19 +4,19 @@
     "QGC.MetaData.Facts": [
         {
             "name": "useGeoMapEngine",
-            "shortDesc": "Use the experimental GeoMap 2D/3D engine for the Fly View map (preview feature).",
+            "shortDesc": "Экспериментальный движок 2D/3D-карты GeoMap для экрана карты. Требуется перезапуск.",
             "type": "bool",
             "default": false,
-            "label": "Use GeoMap engine (preview)",
+            "label": "Использовать движок карты GeoMap (предварительная версия)",
             "keywords": "geomap,3d map,map engine,preview,experimental",
             "qgcRebootRequired": true
         },
         {
             "name": "geoMapDebugUI",
-            "shortDesc": "Show the GeoMap engine debug controls and terrain stats overlay.",
+            "shortDesc": "Показывает отладочные элементы движка GeoMap и статистику рельефа.",
             "type": "bool",
             "default": false,
-            "label": "Show GeoMap engine debug UI",
+            "label": "Показывать отладку движка GeoMap",
             "keywords": "geomap,debug,stats,diagnostics"
         },
         {
@@ -96,7 +96,7 @@
         },
         {
             "name": "forwardFlightGoToLocationLoiterRad",
-            "shortDesc": "Loiter radius when circling a go-to destination during fixed-wing flight. (ArduPilot only)",
+            "shortDesc": "Радиус кружения у точки назначения в режиме Guided при полёте самолёта (только ArduPilot). Для лодки не используется.",
             "type": "double",
             "units": "m",
             "default": 80,

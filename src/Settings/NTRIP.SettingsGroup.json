@@ -4,119 +4,119 @@
     "QGC.MetaData.Facts": [
         {
             "name": "ntripServerConnectEnabled",
-            "shortDesc": "Connect to NTRIP server",
+            "shortDesc": "Подключаться к серверу NTRIP",
             "longDesc": "Connect to NTRIP server using specified address/port",
             "type": "bool",
             "default": false,
-            "label": "Connect to NTRIP server"
+            "label": "Подключаться к серверу NTRIP"
         },
         {
             "name": "ntripServerHostAddress",
-            "shortDesc": "Host address",
+            "shortDesc": "Адрес сервера",
             "type": "string",
             "default": "",
-            "label": "Host address"
+            "label": "Адрес сервера"
         },
         {
             "name": "ntripServerPort",
-            "shortDesc": "Server port",
+            "shortDesc": "Порт сервера",
             "type": "uint16",
             "default": 2101,
-            "label": "Server port"
+            "label": "Порт сервера"
         },
         {
             "name": "ntripUsername",
-            "shortDesc": "Username",
+            "shortDesc": "Имя пользователя",
             "type": "string",
             "default": "",
-            "label": "Username"
+            "label": "Имя пользователя"
         },
         {
             "name": "ntripPassword",
-            "shortDesc": "Password",
+            "shortDesc": "Пароль",
             "type": "string",
             "default": "",
-            "label": "Password"
+            "label": "Пароль"
         },
         {
             "name": "ntripMountpoint",
-            "shortDesc": "Mount Point",
+            "shortDesc": "Точка подключения",
             "longDesc": "NTRIP mount point. Leave blank for RTCM over TCP",
             "type": "string",
             "default": "",
-            "label": "Mount Point"
+            "label": "Точка подключения"
         },
         {
             "name": "ntripWhitelist",
-            "shortDesc": "Comma-separated RTCM message IDs to forward. Leave blank for all messages.",
+            "shortDesc": "Номера сообщений RTCM через запятую. Пусто — все сообщения.",
             "longDesc": "Comma-separated RTCM message IDs to forward (e.g. 1005,1077,1087). Leave blank for all messages.",
             "type": "string",
             "default": "",
-            "label": "RTCM Message Filter",
+            "label": "Фильтр сообщений RTCM",
             "keywords": "whitelist,message filter"
         },
         {
             "name": "ntripUseTls",
-            "shortDesc": "Use TLS encryption",
+            "shortDesc": "Шифрование TLS",
             "longDesc": "Connect using TLS/SSL encryption (required for some SPARTN casters on port 2102)",
             "type": "bool",
             "default": false,
-            "label": "Use TLS encryption"
+            "label": "Шифрование TLS"
         },
         {
             "name": "ntripAllowSelfSignedCerts",
-            "shortDesc": "Accept self-signed TLS certificates",
+            "shortDesc": "Принимать самоподписанные сертификаты TLS",
             "longDesc": "Allow connections to NTRIP casters with self-signed TLS certificates. Disabling this rejects self-signed certificates to prevent man-in-the-middle attacks.",
             "type": "bool",
             "default": false,
-            "label": "Accept self-signed certificates"
+            "label": "Принимать самоподписанные сертификаты"
         },
         {
             "name": "ntripGgaPositionSource",
-            "shortDesc": "GGA Position Source",
+            "shortDesc": "Источник позиции GGA",
             "longDesc": "Position source for NMEA GGA sentences sent to the NTRIP caster. Auto selects the best available source.",
             "type": "uint8",
-            "enumStrings": "Auto,Vehicle GPS,Vehicle EKF,RTK Base Station,GCS Position",
+            "enumStrings": "Авто,GPS борта,EKF борта,Базовая станция RTK,Позиция станции",
             "enumValues": "0,1,2,3,4",
             "default": 0,
-            "label": "GGA Position Source"
+            "label": "Источник позиции GGA"
         },
         {
             "name": "ntripGgaIntervalSec",
-            "shortDesc": "GGA Send Interval",
+            "shortDesc": "Интервал отправки GGA",
             "longDesc": "How often to send NMEA GGA sentences upstream to the NTRIP caster. VRS mountpoints typically require 1-10s; set lower for tighter VRS tracking, higher to reduce bandwidth.",
             "type": "uint32",
             "default": 5,
             "min": 1,
             "max": 60,
             "units": "s",
-            "label": "GGA Send Interval"
+            "label": "Интервал отправки GGA"
         },
         {
             "name": "ntripUdpForwardEnabled",
-            "shortDesc": "Forward received RTCM correction data to another application via UDP.",
+            "shortDesc": "Пересылать полученные поправки RTCM другой программе по UDP.",
             "longDesc": "Forward received RTCM correction data via UDP to the specified address and port",
             "type": "bool",
             "default": false,
-            "label": "UDP forward RTCM data",
+            "label": "Пересылать RTCM по UDP",
             "keywords": "udp forward,relay,corrections forward"
         },
         {
             "name": "ntripUdpTargetAddress",
-            "shortDesc": "IP address to forward RTCM correction data to.",
+            "shortDesc": "IP-адрес, на который пересылать поправки RTCM.",
             "longDesc": "IP address to forward RTCM data to via UDP",
             "type": "string",
             "default": "",
-            "label": "UDP target address",
+            "label": "Адрес получателя UDP",
             "keywords": "udp forward,relay"
         },
         {
             "name": "ntripUdpTargetPort",
-            "shortDesc": "Port number for forwarding RTCM correction data via UDP.",
+            "shortDesc": "Порт для пересылки поправок RTCM по UDP.",
             "longDesc": "Port to forward RTCM data to via UDP",
             "type": "uint16",
             "default": 0,
-            "label": "UDP target port",
+            "label": "Порт получателя UDP",
             "keywords": "udp forward,relay"
         }
     ]

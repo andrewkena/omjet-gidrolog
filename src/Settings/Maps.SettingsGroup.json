@@ -4,18 +4,18 @@
     "QGC.MetaData.Facts": [
         {
             "name": "maxCacheDiskSize",
-            "shortDesc": "Maximum disk space in megabytes for caching downloaded map tiles.",
+            "shortDesc": "Сколько места на диске (МБ) можно занять под кэш тайлов карты.",
             "type": "Uint32",
             "units": "MB",
             "min": 1,
             "max": 262144,
             "default": 1024,
-            "label": "Max disk cache",
+            "label": "Макс. кэш на диске",
             "keywords": "cache,disk size,tile cache"
         },
         {
             "name": "maxCacheMemorySize",
-            "shortDesc": "Maximum RAM in megabytes for caching map tiles in memory.",
+            "shortDesc": "Сколько оперативной памяти (МБ) можно занять под кэш тайлов карты.",
             "type": "Uint32",
             "units": "MB",
             "min": 1,
@@ -23,7 +23,7 @@
             "default": 128,
             "mobileDefault": 16,
             "qgcRebootRequired": true,
-            "label": "Max memory cache",
+            "label": "Макс. кэш в памяти",
             "keywords": "cache,memory size,tile cache"
         }
     ]

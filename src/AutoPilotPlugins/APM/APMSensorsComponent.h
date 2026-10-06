@@ -15,7 +15,7 @@ public:
     QStringList setupCompleteChangedTriggerList() const final;
 
     QString name() const final { return _name; }
-    QString description() const final { return tr("Configure and calibrate compass, accelerometer, and other onboard sensors."); }
+    QString description() const final { return QStringLiteral("Настройка и калибровка компаса, акселерометра и других бортовых датчиков."); }
     QString iconResource() const final { return QStringLiteral("/qmlimages/SensorsComponentIcon.png"); }
     bool requiresSetup() const final { return true; }
     bool setupComplete() const final { return (!compassSetupNeeded() && !accelSetupNeeded()); }
@@ -23,5 +23,5 @@ public:
     QUrl summaryQmlSource() const final { return QUrl::fromUserInput("qrc:/qml/QGroundControl/AutoPilotPlugins/APM/APMSensorsComponentSummary.qml"); }
 
 private:
-    const QString _name = tr("Sensors");
+    const QString _name = QStringLiteral("Датчики");
 };

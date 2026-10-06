@@ -21,7 +21,8 @@ ToolIndicatorPage {
                 implicitHeight: root._toolButtonHeight
                 Layout.fillWidth: true
                 text: qsTr("КАРТА")
-                imageResource: "/res/FlyingPaperPlane.svg"
+                imageResource: "/res/GidroLogMenuMap.svg"
+                imageOriginalColors: true
                 onClicked: {
                     if (mainWindow.allowViewSwitch()) {
                         mainWindow.closeIndicatorDrawer()
@@ -35,7 +36,8 @@ ToolIndicatorPage {
                 implicitHeight: root._toolButtonHeight
                 Layout.fillWidth: true
                 text: qsTr("ЗАДАНИЕ")
-                imageResource: "/qmlimages/Plan.svg"
+                imageResource: "/res/GidroLogMenuPlan.svg"
+                imageOriginalColors: true
                 onClicked: {
                     if (mainWindow.allowViewSwitch()) {
                         mainWindow.closeIndicatorDrawer()
@@ -49,7 +51,8 @@ ToolIndicatorPage {
                 implicitHeight: root._toolButtonHeight
                 Layout.fillWidth: true
                 text: qsTr("АНАЛИЗ")
-                imageResource: "/qmlimages/Analyze.svg"
+                imageResource: "/res/GidroLogMenuAnalyze.svg"
+                imageOriginalColors: true
                 visible: QGroundControl.corePlugin.showAdvancedUI
                 onClicked: {
                     if (mainWindow.allowViewSwitch()) {
@@ -65,7 +68,8 @@ ToolIndicatorPage {
                 implicitHeight: root._toolButtonHeight
                 Layout.fillWidth: true
                 text: qsTr("ПАРАМЕТРЫ СУДНА")
-                imageResource: "/res/GearWithPaperPlane.svg"
+                imageResource: "/res/GidroLogMenuVessel.svg"
+                imageOriginalColors: true
                 onClicked: {
                     if (mainWindow.allowViewSwitch()) {
                         mainWindow.closeIndicatorDrawer()
@@ -80,7 +84,8 @@ ToolIndicatorPage {
                 implicitHeight: root._toolButtonHeight
                 Layout.fillWidth: true
                 text: qsTr("НАСТРОЙКИ ПРОГРАММЫ")
-                imageResource: "/res/QGCLogoWhite.svg"
+                imageResource: "/res/GidroLogMenuSettings.svg"
+                imageOriginalColors: true
                 visible: !QGroundControl.corePlugin.options.combineSettingsAndSetup
                 onClicked: {
                     if (mainWindow.allowViewSwitch()) {
@@ -96,7 +101,8 @@ ToolIndicatorPage {
                 implicitHeight: root._toolButtonHeight
                 Layout.fillWidth: true
                 text: qsTr("ВЫХОД")
-                imageResource: "/res/OpenDoor.svg"
+                imageResource: "/res/GidroLogMenuExit.svg"
+                imageOriginalColors: true
                 onClicked: {
                     if (mainWindow.allowViewSwitch()) {
                         mainWindow.closeIndicatorDrawer()

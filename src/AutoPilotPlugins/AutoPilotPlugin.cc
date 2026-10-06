@@ -57,7 +57,7 @@ void AutoPilotPlugin::parametersReadyPreChecks()
     }
 
     if (!_setupComplete) {
-        QGC::showAppMessage(tr("Configuration tasks remain before this vehicle is ready to fly. See Vehicle Configuration for details."));
+        QGC::showAppMessage(QStringLiteral("Перед выходом нужно завершить настройку судна. Подробности — в разделе «Параметры судна».")); // GidroLog
     }
 }
 

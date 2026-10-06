@@ -3,6 +3,7 @@ import QtQuick.Layouts
 
 import QGroundControl
 import QGroundControl.Controls
+import QGroundControl.FactControls
 
 // GidroLog: boat control panel (left side, under the depth legend)
 //   ARM        - hold 2 s to arm / disarm, red while armed
@@ -10,6 +11,7 @@ import QGroundControl.Controls
 //                hold 2 s to release the emergency stop
 //   Manual / AUTO / Smart RTL / RTL - hold 2 s to switch mode, current mode is green
 //   siren / beacon indicators - red while the assigned channel is on (channels to be assigned)
+//   photo pin - blinks blue on each camera trigger
 Item {
     id:             control
     implicitWidth:  mainLayout.implicitWidth + (_margin * 2)
@@ -21,6 +23,64 @@ Item {
     property bool _estopEngaged:    false   // motor emergency stop sent and not released yet
     property bool sirenActive:      _channelOn(_settings.sirenChannel, _settings.sirenThreshold)
     property bool beaconActive:     _channelOn(_settings.beaconChannel, _settings.beaconThreshold)
+
+    // GidroLog: motor emergency stop switch on the transmitter, linked with the STOP button.
+    // Channel: from the settings, or (auto) the one with RCx_OPTION = 31 on the autopilot.
+    property int  _estopChannel:    _settings.estopChannel >= 0 ? _settings.estopChannel : _autoEstopChannel
+    property int  _autoEstopChannel: _findEstopChannel()
+    property bool estopRcActive:    _estopChannel > 0 && _channelOn(_estopChannel, _settings.estopThreshold)
+
+    onEstopRcActiveChanged: _estopEngaged = estopRcActive
+
+    // GidroLog: photo trigger indicator - blinks for a moment on every camera trigger
+    // (CAMERA_IMAGE_CAPTURED / CAMERA_FEEDBACK from the autopilot -> vehicle.cameraTriggerPoints)
+    property int  _photoCount:      _haveVehicle && vehicle.cameraTriggerPoints ? vehicle.cameraTriggerPoints.count : 0
+    property bool _photoFlash:      false
+    property bool _photoBlinkOn:    false
+
+    on_PhotoCountChanged: {
+        if (_photoCount > 0) {
+            _photoFlash = true
+            _photoBlinkOn = true
+            photoFlashTimer.restart()
+            photoBlinkTimer.restart()
+        }
+    }
+
+    Timer {
+        id:         photoFlashTimer
+        interval:   1500
+        onTriggered: {
+            control._photoFlash = false
+            control._photoBlinkOn = false
+            photoBlinkTimer.stop()
+        }
+    }
+
+    Timer {
+        id:         photoBlinkTimer
+        interval:   250
+        repeat:     true
+        onTriggered: control._photoBlinkOn = !control._photoBlinkOn
+    }
+
+    FactPanelController { id: paramController }
+
+    function _findEstopChannel() {
+        if (!vehicle || !vehicle.parameterManager.parametersReady) {
+            return 0
+        }
+        for (let i = 1; i <= 16; i++) {
+            const name = "RC" + i + "_OPTION"
+            if (paramController.parameterExists(-1, name)) {
+                const fact = paramController.getParameterFact(-1, name, false)
+                if (fact && fact.rawValue === 31) {
+                    return i
+                }
+            }
+        }
+        return 0
+    }
 
     function _channelOn(channel, threshold) {
         if (channel < 1 || channel > _rcChannels.length) {
@@ -142,7 +202,7 @@ Item {
                 source:                 "/res/GidroLogSiren.svg"
                 sourceSize.height:      height
                 fillMode:               Image.PreserveAspectFit
-                color:                  control.sirenActive ? "#FF9800" : qgcPal.text
+                color:                  control.sirenActive ? "#F44336" : qgcPal.text   // GidroLog: siren on = red
                 opacity:                control.sirenActive ? 1.0 : 0.5
             }
 
@@ -156,6 +216,19 @@ Item {
                 fillMode:               Image.PreserveAspectFit
                 color:                  control.beaconActive ? "#FF9800" : qgcPal.text
                 opacity:                control.beaconActive ? 1.0 : 0.5
+            }
+
+            Item { Layout.fillWidth: true }
+
+            // GidroLog: photo trigger (pin), blinks blue when a photo is taken
+            QGCColoredImage {
+                Layout.preferredWidth:  ScreenTools.defaultFontPixelHeight * 2
+                Layout.preferredHeight: Layout.preferredWidth
+                source:                 "/res/GidroLogPhotoPin.svg"
+                sourceSize.height:      height
+                fillMode:               Image.PreserveAspectFit
+                color:                  control._photoBlinkOn ? "#2196F3" : qgcPal.text
+                opacity:                control._photoBlinkOn ? 1.0 : 0.5
             }
 
             Item { Layout.fillWidth: true }

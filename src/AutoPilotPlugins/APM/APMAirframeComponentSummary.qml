@@ -36,7 +36,7 @@ Item {
 
         VehicleSummaryRow {
             labelText: qsTr("Firmware Version")
-            valueText: globals.activeVehicle.firmwareMajorVersion == -1 ? qsTr("Unknown") : globals.activeVehicle.firmwareMajorVersion + "." + globals.activeVehicle.firmwareMinorVersion + "." + globals.activeVehicle.firmwarePatchVersion + globals.activeVehicle.firmwareVersionTypeString
+            valueText: globals.activeVehicle.firmwareMajorVersion == -1 ? qsTr("Неизвестно") : globals.activeVehicle.firmwareMajorVersion + "." + globals.activeVehicle.firmwareMinorVersion + "." + globals.activeVehicle.firmwarePatchVersion + globals.activeVehicle.firmwareVersionTypeString
         }
     }
 }

@@ -3,7 +3,7 @@
     "fileType": "SettingsUI",
     "groups": [
         {
-            "heading": "Ground Station",
+            "heading": "Наземная станция",
             "keywords": ["system id", "mavlink id", "heartbeat", "initial download", "gcs"],
             "controls": [
                 {
@@ -18,7 +18,7 @@
             ]
         },
         {
-            "heading": "MAVLink Forwarding",
+            "heading": "Пересылка MAVLink",
             "keywords": ["forward", "relay", "mavlink forward", "host"],
             "controls": [
                 {
@@ -31,7 +31,7 @@
             ]
         },
         {
-            "heading": "Logging",
+            "heading": "Журналы",
             "keywords": ["telemetry log", "tlog", "save log", "recording", "csv"],
             "controls": [
                 {
@@ -46,7 +46,7 @@
             ]
         },
         {
-            "heading": "Stream Rates (ArduPilot Only)",
+            "heading": "Частоты потоков (только ArduPilot)",
             "showWhen": "QGroundControl.apmFirmwareSupported",
             "keywords": ["stream rate", "ardupilot", "apm", "raw sensors", "rc channels", "position rate"],
             "controls": [
@@ -78,7 +78,7 @@
         },
         {
             "component": "SigningKeyManager",
-            "sectionName": "Signing Key",
+            "sectionName": "Ключ подписи",
             "keywords": [
                 "signing",
                 "encryption",
@@ -89,7 +89,7 @@
         },
         {
             "component": "MavlinkLinkStatus",
-            "sectionName": "Link Status",
+            "sectionName": "Состояние канала",
             "keywords": [
                 "link status",
                 "packet loss",

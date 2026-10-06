@@ -65,7 +65,7 @@ ColumnLayout {
             Layout.fillWidth: true
             textColor: qgcPal.textFieldText
             placeholderTextColor: Qt.rgba(qgcPal.textFieldText.r, qgcPal.textFieldText.g, qgcPal.textFieldText.b, 0.7)
-            placeholderText: qsTr("Search parameters")
+            placeholderText: qsTr("Поиск параметров")
 
             onTextChanged: {
                 control._parameterSearchText = text
@@ -85,7 +85,7 @@ ColumnLayout {
         }
 
         QGCCheckBoxSlider {
-            text: qsTr("Changed only")
+            text: qsTr("Только изменённые")
             checked: _showOnlyChangedParameters
             onToggled: {
                 control._showOnlyChangedParameters = checked
@@ -116,7 +116,7 @@ ColumnLayout {
                 // fall back to isFloat heuristic. Show enum label when applicable.
                 readonly property string _formattedValue: {
                     const v = modelData.value
-                    if (v === undefined || v === null) return qsTr("N/A")
+                    if (v === undefined || v === null) return qsTr("н/д")
                     const numV = Number(v)
                     // Enum: find matching label
                     const eStrs = modelData.enumStrings
@@ -156,7 +156,7 @@ ColumnLayout {
                     } else {
                         formatted = String(Math.round(numD))
                     }
-                    return qsTr(" (default: %1)").arg(formatted)
+                    return qsTr(" (по умолчанию: %1)").arg(formatted)
                 }
 
                 RowLayout {

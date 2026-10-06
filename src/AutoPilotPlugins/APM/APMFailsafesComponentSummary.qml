@@ -32,7 +32,7 @@ Item {
         spacing: 0
 
         VehicleSummaryRow {
-            labelText:  qsTr("Throttle failsafe:")
+            labelText:  qsTr("Аварийный режим газа:")
             valueText:  fact ? fact.enumStringValue : ""
             visible:    controller.vehicle.multiRotor
 
@@ -40,7 +40,7 @@ Item {
         }
 
         VehicleSummaryRow {
-            labelText:  qsTr("Throttle failsafe:")
+            labelText:  qsTr("Аварийный режим газа:")
             valueText:  fact ? fact.enumStringValue : ""
             visible:    controller.vehicle.fixedWing
 
@@ -48,7 +48,7 @@ Item {
         }
 
         VehicleSummaryRow {
-            labelText:  qsTr("Throttle failsafe:")
+            labelText:  qsTr("Аварийный режим газа:")
             valueText:  fact ? fact.enumStringValue : ""
             visible:    _roverFirmware
 
@@ -56,7 +56,7 @@ Item {
         }
 
         VehicleSummaryRow {
-            labelText:  qsTr("Failsafe Action:")
+            labelText:  qsTr("Аварийное действие:")
             valueText:  fact ? fact.enumStringValue : ""
             visible:    _roverFirmware
 
@@ -64,7 +64,7 @@ Item {
         }
 
         VehicleSummaryRow {
-            labelText:  qsTr("Failsafe Crash Check:")
+            labelText:  qsTr("Проверка столкновения:")
             valueText:  fact ? fact.enumStringValue : ""
             visible:    _roverFirmware
 
@@ -72,25 +72,25 @@ Item {
         }
 
         VehicleSummaryRow {
-            labelText:  qsTr("Batt1 low failsafe:")
+            labelText:  qsTr("Батарея 1, низкий заряд:")
             valueText:  _batt1MonitorEnabled ? _batt1FSLowAct.enumStringValue : ""
             visible:    _batt1MonitorEnabled
         }
 
         VehicleSummaryRow {
-            labelText:  qsTr("Batt1 critical failsafe:")
+            labelText:  qsTr("Батарея 1, критический заряд:")
             valueText:  _batt1FSCritActAvailable ? _batt1FSCritAct.enumStringValue : ""
             visible:    _batt1FSCritActAvailable
         }
 
         VehicleSummaryRow {
-            labelText:  qsTr("Batt2 low failsafe:")
+            labelText:  qsTr("Батарея 2, низкий заряд:")
             valueText:  _batt2MonitorEnabled ? _batt2FSLowAct.enumStringValue : ""
             visible:    _batt2MonitorEnabled
         }
 
         VehicleSummaryRow {
-            labelText:  qsTr("Batt2 critical failsafe:")
+            labelText:  qsTr("Батарея 2, критический заряд:")
             valueText:  _batt2MonitorEnabled ? _batt2FSCritAct.enumStringValue : ""
             visible:    _batt2MonitorEnabled
         }

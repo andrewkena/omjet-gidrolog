@@ -26,7 +26,7 @@
 
 QGC_LOGGING_CATEGORY(FirmwarePluginLog, "FirmwarePlugin.FirmwarePlugin")
 
-static const QString guided_mode_not_supported_by_vehicle = QObject::tr("Guided mode not supported by Vehicle.");
+static const QString guided_mode_not_supported_by_vehicle = QStringLiteral("Судно не поддерживает режим Guided.");
 
 FirmwarePlugin::FirmwarePlugin(QObject *parent)
     : QObject(parent)
@@ -402,7 +402,7 @@ void FirmwarePlugin::_versionFileDownloadFinished(const QString &remoteFile, con
         const QString currentVersionNumber = QStringLiteral("%1.%2.%3").arg(vehicle->firmwareMajorVersion())
                                                                        .arg(vehicle->firmwareMinorVersion())
                                                                        .arg(vehicle->firmwarePatchVersion());
-        QGC::showAppMessage(tr("Vehicle is not running latest stable firmware! Running %1, latest stable is %2.").arg(currentVersionNumber, version));
+        QGC::showAppMessage(QStringLiteral("На судне установлена не последняя стабильная прошивка: сейчас %1, последняя стабильная — %2.").arg(currentVersionNumber, version));
     }
 }
 

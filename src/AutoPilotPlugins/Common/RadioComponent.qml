@@ -26,7 +26,7 @@ SetupPage {
                 nextButton: remoteControlCalibration.nextButton
                 joystickMode: false
 
-                onThrottleReversedCalFailure: QGroundControl.showMessageDialog(radioPage, qsTr("Throttle channel reversed"), qsTr("Calibration failed. The throttle channel on your transmitter is reversed. You must correct this on your transmitter in order to complete calibration."))
+                onThrottleReversedCalFailure: QGroundControl.showMessageDialog(radioPage, qsTr("Канал газа реверсирован"), qsTr("Калибровка не удалась: канал газа на пульте реверсирован. Исправьте это на пульте, чтобы завершить калибровку."))
             }
 
             Component.onCompleted: controller.start()
@@ -64,22 +64,22 @@ SetupPage {
 
                     QGCButton {
                         id: bindButton
-                        text: qsTr("Spektrum Bind")
+                        text: qsTr("Привязка Spektrum")
                         onClicked: spektrumBindDialogFactory.open()
                     }
 
                     QGCButton {
-                        text: qsTr("CRSF Bind")
-                        onClicked: QGroundControl.showMessageDialog(radioPage, qsTr("CRSF Bind"),
-                                                                qsTr("Click Ok to place your CRSF receiver in the bind mode."),
+                        text: qsTr("Привязка CRSF")
+                        onClicked: QGroundControl.showMessageDialog(radioPage, qsTr("Привязка CRSF"),
+                                                                qsTr("Нажмите OK, чтобы перевести приёмник CRSF в режим привязки."),
                                                                 Dialog.Ok | Dialog.Cancel,
                                                                 function() { controller.crsfBindMode() })
                     }
 
                     QGCButton {
-                        text: qsTr("Copy Trims")
-                        onClicked: QGroundControl.showMessageDialog(radioPage, qsTr("Copy Trims"),
-                                                                qsTr("Center your sticks and move throttle all the way down, then press Ok to copy trims. After pressing Ok, reset the trims on your radio back to zero."),
+                        text: qsTr("Копировать триммеры")
+                        onClicked: QGroundControl.showMessageDialog(radioPage, qsTr("Копировать триммеры"),
+                                                                qsTr("Отцентрируйте стики, газ в минимум, затем нажмите OK для копирования триммеров. После этого обнулите триммеры на пульте."),
                                                                 Dialog.Ok | Dialog.Cancel,
                                                                 function() { controller.copyTrims() })
                     }
@@ -95,7 +95,7 @@ SetupPage {
                     id: spektrumBindDialogComponent
 
                     QGCPopupDialog {
-                        title: qsTr("Spektrum Bind")
+                        title: qsTr("Привязка Spektrum")
                         buttons: Dialog.Ok | Dialog.Cancel
 
                         onAccepted: { controller.spektrumBindMode(radioGroup.checkedButton.bindMode) }
@@ -107,29 +107,29 @@ SetupPage {
 
                             QGCLabel {
                                 wrapMode: Text.WordWrap
-                                text: qsTr("Click Ok to place your Spektrum receiver in the bind mode.")
+                                text: qsTr("Нажмите OK, чтобы перевести приёмник Spektrum в режим привязки.")
                             }
 
                             QGCLabel {
                                 wrapMode: Text.WordWrap
-                                text: qsTr("Select the specific receiver type below:")
+                                text: qsTr("Выберите тип приёмника:")
                             }
 
                             QGCRadioButton {
-                                text: qsTr("DSM2 Mode")
+                                text: qsTr("Режим DSM2")
                                 ButtonGroup.group: radioGroup
                                 property int bindMode: RadioComponentController.DSM2
                             }
 
                             QGCRadioButton {
-                                text: qsTr("DSMX (7 channels or less)")
+                                text: qsTr("DSMX (7 каналов и меньше)")
                                 ButtonGroup.group: radioGroup
                                 property int bindMode: RadioComponentController.DSMX7
                             }
 
                             QGCRadioButton {
                                 checked: true
-                                text: qsTr("DSMX (8 channels or more)")
+                                text: qsTr("DSMX (8 каналов и больше)")
                                 ButtonGroup.group: radioGroup
                                 property int bindMode: RadioComponentController.DSMX8
                             }

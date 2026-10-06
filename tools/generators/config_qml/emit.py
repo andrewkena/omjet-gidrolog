@@ -61,6 +61,10 @@ def _qml_component_section(sec: SectionDef, tr_context: str = "") -> str:
 
 def _safe_id(name: str) -> str:
     """Convert a section name to a safe QML identifier."""
+    if not name.isascii():
+        # GidroLog: Russian section titles -> stable ASCII id from a hash
+        import hashlib
+        return "s" + hashlib.md5(name.encode("utf-8")).hexdigest()[:8]
     return "".join(c if c.isalnum() else "_" for c in name).lower()
 
 

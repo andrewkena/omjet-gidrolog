@@ -15,7 +15,7 @@
     },
     "sections": [
         {
-            "title": "Battery",
+            "title": "Батарея",
             "keywords": [
                 "battery",
                 "voltage",
@@ -33,36 +33,36 @@
                 "enableParam": "MONITOR",
                 "disabledParamValue": "_monitorParamValueDisabled",
                 "disabledSection": {
-                    "heading": "Disabled Batteries",
+                    "heading": "Отключённые батареи",
                     "enabledParamValue": "_monitorParamValueAnalogVoltageAndCurrent"
                 }
             },
             "controls": [
                 {
                     "param": "MONITOR",
-                    "label": "Battery monitor",
+                    "label": "Датчик батареи",
                     "control": "combobox"
                 },
                 {
                     "param": "CAPACITY",
-                    "label": "Battery capacity",
+                    "label": "Ёмкость батареи",
                     "optional": true,
                     "showWhen": "controller.parameterExists(-1, _fullParamName(\"CAPACITY\"))"
                 },
                 {
                     "param": "ARM_VOLT",
-                    "label": "Minimum arming voltage",
+                    "label": "Мин. напряжение для запуска",
                     "optional": true,
                     "showWhen": "controller.parameterExists(-1, _fullParamName(\"ARM_VOLT\"))"
                 },
                 {
                     "param": "VOLT_MULT",
-                    "label": "Voltage multiplier",
+                    "label": "Множитель напряжения",
                     "optional": true,
                     "showWhen": "controller.parameterExists(-1, _fullParamName(\"VOLT_MULT\")) && [_monitorParamValueAnalogVoltageOnly, _monitorParamValueAnalogVoltageAndCurrent, _monitorParamValueAnalogVoltageSyntheticCurrent].includes(controller.getParameterFact(-1, _fullParamName(\"MONITOR\")).rawValue)",
                     "control": "dialogButton",
                     "dialogButton": {
-                        "text": "Calculate",
+                        "text": "Рассчитать",
                         "dialogComponent": "APMCalcVoltageDividerDialog",
                         "buttonAfter": false,
                         "dialogParams": {
@@ -72,12 +72,12 @@
                 },
                 {
                     "param": "AMP_PERVLT",
-                    "label": "Amps per volt",
+                    "label": "Ампер на вольт",
                     "optional": true,
                     "showWhen": "controller.parameterExists(-1, _fullParamName(\"AMP_PERVLT\")) && [_monitorParamValueAnalogVoltageAndCurrent, _monitorParamValueAnalogCurrentOnly].includes(controller.getParameterFact(-1, _fullParamName(\"MONITOR\")).rawValue)",
                     "control": "dialogButton",
                     "dialogButton": {
-                        "text": "Calculate",
+                        "text": "Рассчитать",
                         "dialogComponent": "APMCalcAmpsPerVoltDialog",
                         "buttonAfter": false,
                         "dialogParams": {
@@ -87,7 +87,7 @@
                 },
                 {
                     "param": "AMP_OFFSET",
-                    "label": "Amps offset",
+                    "label": "Смещение тока",
                     "optional": true,
                     "showWhen": "controller.parameterExists(-1, _fullParamName(\"AMP_OFFSET\")) && [_monitorParamValueAnalogVoltageAndCurrent, _monitorParamValueAnalogCurrentOnly].includes(controller.getParameterFact(-1, _fullParamName(\"MONITOR\")).rawValue)"
                 }

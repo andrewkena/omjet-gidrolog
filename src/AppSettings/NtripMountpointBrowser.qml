@@ -11,7 +11,7 @@ SettingsGroupLayout {
     id: root
 
     Layout.fillWidth:   true
-    heading:            qsTr("Mountpoint")
+    heading:            qsTr("Точка подключения")
     visible:            _ntrip.ntripMountpoint.userVisible
 
     QGCPalette { id: qgcPal }
@@ -37,7 +37,7 @@ SettingsGroupLayout {
 
         QGCButton {
             objectName: "ntripBrowseButton"
-            text:       qsTr("Browse")
+            text:       qsTr("Обзор")
             enabled:    !root._isActive && root._hasHost &&
                         root._ntripMgr.sourceTableController.fetchStatus !== NTRIPSourceTableController.InProgress
             onClicked:  root._ntripMgr.fetchMountpoints()
@@ -47,7 +47,7 @@ SettingsGroupLayout {
     QGCLabel {
         Layout.fillWidth:   true
         visible:            root._ntripMgr.sourceTableController.fetchStatus === NTRIPSourceTableController.InProgress
-        text:               qsTr("Fetching mountpoints…")
+        text:               qsTr("Получение списка точек…")
         color:              qgcPal.colorOrange
     }
 

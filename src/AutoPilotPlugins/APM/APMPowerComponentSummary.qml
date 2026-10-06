@@ -41,12 +41,12 @@ Item {
                 property Fact   _capacity:          _capacityAvailable ? controller.getParameterFact(-1, _prefix + "CAPACITY") : null
 
                 VehicleSummaryRow {
-                    labelText: qsTr("Batt%1 monitor").arg(_label)
+                    labelText: qsTr("Батарея %1, датчик").arg(_label)
                     valueText: _monitor.enumStringValue
                 }
 
                 VehicleSummaryRow {
-                    labelText: qsTr("Batt%1 capacity").arg(_label)
+                    labelText: qsTr("Батарея %1, ёмкость").arg(_label)
                     valueText: _capacity ? _capacity.valueString + " " + _capacity.units : ""
                     visible:   _capacityAvailable
                 }

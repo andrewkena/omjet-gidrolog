@@ -62,17 +62,17 @@ Item {
 
     ListModel {
         id: lightsOutModel
-        ListElement { text: qsTr("Disabled"); value: 0 }
-        ListElement { text: qsTr("Channel 5"); value: 5 }
-        ListElement { text: qsTr("Channel 6"); value: 6 }
-        ListElement { text: qsTr("Channel 7"); value: 7 }
-        ListElement { text: qsTr("Channel 8"); value: 8 }
-        ListElement { text: qsTr("Channel 9"); value: 9 }
-        ListElement { text: qsTr("Channel 10"); value: 10 }
-        ListElement { text: qsTr("Channel 11"); value: 11 }
-        ListElement { text: qsTr("Channel 12"); value: 12 }
-        ListElement { text: qsTr("Channel 13"); value: 13 }
-        ListElement { text: qsTr("Channel 14"); value: 14 }
+        ListElement { text: qsTr("Отключено"); value: 0 }
+        ListElement { text: qsTr("Канал 5"); value: 5 }
+        ListElement { text: qsTr("Канал 6"); value: 6 }
+        ListElement { text: qsTr("Канал 7"); value: 7 }
+        ListElement { text: qsTr("Канал 8"); value: 8 }
+        ListElement { text: qsTr("Канал 9"); value: 9 }
+        ListElement { text: qsTr("Канал 10"); value: 10 }
+        ListElement { text: qsTr("Канал 11"); value: 11 }
+        ListElement { text: qsTr("Канал 12"); value: 12 }
+        ListElement { text: qsTr("Канал 13"); value: 13 }
+        ListElement { text: qsTr("Канал 14"); value: 14 }
     }
 
     Loader {
@@ -89,12 +89,12 @@ Item {
         spacing: 0
 
         VehicleSummaryRow {
-            labelText:  qsTr("Lights Output 1")
+            labelText:  qsTr("Выход освещения 1")
             valueText:  lightsOutModel.get(lightsLoader.lights1OutIndex).text
         }
 
         VehicleSummaryRow {
-            labelText:  qsTr("Lights Output 2")
+            labelText:  qsTr("Выход освещения 2")
             valueText:  lightsOutModel.get(lightsLoader.lights2OutIndex).text
         }
     }

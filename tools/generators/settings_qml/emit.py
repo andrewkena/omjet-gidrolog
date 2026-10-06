@@ -243,6 +243,10 @@ def generate_page_qml(
         if grp.heading:
             sanitized = _object_name(grp.heading)
             if not sanitized:
+                # GidroLog: allow non-ASCII (Russian) headings - derive a stable ASCII id from a hash
+                import hashlib
+                sanitized = "h" + hashlib.md5(grp.heading.encode("utf-8")).hexdigest()[:8]
+            if not sanitized:
                 raise ValueError(
                     f"Page '{page_name or json_context}': heading '{grp.heading}' sanitizes to an "
                     f"empty objectName. Use a heading with ASCII letters or digits."

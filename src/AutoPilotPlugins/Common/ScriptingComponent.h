@@ -11,7 +11,7 @@ public:
 
     QStringList setupCompleteChangedTriggerList() const override { return QStringList(); }
     QString name() const override { return _name; }
-    QString description() const override { return tr("Provides access to onboard script management."); }
+    QString description() const override { return QStringLiteral("Управление бортовыми скриптами."); }
     QString iconResource() const override { return QStringLiteral("/InstrumentValueIcons/folder-outline.svg"); }
     bool requiresSetup() const override { return false; }
     bool setupComplete() const override { return true; }

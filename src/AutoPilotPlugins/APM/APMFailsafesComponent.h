@@ -23,5 +23,5 @@ public:
     bool allowSetupWhileFlying() const final { return true; }
 
 private:
-    const QString _name = tr("Failsafes");
+    const QString _name = QStringLiteral("Аварийные режимы");
 };

@@ -66,14 +66,14 @@ ColumnLayout {
 
         ColumnLayout {
             LabelledComboBox {
-                label: qsTr("Scale")
+                label: qsTr("Масштаб")
                 model: inspectorController.timeScales
                 currentIndex: chartController.rangeXIndex
                 onActivated: (index) => { chartController.rangeXIndex = index }
             }
 
             LabelledComboBox {
-                label: qsTr("Range")
+                label: qsTr("Диапазон")
                 model: inspectorController.rangeList
                 currentIndex: chartController.rangeYIndex
                 onActivated: (index) => { chartController.rangeYIndex = index }

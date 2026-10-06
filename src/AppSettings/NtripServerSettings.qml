@@ -8,7 +8,7 @@ import QGroundControl.FactControls
 
 SettingsGroupLayout {
     Layout.fillWidth:   true
-    heading:            qsTr("Server")
+    heading:            qsTr("Сервер")
     visible:            _ntrip.ntripServerHostAddress.userVisible || _ntrip.ntripServerPort.userVisible ||
                         _ntrip.ntripUsername.userVisible || _ntrip.ntripPassword.userVisible
 
@@ -60,7 +60,7 @@ SettingsGroupLayout {
         }
 
         QGCButton {
-            text:       passwordField._showPassword ? qsTr("Hide") : qsTr("Show")
+            text:       passwordField._showPassword ? qsTr("Скрыть") : qsTr("Показать")
             onClicked:  passwordField._showPassword = !passwordField._showPassword
             Layout.alignment: Qt.AlignBottom
         }

@@ -11,8 +11,8 @@ SettingsGroupLayout {
     id: _signingKeyManager
 
     Layout.fillWidth: true
-    heading:            qsTr("MAVLink 2 Signing")
-    headingDescription: qsTr("Signing keys should only be sent to the vehicle over secure links (e.g. USB).")
+    heading:            qsTr("Подпись MAVLink 2")
+    headingDescription: qsTr("Ключи подписи передавайте на судно только по защищённому каналу (например, USB).")
 
     property Vehicle _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
 
@@ -34,7 +34,7 @@ SettingsGroupLayout {
 
         QGCPopupDialog {
             id:                     addKeyDialog
-            title:                  qsTr("Add Signing Key")
+            title:                  qsTr("Добавить ключ подписи")
             buttons:                Dialog.Ok | Dialog.Cancel
             acceptButtonEnabled:    keyNameField.text !== "" &&
                                     (addKeyDialog.useRawKey
@@ -53,31 +53,31 @@ SettingsGroupLayout {
                 }
                 if (!ok) {
                     addKeyDialog.preventClose = true
-                    errorLabel.text = qsTr("Could not add key. Name may already exist or input is invalid.")
+                    errorLabel.text = qsTr("Не удалось добавить ключ. Возможно, такое имя уже есть или данные введены неверно.")
                 }
             }
 
             ColumnLayout {
                 spacing: ScreenTools.defaultFontPixelHeight / 2
 
-                QGCLabel { text: qsTr("Key Name") }
+                QGCLabel { text: qsTr("Имя ключа") }
                 QGCTextField {
                     id:                     keyNameField
                     Layout.fillWidth:       true
                     Layout.preferredWidth:  ScreenTools.defaultFontPixelWidth * 30
-                    placeholderText:        qsTr("Enter a friendly name")
+                    placeholderText:        qsTr("Введите понятное имя")
                 }
 
                 RowLayout {
                     spacing: ScreenTools.defaultFontPixelWidth
 
                     QGCRadioButton {
-                        text:       qsTr("Passphrase")
+                        text:       qsTr("Парольная фраза")
                         checked:    !addKeyDialog.useRawKey
                         onClicked:  addKeyDialog.useRawKey = false
                     }
                     QGCRadioButton {
-                        text:       qsTr("Raw Key (hex)")
+                        text:       qsTr("Ключ (hex)")
                         checked:    addKeyDialog.useRawKey
                         onClicked:  addKeyDialog.useRawKey = true
                     }
@@ -88,14 +88,14 @@ SettingsGroupLayout {
                     visible:                !addKeyDialog.useRawKey
                     Layout.fillWidth:       true
                     Layout.preferredWidth:  ScreenTools.defaultFontPixelWidth * 30
-                    placeholderText:        qsTr("Enter passphrase (min %1 chars)").arg(addKeyDialog._minPassphraseLength)
+                    placeholderText:        qsTr("Введите парольную фразу (не менее %1 симв.)").arg(addKeyDialog._minPassphraseLength)
                     echoMode:               TextInput.Password
                     inputMethodHints:       Qt.ImhNoPredictiveText
                 }
 
                 QGCLabel {
                     visible:    !addKeyDialog.useRawKey && passphraseField.text.length > 0 && passphraseField.text.length < addKeyDialog._minPassphraseLength
-                    text:       qsTr("Passphrase too short (%1/%2)").arg(passphraseField.text.length).arg(addKeyDialog._minPassphraseLength)
+                    text:       qsTr("Парольная фраза слишком короткая (%1/%2)").arg(passphraseField.text.length).arg(addKeyDialog._minPassphraseLength)
                     color:      QGroundControl.globalPalette.warningText
                     font.pointSize: ScreenTools.smallFontPointSize
                 }
@@ -108,21 +108,21 @@ SettingsGroupLayout {
                         id:                     rawKeyField
                         Layout.fillWidth:       true
                         Layout.preferredWidth:  ScreenTools.defaultFontPixelWidth * 30
-                        placeholderText:        qsTr("64 hex characters")
+                        placeholderText:        qsTr("64 hex-символа")
                         maximumLength:          64
                         inputMethodHints:       Qt.ImhNoPredictiveText
                         validator:              RegularExpressionValidator { regularExpression: /[0-9a-fA-F]*/ }
                     }
 
                     QGCButton {
-                        text:       qsTr("Generate")
+                        text:       qsTr("Сгенерировать")
                         onClicked:  rawKeyField.text = QGroundControl.mavlinkSigningKeys.generateRandomHexKey()
                     }
                 }
 
                 QGCLabel {
                     visible:    addKeyDialog.useRawKey && rawKeyField.text.length > 0 && rawKeyField.text.length !== 64
-                    text:       qsTr("%1/64 hex characters").arg(rawKeyField.text.length)
+                    text:       qsTr("%1/64 hex-символов").arg(rawKeyField.text.length)
                     color:      QGroundControl.globalPalette.warningText
                     font.pointSize: ScreenTools.smallFontPointSize
                 }
@@ -141,10 +141,10 @@ SettingsGroupLayout {
 
     LabelledLabel {
         Layout.fillWidth:   true
-        label:              qsTr("Active Key")
+        label:              qsTr("Активный ключ")
         labelText:          _signingKeyManager._activeVehicle && _signingKeyManager._activeVehicle.signingController.signingStatus.keyName !== ""
                                 ? _signingKeyManager._activeVehicle.signingController.signingStatus.keyName
-                                : qsTr("None")
+                                : qsTr("Нет")
         visible:            _signingKeyManager._activeVehicle
     }
 
@@ -174,14 +174,14 @@ SettingsGroupLayout {
             // Quiet hint when a different key on this vehicle is the active one — explains why
             // Enable/Disable are both hidden on this row.
             QGCLabel {
-                text:               qsTr("(another key active)")
+                text:               qsTr("(активен другой ключ)")
                 visible:            keyDelegate._otherKeyActive
                 font.pointSize:     ScreenTools.smallFontPointSize
                 opacity:            0.7
             }
 
             QGCButton {
-                text:       keyDelegate._signingPending ? qsTr("Configuring…") : qsTr("Enable")
+                text:       keyDelegate._signingPending ? qsTr("Настройка…") : qsTr("Включить")
                 visible:    !keyDelegate._anyKeyActive
                 enabled:    _signingKeyManager._activeVehicle && !keyDelegate._signingPending
                 onClicked: {
@@ -190,11 +190,11 @@ SettingsGroupLayout {
                     }
                     const linkName = _signingKeyManager._activeVehicle.vehicleLinkManager
                                         ? _signingKeyManager._activeVehicle.vehicleLinkManager.primaryLinkName
-                                        : qsTr("active link")
+                                        : qsTr("активный канал")
                     QGroundControl.showMessageDialog(
                         _signingKeyManager,
-                        qsTr("Send Signing Key"),
-                        qsTr("This will transmit key '%1' to the vehicle over '%2'. Only proceed if this link is secure (USB or trusted local network).").arg(keyDelegate._keyName).arg(linkName),
+                        qsTr("Отправка ключа подписи"),
+                        qsTr("Ключ «%1» будет передан на судно по каналу «%2». Продолжайте, только если канал защищён (USB или доверенная локальная сеть).").arg(keyDelegate._keyName).arg(linkName),
                         Dialog.Ok | Dialog.Cancel,
                         function () {
                             if (_signingKeyManager._activeVehicle) {
@@ -205,7 +205,7 @@ SettingsGroupLayout {
             }
 
             QGCButton {
-                text:       keyDelegate._signingPending ? qsTr("Disabling…") : qsTr("Disable")
+                text:       keyDelegate._signingPending ? qsTr("Отключение…") : qsTr("Отключить")
                 visible:    keyDelegate._keyIsActiveVehicle
                 enabled:    _signingKeyManager._activeVehicle && !keyDelegate._signingPending
                 onClicked: {
@@ -216,8 +216,8 @@ SettingsGroupLayout {
                     if (_signingKeyManager._activeVehicle.armed) {
                         QGroundControl.showMessageDialog(
                             _signingKeyManager,
-                            qsTr("Disable Signing While Armed?"),
-                            qsTr("Vehicle is armed. ArduPilot will refuse to disable signing while armed and PX4 will not accept the disable packet without a valid signature. The disable attempt will likely time out and leave the link in an inconsistent state.\n\nDisarm the vehicle first."),
+                            qsTr("Отключить подпись при запущенном судне?"),
+                            qsTr("Судно запущено. ArduPilot не отключает подпись на запущенном судне, а PX4 не примет команду без действительной подписи. Попытка, скорее всего, завершится тайм-аутом и оставит канал в неопределённом состоянии.\n\nСначала остановите судно."),
                             Dialog.Cancel)
                         return
                     }
@@ -226,7 +226,7 @@ SettingsGroupLayout {
             }
 
             QGCButton {
-                text:       qsTr("Export")
+                text:       qsTr("Экспорт")
                 visible:    !keyDelegate._keyIsActive
                 onClicked: {
                     let hex = QGroundControl.mavlinkSigningKeys.keyHexByName(keyDelegate._keyName)
@@ -235,20 +235,20 @@ SettingsGroupLayout {
                         clipboardWipeTimer.restart()
                         QGroundControl.showMessageDialog(
                             _signingKeyManager,
-                            qsTr("Export Key: %1").arg(keyDelegate._keyName),
-                            qsTr("Key copied to clipboard. Store it securely — it will be cleared from the clipboard in 30 seconds."),
+                            qsTr("Экспорт ключа: %1").arg(keyDelegate._keyName),
+                            qsTr("Ключ скопирован в буфер обмена. Сохраните его в надёжном месте — через 30 секунд буфер будет очищен."),
                             Dialog.Ok)
                     }
                 }
             }
 
             QGCButton {
-                text:       qsTr("Delete")
+                text:       qsTr("Удалить")
                 visible:    !keyDelegate._keyIsActive
                 onClicked:  QGroundControl.showMessageDialog(
                                 _signingKeyManager,
-                                qsTr("Delete Signing Key"),
-                                qsTr("Are you sure you want to delete '%1'?\n\nIf a vehicle still has this key configured, you will no longer be able to communicate with it over a signed connection. Raw or generated keys cannot be recovered — Export the hex first if you may need it later.").arg(keyDelegate._keyName),
+                                qsTr("Удаление ключа подписи"),
+                                qsTr("Удалить ключ «%1»?\n\nЕсли этот ключ настроен на судне, связаться с ним по подписанному каналу будет невозможно. Введённые или сгенерированные ключи восстановить нельзя — при необходимости сначала сделайте экспорт.").arg(keyDelegate._keyName),
                                 Dialog.Ok | Dialog.Cancel,
                                 function () { QGroundControl.mavlinkSigningKeys.removeKey(keyDelegate._keyName) })
             }
@@ -256,12 +256,12 @@ SettingsGroupLayout {
     }
 
     QGCLabel {
-        text:       qsTr("No keys configured")
+        text:       qsTr("Ключи не настроены")
         visible:    QGroundControl.mavlinkSigningKeys.keys.count === 0
     }
 
     QGCButton {
-        text:       qsTr("Add Key")
+        text:       qsTr("Добавить ключ")
         onClicked:  addKeyDialogFactory.open()
     }
 }

@@ -15,7 +15,7 @@ SettingsGroupLayout {
     property Fact _elevationProviderFact: QGroundControl.settingsManager.flightMapSettings.elevationMapProvider
 
     LabelledComboBox {
-        label: qsTr("Provider")
+        label: qsTr("Поставщик")
         model: _mapEngineManager.mapProviderList
 
         onActivated: (index) => {
@@ -31,7 +31,7 @@ SettingsGroupLayout {
     }
 
     LabelledComboBox {
-        label: qsTr("Type")
+        label: qsTr("Тип")
         model: _mapEngineManager.mapTypeList(_mapProviderFact.rawValue)
 
         onActivated: (index) => { _mapTypeFact.rawValue = comboBox.textAt(index) }
@@ -44,7 +44,7 @@ SettingsGroupLayout {
     }
 
     LabelledComboBox {
-        label: qsTr("Elevation Provider")
+        label: qsTr("Поставщик высот")
         model: _mapEngineManager.elevationProviderList
 
         onActivated: (index) => { _elevationProviderFact.rawValue = comboBox.textAt(index) }

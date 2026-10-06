@@ -19,7 +19,7 @@ ColumnLayout {
     QGCLabel {
         Layout.preferredWidth: parent.width
         wrapMode: Text.WordWrap
-        text: qsTr("Multiple buttons that have the same action must be pressed simultaneously to invoke the action.")
+        text: qsTr("Если у нескольких кнопок одно действие, для его вызова их нужно нажать одновременно.")
     }
 
     RowLayout {
@@ -73,7 +73,7 @@ ColumnLayout {
         }
 
         QGCCheckBox {
-            text: qsTr("Repeat")
+            text: qsTr("Повтор")
             checked: joystick.getButtonRepeat(buttonAssignmentRow.selectedButtonIndex)
             enabled: buttonActionCombo.currentIndex === -1 ? false : (joystick.assignableActions.get(buttonActionCombo.currentIndex) ? joystick.assignableActions.get(buttonActionCombo.currentIndex).canRepeat : false)
 
@@ -119,12 +119,12 @@ ColumnLayout {
             }
             QGCLabel {
                 width: ScreenTools.defaultFontPixelWidth * 26
-                text: qsTr("Function: ")
+                text: qsTr("Функция: ")
             }
             QGCLabel {
                 width: ScreenTools.defaultFontPixelWidth * 26
                 visible: globals.activeVehicle.supports.jsButton
-                text: qsTr("Shift Function: ")
+                text: qsTr("Функция с Shift: ")
             }
         }
         Repeater {
@@ -215,7 +215,7 @@ ColumnLayout {
                 }
                 QGCCheckBox {
                     id: repeatCheck
-                    text: qsTr("Repeat")
+                    text: qsTr("Повтор")
                     enabled: currentAssignableAction && joystick.calibrated && currentAssignableAction.canRepeat
                     visible: !globals.activeVehicle.supports.jsButton
 
@@ -244,13 +244,13 @@ ColumnLayout {
                 }
 
                 QGCLabel {
-                    text: qsTr("QGC functions do not support shift actions")
+                    text: qsTr("Функции программы не поддерживают Shift")
                     width: ScreenTools.defaultFontPixelWidth * 15
                     visible: hasFirmwareSupport && !buttonActionCombo.isFwAction
                     anchors.verticalCenter: parent.verticalCenter
                 }
                 QGCLabel {
-                    text: qsTr("No firmware support")
+                    text: qsTr("Не поддерживается прошивкой")
                     width: ScreenTools.defaultFontPixelWidth * 15
                     visible: !hasFirmwareSupport
                     anchors.verticalCenter: parent.verticalCenter

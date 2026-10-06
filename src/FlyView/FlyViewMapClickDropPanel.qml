@@ -44,7 +44,7 @@ DropPanel {
 
             QGCButton {
                 Layout.fillWidth: true
-                text: qsTr("Go to location")
+                text: qsTr("Идти в точку")
                 visible: root._guidedController.showGotoLocation
                 onClicked: {
                     root.close()
@@ -72,7 +72,7 @@ DropPanel {
 
             QGCButton {
                 Layout.fillWidth: true
-                text: qsTr("Orbit at location")
+                text: qsTr("Кружить вокруг точки")
                 visible: root._guidedController.showOrbit && (root.orbitIndicator !== null)
                 onClicked: {
                     root.close()
@@ -84,7 +84,7 @@ DropPanel {
             QGCButton {
                 objectName: "mapClickROI"
                 Layout.fillWidth: true
-                text: qsTr("ROI at location")
+                text: qsTr("Точка интереса")
                 visible: root._guidedController.showROI
                 onClicked: {
                     root.close()
@@ -94,7 +94,7 @@ DropPanel {
 
             QGCButton {
                 Layout.fillWidth: true
-                text: qsTr("Set home here")
+                text: qsTr("Установить точку возврата")
                 visible: root._guidedController.showSetHome
                 onClicked: {
                     root.close()
@@ -104,7 +104,7 @@ DropPanel {
 
             QGCButton {
                 Layout.fillWidth: true
-                text: qsTr("Set Estimator Origin")
+                text: qsTr("Задать начало координат")
                 visible: root._guidedController.showSetEstimatorOrigin
                 onClicked: {
                     root.close()
@@ -114,7 +114,7 @@ DropPanel {
 
             QGCButton {
                 Layout.fillWidth: true
-                text: qsTr("Set Heading")
+                text: qsTr("Задать курс")
                 visible: root._guidedController.showChangeHeading
                 onClicked: {
                     root.close()
@@ -124,8 +124,8 @@ DropPanel {
 
             ColumnLayout {
                 spacing: 0
-                QGCLabel { text: qsTr("Lat: %1").arg(root.mapClickCoord.latitude.toFixed(6)) }
-                QGCLabel { text: qsTr("Lon: %1").arg(root.mapClickCoord.longitude.toFixed(6)) }
+                QGCLabel { text: qsTr("Шир: %1").arg(root.mapClickCoord.latitude.toFixed(6)) }
+                QGCLabel { text: qsTr("Долг: %1").arg(root.mapClickCoord.longitude.toFixed(6)) }
             }
         }
     }

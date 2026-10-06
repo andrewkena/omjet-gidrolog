@@ -39,7 +39,7 @@ SetupPage {
             spacing:     _margins
 
             QGCGroupBox {
-                title: qsTr("Flight Mode Settings") + (_fltmodeChExists ? "" : qsTr(" (Channel 5)"))
+                title: qsTr("Настройка режимов") + (_fltmodeChExists ? "" : qsTr(" (канал 5)"))
 
                 ColumnLayout {
                     spacing: ScreenTools.defaultFontPixelHeight
@@ -51,16 +51,16 @@ SetupPage {
                             QGCLabel {
                                 id:                 modeChannelLabel
                                 anchors.baseline:   modeChannelCombo.baseline
-                                text:               qsTr("Flight mode channel:")
+                                text:               qsTr("Канал режимов:")
                             }
 
                             QGCComboBox {
                                 id:              modeChannelCombo
                                 sizeToContents:  true
                                 Layout.maximumWidth: _comboWidth
-                                model:          [ qsTr("Not assigned"), qsTr("Channel 1"), qsTr("Channel 2"),
-                                    qsTr("Channel 3"),    qsTr("Channel 4"), qsTr("Channel 5"),
-                                    qsTr("Channel 6"),    qsTr("Channel 7"), qsTr("Channel 8") ]
+                                model:          [ qsTr("Не назначен"), qsTr("Канал 1"), qsTr("Канал 2"),
+                                    qsTr("Канал 3"),    qsTr("Канал 4"), qsTr("Канал 5"),
+                                    qsTr("Канал 6"),    qsTr("Канал 7"), qsTr("Канал 8") ]
 
                                 currentIndex:   _fltmodeCh.value
                                 onActivated: (index) => { _fltmodeCh.value = index }
@@ -76,7 +76,7 @@ SetupPage {
                                 model:  6
 
                                 QGCLabel {
-                                    text:   qsTr("Flight Mode ") + index
+                                    text:   qsTr("Режим ") + index
                                     color:  controller.activeFlightMode == index ? "yellow" : qgcPal.text
 
                                     property int index: modelData + 1
@@ -98,7 +98,7 @@ SetupPage {
                             }
 
                             QGCLabel {
-                                text:           qsTr("Simple")
+                                text:           qsTr("Простой")
                                 font.pointSize: ScreenTools.smallFontPointSize
                                 visible:        _customSimpleMode
                             }
@@ -113,7 +113,7 @@ SetupPage {
                             }
 
                             QGCLabel {
-                                text:           qsTr("Super-Simple")
+                                text:           qsTr("Суперпростой")
                                 font.pointSize: ScreenTools.smallFontPointSize
                                 visible:        _customSimpleMode
                             }
@@ -139,7 +139,7 @@ SetupPage {
                             spacing: _margins
                             visible: controller.simpleModesSupported
 
-                            QGCLabel { text: qsTr("Simple Mode") }
+                            QGCLabel { text: qsTr("Простой режим") }
 
                             QGCComboBox {
                                 model:          controller.simpleModeNames
@@ -151,7 +151,7 @@ SetupPage {
             } // QGCGroupBox - Flight Modes
 
             QGCGroupBox {
-                title: qsTr("Switch Options")
+                title: qsTr("Функции переключателей")
 
                 ColumnLayout {
                     spacing: ScreenTools.defaultFontPixelHeight
@@ -167,7 +167,7 @@ SetupPage {
 
                                 QGCLabel {
                                     anchors.baseline:   optCombo.baseline
-                                    text:               qsTr("Channel option %1 :").arg(index)
+                                    text:               qsTr("Функция канала %1:").arg(index)
                                     color:              controller.channelOptionEnabled[modelData + (_ch7OptAvailable ? 1 : 0)] ? "yellow" : qgcPal.text
                                 }
 

@@ -39,14 +39,14 @@ ColumnLayout {
                 Layout.fillWidth: true
                 spacing: ScreenTools.defaultFontPixelHeight
 
-                QGCLabel { text: qsTr("Attitude Controls") }
+                QGCLabel { text: qsTr("Управление положением") }
 
                 Repeater {
                     model: [
-                        { name: qsTr("Pitch"),      mapped: controller.pitchChannelMapped,      value: controller.adjustedPitchChannelValue,      deadband: controller.pitchDeadband },
-                        { name: qsTr("Roll"),       mapped: controller.rollChannelMapped,       value: controller.adjustedRollChannelValue,       deadband: controller.rollDeadband },
-                        { name: qsTr("Yaw"),        mapped: controller.yawChannelMapped,        value: controller.adjustedYawChannelValue,        deadband: controller.yawDeadband },
-                        { name: qsTr("Throttle"),   mapped: controller.throttleChannelMapped,   value: controller.adjustedThrottleChannelValue,   deadband: controller.throttleDeadband }
+                        { name: qsTr("Тангаж"),      mapped: controller.pitchChannelMapped,      value: controller.adjustedPitchChannelValue,      deadband: controller.pitchDeadband },
+                        { name: qsTr("Крен"),       mapped: controller.rollChannelMapped,       value: controller.adjustedRollChannelValue,       deadband: controller.rollDeadband },
+                        { name: qsTr("Рыскание"),        mapped: controller.yawChannelMapped,        value: controller.adjustedYawChannelValue,        deadband: controller.yawDeadband },
+                        { name: qsTr("Газ"),   mapped: controller.throttleChannelMapped,   value: controller.adjustedThrottleChannelValue,   deadband: controller.throttleDeadband }
                     ]
 
                     RowLayout {
@@ -71,14 +71,14 @@ ColumnLayout {
                 }
 
                 QGCLabel {
-                    text: qsTr("Aux Extensions")
+                    text: qsTr("Доп. каналы")
                     visible: controller.pitchExtensionEnabled || controller.rollExtensionEnabled
                 }
 
                 Repeater {
                     model: [
-                        { name: qsTr("Pitch"),  extensionEnabled: controller.pitchExtensionEnabled, mapped: controller.pitchExtensionChannelMapped, value: controller.adjustedPitchExtensionChannelValue,   deadband: controller.pitchExtensionDeadband },
-                        { name: qsTr("Roll"),   extensionEnabled: controller.rollExtensionEnabled,  mapped: controller.rollExtensionChannelMapped,  value: controller.adjustedRollExtensionChannelValue,    deadband: controller.rollExtensionDeadband },
+                        { name: qsTr("Тангаж"),  extensionEnabled: controller.pitchExtensionEnabled, mapped: controller.pitchExtensionChannelMapped, value: controller.adjustedPitchExtensionChannelValue,   deadband: controller.pitchExtensionDeadband },
+                        { name: qsTr("Крен"),   extensionEnabled: controller.rollExtensionEnabled,  mapped: controller.rollExtensionChannelMapped,  value: controller.adjustedRollExtensionChannelValue,    deadband: controller.rollExtensionDeadband },
                     ]
 
                     RowLayout {
@@ -104,19 +104,19 @@ ColumnLayout {
                 }
 
                 QGCLabel {
-                    text: qsTr("Additional Axes")
+                    text: qsTr("Доп. оси")
                     visible: controller.additionalAxis1Enabled || controller.additionalAxis2Enabled || controller.additionalAxis3Enabled ||
                              controller.additionalAxis4Enabled || controller.additionalAxis5Enabled || controller.additionalAxis6Enabled
                 }
 
                 Repeater {
                     model: [
-                        { name: qsTr("Aux 1"),  extensionEnabled: controller.additionalAxis1Enabled,  mapped: controller.additionalAxis1ChannelMapped,  value: controller.adjustedAdditionalAxis1ChannelValue,    deadband: controller.additionalAxis1Deadband },
-                        { name: qsTr("Aux 2"),  extensionEnabled: controller.additionalAxis2Enabled,  mapped: controller.additionalAxis2ChannelMapped,  value: controller.adjustedAdditionalAxis2ChannelValue,    deadband: controller.additionalAxis2Deadband },
-                        { name: qsTr("Aux 3"),  extensionEnabled: controller.additionalAxis3Enabled,  mapped: controller.additionalAxis3ChannelMapped,  value: controller.adjustedAdditionalAxis3ChannelValue,    deadband: controller.additionalAxis3Deadband },
-                        { name: qsTr("Aux 4"),  extensionEnabled: controller.additionalAxis4Enabled,  mapped: controller.additionalAxis4ChannelMapped,  value: controller.adjustedAdditionalAxis4ChannelValue,    deadband: controller.additionalAxis4Deadband },
-                        { name: qsTr("Aux 5"),  extensionEnabled: controller.additionalAxis5Enabled,  mapped: controller.additionalAxis5ChannelMapped,  value: controller.adjustedAdditionalAxis5ChannelValue,    deadband: controller.additionalAxis5Deadband },
-                        { name: qsTr("Aux 6"),  extensionEnabled: controller.additionalAxis6Enabled,  mapped: controller.additionalAxis6ChannelMapped,  value: controller.adjustedAdditionalAxis6ChannelValue,    deadband: controller.additionalAxis6Deadband }
+                        { name: qsTr("Доп. 1"),  extensionEnabled: controller.additionalAxis1Enabled,  mapped: controller.additionalAxis1ChannelMapped,  value: controller.adjustedAdditionalAxis1ChannelValue,    deadband: controller.additionalAxis1Deadband },
+                        { name: qsTr("Доп. 2"),  extensionEnabled: controller.additionalAxis2Enabled,  mapped: controller.additionalAxis2ChannelMapped,  value: controller.adjustedAdditionalAxis2ChannelValue,    deadband: controller.additionalAxis2Deadband },
+                        { name: qsTr("Доп. 3"),  extensionEnabled: controller.additionalAxis3Enabled,  mapped: controller.additionalAxis3ChannelMapped,  value: controller.adjustedAdditionalAxis3ChannelValue,    deadband: controller.additionalAxis3Deadband },
+                        { name: qsTr("Доп. 4"),  extensionEnabled: controller.additionalAxis4Enabled,  mapped: controller.additionalAxis4ChannelMapped,  value: controller.adjustedAdditionalAxis4ChannelValue,    deadband: controller.additionalAxis4Deadband },
+                        { name: qsTr("Доп. 5"),  extensionEnabled: controller.additionalAxis5Enabled,  mapped: controller.additionalAxis5ChannelMapped,  value: controller.adjustedAdditionalAxis5ChannelValue,    deadband: controller.additionalAxis5Deadband },
+                        { name: qsTr("Доп. 6"),  extensionEnabled: controller.additionalAxis6Enabled,  mapped: controller.additionalAxis6ChannelMapped,  value: controller.adjustedAdditionalAxis6ChannelValue,    deadband: controller.additionalAxis6Deadband }
                     ]
 
                     RowLayout {
@@ -173,7 +173,7 @@ ColumnLayout {
 
                         QGCComboBox {
                             id: transmitterModeComboBox
-                            model: [ qsTr("Mode 1"), qsTr("Mode 2"), qsTr("Mode 3"), qsTr("Mode 4") ]
+                            model: [ qsTr("Режим 1"), qsTr("Режим 2"), qsTr("Режим 3"), qsTr("Режим 4") ]
                             enabled: !controller.calibrating
 
                             onActivated: (index) => controller.transmitterMode = index + 1
@@ -183,7 +183,7 @@ ColumnLayout {
 
                         QGCCheckBox {
                             id: centeredThrottleCheckBox
-                            text: qsTr("Centered Throttle")
+                            text: qsTr("Газ по центру")
                             checked: controller.centeredThrottle
                             enabled: !controller.calibrating
                             visible: !controller.joystickMode
@@ -253,12 +253,12 @@ ColumnLayout {
 
         QGCButton {
             id: cancelButton
-            text: qsTr("Cancel")
+            text: qsTr("Отмена")
             onClicked: controller.cancelButtonClicked()
         }
 
         QGCButton {
-            text: qsTr("One-Sided")
+            text: qsTr("Односторонний")
             visible: controller.oneSidedButtonVisible
             onClicked: controller.oneSidedButtonClicked()
         }
@@ -266,26 +266,26 @@ ColumnLayout {
         QGCButton {
             id: nextButton
             primary: true
-            text: qsTr("Calibrate")
+            text: qsTr("Калибровать")
 
             onClicked: {
-                if (text === qsTr("Calibrate")) {
+                if (text === qsTr("Калибровать")) {
                     if (controller.channelCount < controller.minChannelCount) {
                         let errorMessage = ""
                         let title = ""
                         if (controller.joystickMode) {
-                            title = qsTr("Joystick Not Ready")
-                            errorMessage = qsTr("%1 axes or more are needed to fly. Joystick is reporting %2 axes.").arg(controller.minChannelCount).arg(controller.channelCount)
+                            title = qsTr("Джойстик не готов")
+                            errorMessage = qsTr("Для управления нужно не менее %1 осей. Джойстик сообщает %2.").arg(controller.minChannelCount).arg(controller.channelCount)
                         } else {
-                            title = qsTr("Not Ready")
-                            errorMessage = controller.channelCount === 0 ? qsTr("Please turn on RC transmitter.") : qsTr("%1 channels or more are needed to fly.").arg(controller.minChannelCount)
+                            title = qsTr("Не готов")
+                            errorMessage = controller.channelCount === 0 ? qsTr("Включите пульт.") : qsTr("Для управления нужно не менее %1 каналов.").arg(controller.minChannelCount)
                         }
                         QGroundControl.showMessageDialog(root, title, errorMessage)
                         return
                     } else if (!controller.joystickMode) {
-                        QGroundControl.showMessageDialog(root, qsTr("Zero Trims"),
-                                                        qsTr("Before calibrating you should zero all your trims and subtrims. Click Ok to start Calibration.\n\n%1").arg(
-                                                            (QGroundControl.multiVehicleManager.activeVehicle.px4Firmware ? "" : qsTr("Please ensure all motor power is disconnected AND all props are removed from the vehicle."))),
+                        QGroundControl.showMessageDialog(root, qsTr("Обнулите триммеры"),
+                                                        qsTr("Перед калибровкой обнулите все триммеры и субтриммеры. Нажмите OK, чтобы начать калибровку.\n\n%1").arg(
+                                                            (QGroundControl.multiVehicleManager.activeVehicle.px4Firmware ? "" : qsTr("Убедитесь, что питание моторов отключено И все винты сняты."))),
                                                         Dialog.Ok,
                                                         function() { controller.nextButtonClicked() })
                         return

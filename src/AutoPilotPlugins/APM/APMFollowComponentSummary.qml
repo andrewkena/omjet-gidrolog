@@ -20,15 +20,15 @@ Item {
     property bool followParamsAvailable: controller.parameterExists(-1, "FOLL_SYSID")
 
     property var followItems: [
-        { label: qsTr("Follow Enabled"),    fact: getFact("FOLL_ENABLE"),       visible: true},
-        { label: qsTr("Follow System ID"),  fact: getFact("FOLL_SYSID"),        visible: followParamsAvailable },
-        { label: qsTr("Max Distance"),      fact: getFact("FOLL_DIST_MAX"),     visible: followParamsAvailable },
-        { label: qsTr("Offset X"),          fact: getFact("FOLL_OFS_X"),        visible: followParamsAvailable },
-        { label: qsTr("Offset Y"),          fact: getFact("FOLL_OFS_Y"),        visible: followParamsAvailable },
-        { label: qsTr("Offset Z"),          fact: getFact("FOLL_OFS_Z"),        visible: followParamsAvailable },
-        { label: qsTr("Offset Type"),       fact: getFact("FOLL_OFS_TYPE"),     visible: followParamsAvailable },
-        { label: qsTr("Altitude Type"),     fact: getFact("FOLL_ALT_TYPE"),     visible: followParamsAvailable },
-        { label: qsTr("Yaw Behavior"),      fact: getFact("FOLL_YAW_BEHAVE"),   visible: followParamsAvailable }
+        { label: qsTr("Следование"),    fact: getFact("FOLL_ENABLE"),       visible: true},
+        { label: qsTr("ID системы для следования"),  fact: getFact("FOLL_SYSID"),        visible: followParamsAvailable },
+        { label: qsTr("Макс. расстояние"),      fact: getFact("FOLL_DIST_MAX"),     visible: followParamsAvailable },
+        { label: qsTr("Смещение X"),          fact: getFact("FOLL_OFS_X"),        visible: followParamsAvailable },
+        { label: qsTr("Смещение Y"),          fact: getFact("FOLL_OFS_Y"),        visible: followParamsAvailable },
+        { label: qsTr("Смещение Z"),          fact: getFact("FOLL_OFS_Z"),        visible: followParamsAvailable },
+        { label: qsTr("Тип смещения"),       fact: getFact("FOLL_OFS_TYPE"),     visible: followParamsAvailable },
+        { label: qsTr("Тип высоты"),     fact: getFact("FOLL_ALT_TYPE"),     visible: followParamsAvailable },
+        { label: qsTr("Поведение по курсу"),      fact: getFact("FOLL_YAW_BEHAVE"),   visible: followParamsAvailable }
     ]
 
     ColumnLayout {

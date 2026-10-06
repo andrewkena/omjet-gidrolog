@@ -62,9 +62,7 @@ const QVariantList &APMAutoPilotPlugin::vehicleComponents()
 {
     if (_components.isEmpty() && !_incorrectParameterVersion) {
         if (_vehicle->parameterManager()->parametersReady()) {
-            _airframeComponent = new APMAirframeComponent(_vehicle, this);
-            _airframeComponent->setupTriggerSignals();
-            _components.append(QVariant::fromValue(qobject_cast<VehicleComponent*>(_airframeComponent)));
+            // GidroLog: component hidden (Корпус / Подвес / Удалённая поддержка)
 
             if (_vehicle->supports()->radio()) {
                 _radioComponent = new APMRadioComponent(_vehicle, this);
@@ -148,9 +146,7 @@ const QVariantList &APMAutoPilotPlugin::vehicleComponents()
                 _components.append(QVariant::fromValue(qobject_cast<VehicleComponent*>(_advancedTuningCopterComponent)));
             }
 
-            _gimbalComponent = new APMGimbalComponent(_vehicle, this);
-            _gimbalComponent->setupTriggerSignals();
-            _components.append(QVariant::fromValue(qobject_cast<VehicleComponent*>(_gimbalComponent)));
+            // GidroLog: component hidden (Корпус / Подвес / Удалённая поддержка)
 
             if (_vehicle->sub()) {
                 _lightsComponent = new APMLightsComponent(_vehicle, this);
@@ -175,9 +171,7 @@ const QVariantList &APMAutoPilotPlugin::vehicleComponents()
             _loggingComponent->setupTriggerSignals();
             _components.append(QVariant::fromValue(qobject_cast<VehicleComponent*>(_loggingComponent)));
 
-            _apmRemoteSupportComponent = new APMRemoteSupportComponent(_vehicle, this);
-            _apmRemoteSupportComponent->setupTriggerSignals();
-            _components.append(QVariant::fromValue(qobject_cast<VehicleComponent*>(_apmRemoteSupportComponent)));
+            // GidroLog: component hidden (Корпус / Подвес / Удалённая поддержка)
 
             _joystickComponent = new JoystickComponent(_vehicle, this, this);
             _joystickComponent->setupTriggerSignals();

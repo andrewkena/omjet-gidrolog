@@ -210,7 +210,7 @@ Item {
 
         axisX: ValueAxis {
             id: _xAxis
-            titleText: xAxisShowLocalTime ? qsTr("Time (local)") : qsTr("Elapsed")
+            titleText: xAxisShowLocalTime ? qsTr("Время (местн.)") : qsTr("Прошло")
             labelFormat: "%.3f"
             min: 0
             max: 1

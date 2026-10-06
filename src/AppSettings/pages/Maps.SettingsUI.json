@@ -4,7 +4,7 @@
     "groups": [
         {
             "component": "MapProviderSettings",
-            "sectionName": "Map Provider",
+            "sectionName": "Поставщик карт",
             "keywords": [
                 "map provider",
                 "satellite",
@@ -17,7 +17,7 @@
         },
         {
             "component": "OfflineMapSettings",
-            "sectionName": "Offline Maps",
+            "sectionName": "Офлайн-карты",
             "keywords": [
                 "offline",
                 "download",
@@ -26,43 +26,14 @@
             ]
         },
         {
-            "heading": "Tokens",
-            "keywords": ["token", "api key", "tianditu", "mapbox", "esri", "vworld", "openaip"],
-            "headingDescription": "qsTr(\"Allows access to additional providers\")",
-            "controls": [
-                {
-                    "setting": "appSettings.tiandituToken"
-                },
-                {
-                    "setting": "appSettings.mapboxToken"
-                },
-                {
-                    "setting": "appSettings.esriToken"
-                },
-                {
-                    "setting": "appSettings.vworldToken"
-                },
-                {
-                    "setting": "appSettings.openaipToken"
-                }
-            ]
-        },
-        {
-            "heading": "Mapbox Login",
-            "keywords": ["mapbox", "account", "style"],
-            "controls": [
-                {
-                    "setting": "appSettings.mapboxAccount"
-                },
-                {
-                    "setting": "appSettings.mapboxStyle"
-                }
-            ]
-        },
-        {
-            "heading": "Custom Map URL",
-            "keywords": ["custom map", "wms", "tile url", "tile server"],
-            "headingDescription": "qsTr(\"URL with {x} {y} {z} or {zoom} substitutions\")",
+            "heading": "Свой адрес карты",
+            "keywords": [
+                "custom map",
+                "wms",
+                "tile url",
+                "tile server"
+            ],
+            "headingDescription": "qsTr(\"Адрес с подстановками {x} {y} {z} или {zoom}\")",
             "controls": [
                 {
                     "setting": "appSettings.customURL"
@@ -70,8 +41,13 @@
             ]
         },
         {
-            "heading": "Tile Cache",
-            "keywords": ["cache", "disk size", "memory size", "tile cache"],
+            "heading": "Кэш тайлов",
+            "keywords": [
+                "cache",
+                "disk size",
+                "memory size",
+                "tile cache"
+            ],
             "controls": [
                 {
                     "setting": "mapsSettings.maxCacheDiskSize"

@@ -580,7 +580,7 @@ void UDPLink::_onDisconnected()
 void UDPLink::_onErrorOccurred(const QString &errorString)
 {
     qCWarning(UDPLinkLog) << "Communication error:" << errorString;
-    emit communicationError(tr("UDP Link Error"), tr("Link %1: %2").arg(_udpConfig->name(), errorString));
+    emit communicationError(QStringLiteral("Ошибка UDP-соединения"), QStringLiteral("Канал %1: %2").arg(_udpConfig->name(), errorString));
 }
 
 void UDPLink::_onDataReceived(const QByteArray &data)

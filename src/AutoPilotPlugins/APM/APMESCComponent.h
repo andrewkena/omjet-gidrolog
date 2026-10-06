@@ -12,7 +12,7 @@ public:
     QStringList setupCompleteChangedTriggerList() const final { return QStringList(); }
 
     QString name() const final { return _name; }
-    QString description() const final { return tr("Configure and calibrate Electronic Speed Controllers."); }
+    QString description() const final { return QStringLiteral("Настройка и калибровка регуляторов хода (ESC)."); }
     QString iconResource() const final { return QStringLiteral("/qmlimages/EscIndicator.svg"); }
     bool requiresSetup() const final { return false; }
     bool setupComplete() const final { return true; }
@@ -21,5 +21,5 @@ public:
     bool allowSetupWhileArmed() const final { return true; }
 
 private:
-    const QString _name = tr("ESC");
+    const QString _name = QStringLiteral("Регуляторы (ESC)");
 };

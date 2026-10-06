@@ -3,8 +3,8 @@
     "fileType": "SettingsUI",
     "groups": [
         {
-            "heading": "General",
-            "headingDescription": "qsTr(\"The 3D View is deprecated and will be removed in a future release in favor of the GeoMap engine.\")",
+            "heading": "Общие",
+            "headingDescription": "qsTr(\"3D-экран устарел и будет удалён в следующих версиях — его заменит движок GeoMap.\")",
             "keywords": ["3d view", "3d map", "enable 3d", "map provider", "deprecated"],
             "controls": [
                 {
@@ -19,7 +19,7 @@
             ]
         },
         {
-            "heading": "Data",
+            "heading": "Данные",
             "keywords": ["osm", "openstreetmap", "3d data", "building height", "altitude bias"],
             "enableWhen": "QGroundControl.settingsManager.viewer3DSettings.enabled.rawValue",
             "controls": [
@@ -29,7 +29,7 @@
                     "showWhen": "!ScreenTools.isMobile",
                     "properties": {
                         "selectFolder": false,
-                        "nameFilters": "[ qsTr(\"OpenStreetMap files (*.osm)\"), qsTr(\"All Files (*)\") ]"
+                        "nameFilters": "[ qsTr(\"Файлы OpenStreetMap (*.osm)\"), qsTr(\"Все файлы (*)\") ]"
                     }
                 },
                 {

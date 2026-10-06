@@ -93,10 +93,10 @@ ColumnLayout {
     }
 
     function eventTypeLabel(eventType) {
-        if (eventType === "mode")    return qsTr("Mode")
-        if (eventType === "event")   return qsTr("Event")
-        if (eventType === "error")   return qsTr("Error")
-        if (eventType === "warning") return qsTr("Warning")
+        if (eventType === "mode")    return qsTr("Режим")
+        if (eventType === "event")   return qsTr("Событие")
+        if (eventType === "error")   return qsTr("Ошибка")
+        if (eventType === "warning") return qsTr("Внимание")
         return eventType
     }
 
@@ -341,7 +341,7 @@ ColumnLayout {
             visible: logParser.modeSegments.length > 0
 
             QGCLabel {
-                text: qsTr("Modes")
+                text: qsTr("Режимы")
                 font.bold: true
                 Layout.preferredWidth: _base.graphsView.plotArea.x  // Align with chart plot area
                 Layout.maximumWidth: Layout.preferredWidth
@@ -371,7 +371,7 @@ ColumnLayout {
             visible: logParser.dropouts.length > 0
 
             QGCLabel {
-                text: qsTr("Dropouts")
+                text: qsTr("Пропуски")
                 font.bold: true
                 Layout.preferredWidth: _base.graphsView.plotArea.x  // Align with chart plot area
                 Layout.maximumWidth: Layout.preferredWidth
@@ -401,7 +401,7 @@ ColumnLayout {
             visible: logParser.events.length > 0
 
             QGCLabel {
-                text: qsTr("Events")
+                text: qsTr("События")
                 font.bold: true
                 Layout.preferredWidth: _base.graphsView.plotArea.x  // Align with chart plot area
                 Layout.maximumWidth: Layout.preferredWidth
@@ -435,7 +435,7 @@ ColumnLayout {
         Layout.fillHeight: true
         logParser: control.logParser
         xAxisShowLocalTime: control.xAxisShowLocalTime
-        yAxisTitle: qsTr("Value")
+        yAxisTitle: qsTr("Значение")
 
         // ---- Chart-specific popup rows ----
         RowLayout {
@@ -448,7 +448,7 @@ ColumnLayout {
                 color: modeColor(_markerModeName)
             }
 
-            QGCLabel { text: qsTr("Mode:") }
+            QGCLabel { text: qsTr("Режим:") }
             QGCLabel { text: _markerModeName; font.bold: true }
         }
 
@@ -479,17 +479,17 @@ ColumnLayout {
                     Layout.leftMargin: _base.colorBlockWidth + ScreenTools.defaultFontPixelWidth * 0.4
                     spacing: ScreenTools.defaultFontPixelWidth * 0.3
 
-                    QGCLabel { text: qsTr("Current") }
+                    QGCLabel { text: qsTr("Текущее") }
                     QGCLabel { text: Number(modelData.value).toFixed(3); font.bold: true }
 
                     Item { width: ScreenTools.defaultFontPixelWidth * 0.5 }
 
-                    QGCLabel { text: qsTr("Min") }
+                    QGCLabel { text: qsTr("Мин.") }
                     QGCLabel { text: isNaN(modelData.min) ? "—" : Number(modelData.min).toFixed(3); font.bold: true }
 
                     Item { width: ScreenTools.defaultFontPixelWidth * 0.5 }
 
-                    QGCLabel { text: qsTr("Max") }
+                    QGCLabel { text: qsTr("Макс.") }
                     QGCLabel { text: isNaN(modelData.max) ? "—" : Number(modelData.max).toFixed(3); font.bold: true }
                 }
             }
@@ -526,7 +526,7 @@ ColumnLayout {
         visible: modeLegendEntries().length > 0
         spacing: ScreenTools.defaultFontPixelWidth
 
-        QGCLabel { text: qsTr("Modes:"); font.bold: true }
+        QGCLabel { text: qsTr("Режимы:"); font.bold: true }
 
         Repeater {
             model: modeLegendEntries()
@@ -551,7 +551,7 @@ ColumnLayout {
         visible: logParser.events.length > 0
         spacing: ScreenTools.defaultFontPixelWidth
 
-        QGCLabel { text: qsTr("Events:"); font.bold: true }
+        QGCLabel { text: qsTr("События:"); font.bold: true }
 
         Repeater {
             model: ["mode", "event", "error", "warning"]
@@ -585,11 +585,11 @@ ColumnLayout {
 
         QGCLabel {
             Layout.fillWidth: true
-            text: qsTr("Click to place cursor. Shift+drag to move cursor. Drag to zoom X-axis. Double-click to reset zoom.")
+            text: qsTr("Клик — поставить курсор. Shift+перетаскивание — сдвинуть курсор. Перетаскивание — масштаб по X. Двойной клик — сбросить масштаб.")
         }
 
         QGCButton {
-            text: qsTr("Reset Zoom")
+            text: qsTr("Сбросить масштаб")
             enabled: _base.zoomMinX !== _base.fullMinX || _base.zoomMaxX !== _base.fullMaxX
             onClicked: _base.resetZoom()
         }

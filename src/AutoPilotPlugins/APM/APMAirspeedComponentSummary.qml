@@ -31,25 +31,25 @@ Item {
         spacing: 0
 
         VehicleSummaryRow {
-            labelText: qsTr("Sensor type")
-            valueText: _arspdTypeAvailable ? _arspdType.enumStringValue : qsTr("N/A")
+            labelText: qsTr("Тип датчика")
+            valueText: _arspdTypeAvailable ? _arspdType.enumStringValue : qsTr("Н/Д")
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("Use airspeed")
-            valueText: _arspdUseAvailable ? _arspdUse.enumStringValue : qsTr("N/A")
+            labelText: qsTr("Использовать воздушную скорость")
+            valueText: _arspdUseAvailable ? _arspdUse.enumStringValue : qsTr("Н/Д")
             visible: _sensorEnabled
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("Sensor 2 type")
-            valueText: _arspd2TypeAvailable ? _arspd2Type.enumStringValue : qsTr("N/A")
+            labelText: qsTr("Тип датчика 2")
+            valueText: _arspd2TypeAvailable ? _arspd2Type.enumStringValue : qsTr("Н/Д")
             visible: _arspd2TypeAvailable
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("Cruise airspeed")
-            valueText: _cruiseAvailable ? _cruise.valueString + " " + _cruise.units : qsTr("N/A")
+            labelText: qsTr("Крейсерская скорость")
+            valueText: _cruiseAvailable ? _cruise.valueString + " " + _cruise.units : qsTr("Н/Д")
             visible: _sensorEnabled && _cruiseAvailable
         }
     }

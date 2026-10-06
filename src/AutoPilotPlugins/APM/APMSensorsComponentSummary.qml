@@ -28,7 +28,7 @@ Item {
         spacing: 0
 
         VehicleSummaryRow {
-        labelText:  qsTr("Compasses:")
+        labelText:  qsTr("Компасы:")
         valueText: ""
         }
 
@@ -46,8 +46,8 @@ Item {
                                      (sensorParams.rgCompassExternalParamAvailable[index] ?
                                           (sensorParams.rgCompassExternal[index] ? ", External" : ", Internal" ) :
                                           "") :
-                                     qsTr("Setup required")) :
-                                qsTr("Not installed")
+                                     qsTr("Требуется настройка")) :
+                                qsTr("Не установлен")
 
                     function getPriority (index) {
                         if (sensorParams.rgCompassId[index].value == sensorParams.rgCompassPrio[0].value) {
@@ -73,8 +73,8 @@ Item {
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("Accelerometer(s):")
-            valueText: controller.accelSetupNeeded ? qsTr("Setup required") : qsTr("Ready")
+            labelText: qsTr("Акселерометр(ы):")
+            valueText: controller.accelSetupNeeded ? qsTr("Требуется настройка") : qsTr("Готово")
         }
 
         Repeater {
@@ -86,8 +86,8 @@ Item {
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("Barometer(s):")
-            valueText: sensorParams.baroIdAvailable ? "" : qsTr("Not Supported(Over APM 4.1)")
+            labelText: qsTr("Барометр(ы):")
+            valueText: sensorParams.baroIdAvailable ? "" : qsTr("Не поддерживается (APM 4.1 и новее)")
         }
 
         Repeater {

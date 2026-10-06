@@ -12,7 +12,7 @@ public:
     QStringList setupCompleteChangedTriggerList() const final { return QStringList(); }
 
     QString name() const final { return _name; }
-    QString description() const final { return tr("Configure ArduPilot logging parameters."); }
+    QString description() const final { return QStringLiteral("Настройка журналирования ArduPilot."); }
     QString vehicleConfigJson() const final;
     QString iconResource() const final { return QStringLiteral("/qmlimages/OnboardLogIcon.svg"); }
     bool requiresSetup() const final { return false; }
@@ -23,5 +23,5 @@ public:
     bool allowSetupWhileFlying() const final { return true; }
 
 private:
-    const QString _name = tr("Logging");
+    const QString _name = QStringLiteral("Журналы");
 };

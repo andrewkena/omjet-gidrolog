@@ -47,7 +47,7 @@ RowLayout {
     }
 
     QGCButton {
-        text:       qsTr("Browse")
+        text:       qsTr("Обзор")
         onClicked:  _browseDialog.openForLoad()
 
         QGCFileDialog {

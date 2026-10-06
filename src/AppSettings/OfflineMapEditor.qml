@@ -198,7 +198,7 @@ FlightMap {
                     text: {
                         if (tileSet) {
                             if (tileSet.defaultSet)
-                                return qsTr("System Wide Tile Cache")
+                                return qsTr("Общий кэш тайлов")
                             else
                                 return "(" + tileSet.mapTypeStr + ")"
                         } else
@@ -211,21 +211,21 @@ FlightMap {
                     spacing: ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter: parent.horizontalCenter
                     visible: !_defaultSet && mapType !== QGroundControl.elevationProviderName
-                    QGCLabel { text: qsTr("Zoom Levels:"); width: infoView._labelWidth }
+                    QGCLabel { text: qsTr("Уровни масштаба:"); width: infoView._labelWidth }
                     QGCLabel { text: tileSet ? (tileSet.minZoom + " - " + tileSet.maxZoom) : ""; horizontalAlignment: Text.AlignRight; width: infoView._valueWidth }
                 }
                 Row {
                     spacing: ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter: parent.horizontalCenter
                     visible: !_defaultSet
-                    QGCLabel { text: qsTr("Total:"); width: infoView._labelWidth }
+                    QGCLabel { text: qsTr("Всего:"); width: infoView._labelWidth }
                     QGCLabel { text: (tileSet ? tileSet.totalTileCountStr : "") + " (" + (tileSet ? tileSet.totalTilesSizeStr : "") + ")"; horizontalAlignment: Text.AlignRight; width: infoView._valueWidth }
                 }
                 Row {
                     spacing: ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter: parent.horizontalCenter
                     visible: tileSet && !_defaultSet && tileSet.uniqueTileCount > 0
-                    QGCLabel { text: qsTr("Unique:"); width: infoView._labelWidth }
+                    QGCLabel { text: qsTr("Уникальных:"); width: infoView._labelWidth }
                     QGCLabel { text: (tileSet ? tileSet.uniqueTileCountStr : "") + " (" + (tileSet ? tileSet.uniqueTileSizeStr : "") + ")"; horizontalAlignment: Text.AlignRight; width: infoView._valueWidth }
                 }
 
@@ -233,14 +233,14 @@ FlightMap {
                     spacing: ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter: parent.horizontalCenter
                     visible: tileSet && !_defaultSet && !tileSet.complete
-                    QGCLabel { text: qsTr("Downloaded:"); width: infoView._labelWidth }
+                    QGCLabel { text: qsTr("Скачано:"); width: infoView._labelWidth }
                     QGCLabel { text: (tileSet ? tileSet.savedTileCountStr : "") + " (" + (tileSet ? tileSet.savedTileSizeStr : "") + ")"; horizontalAlignment: Text.AlignRight; width: infoView._valueWidth }
                 }
                 Row {
                     spacing: ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter: parent.horizontalCenter
                     visible: tileSet && !_defaultSet && !tileSet.complete && tileSet.errorCount > 0
-                    QGCLabel { text: qsTr("Error Count:"); width: infoView._labelWidth }
+                    QGCLabel { text: qsTr("Ошибок:"); width: infoView._labelWidth }
                     QGCLabel { text: tileSet ? tileSet.errorCountStr : ""; horizontalAlignment: Text.AlignRight; width: infoView._valueWidth }
                 }
                 //-- Default Tile Set
@@ -248,39 +248,39 @@ FlightMap {
                     spacing: ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter: parent.horizontalCenter
                     visible: _defaultSet
-                    QGCLabel { text: qsTr("Size:"); width: infoView._labelWidth }
+                    QGCLabel { text: qsTr("Размер:"); width: infoView._labelWidth }
                     QGCLabel { text: tileSet ? tileSet.savedTileSizeStr : ""; horizontalAlignment: Text.AlignRight; width: infoView._valueWidth }
                 }
                 Row {
                     spacing: ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter: parent.horizontalCenter
                     visible: _defaultSet
-                    QGCLabel { text: qsTr("Tile Count:"); width: infoView._labelWidth }
+                    QGCLabel { text: qsTr("Тайлов:"); width: infoView._labelWidth }
                     QGCLabel { text: tileSet ? tileSet.savedTileCountStr : ""; horizontalAlignment: Text.AlignRight; width: infoView._valueWidth }
                 }
                 Row {
                     spacing: ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter: parent.horizontalCenter
                     QGCButton {
-                        text: qsTr("Resume Download")
+                        text: qsTr("Продолжить скачивание")
                         visible: tileSet && !_defaultSet && !tileSet.complete && !tileSet.downloading
                         width: ScreenTools.defaultFontPixelWidth * 16
                         onClicked: tileSet.resumeDownloadTask()
                     }
                     QGCButton {
-                        text: qsTr("Cancel Download")
+                        text: qsTr("Отменить скачивание")
                         visible: tileSet && !_defaultSet && !tileSet.complete && tileSet.downloading
                         width: ScreenTools.defaultFontPixelWidth * 16
                         onClicked: tileSet.cancelDownloadTask()
                     }
                     QGCButton {
-                        text: qsTr("Delete")
+                        text: qsTr("Удалить")
                         width: ScreenTools.defaultFontPixelWidth * (infoView._extraButton ? 6 : 10)
                         onClicked: deleteConfirmationDialogFactory.open()
                         enabled: tileSet && tileSet.savedTileSize > 0
                     }
                     QGCButton {
-                        text: qsTr("Ok")
+                        text: qsTr("OK")
                         width: ScreenTools.defaultFontPixelWidth * (infoView._extraButton ? 6 : 10)
                         visible: !_defaultSet
                         enabled: editSetName.text !== ""
@@ -292,7 +292,7 @@ FlightMap {
                         }
                     }
                     QGCButton {
-                        text: _defaultSet ? qsTr("Close") : qsTr("Cancel")
+                        text: _defaultSet ? qsTr("Закрыть") : qsTr("Отмена")
                         width: ScreenTools.defaultFontPixelWidth * (infoView._extraButton ? 6 : 10)
                         onClicked: _map.destroy()
                     }
@@ -318,7 +318,7 @@ FlightMap {
                 spacing: _margins
 
                 QGCButton {
-                    text: qsTr("Show zoom previews")
+                    text: qsTr("Показывать превью масштабов")
                     visible: !_showPreview
                     onClicked: _showPreview = !_showPreview
                 }
@@ -352,7 +352,7 @@ FlightMap {
                         QGCMapLabel {
                             anchors.centerIn: parent
                             map: minZoomPreview
-                            text: qsTr("Min Zoom: %1").arg(sliderMinZoom.value)
+                            text: qsTr("Мин. масштаб: %1").arg(sliderMinZoom.value)
                         }
                         MouseArea {
                             anchors.fill: parent
@@ -390,7 +390,7 @@ FlightMap {
                         QGCMapLabel {
                             anchors.centerIn: parent
                             map: maxZoomPreview
-                            text: qsTr("Max Zoom: %1").arg(sliderMaxZoom.value)
+                            text: qsTr("Макс. масштаб: %1").arg(sliderMaxZoom.value)
                         }
                         MouseArea {
                             anchors.fill: parent
@@ -421,7 +421,7 @@ FlightMap {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     wrapMode: Text.WordWrap
-                    text: qsTr("Add New Set")
+                    text: qsTr("Новый набор")
                     font.pointSize: _saveRealEstate ? ScreenTools.defaultFontPointSize : ScreenTools.mediumFontPointSize
                     horizontalAlignment: Text.AlignHCenter
                 }
@@ -449,7 +449,7 @@ FlightMap {
                             spacing: ScreenTools.isTinyScreen ? 0 : ScreenTools.defaultFontPixelHeight * 0.25
                             anchors.left: parent.left
                             anchors.right: parent.right
-                            QGCLabel { text: qsTr("Name:") }
+                            QGCLabel { text: qsTr("Имя:") }
                             QGCTextField {
                                 id: setName
                                 anchors.left: parent.left
@@ -468,7 +468,7 @@ FlightMap {
                             anchors.left: parent.left
                             anchors.right: parent.right
                             QGCLabel {
-                                text: qsTr("Map type:")
+                                text: qsTr("Тип карты:")
                                 visible: !_saveRealEstate
                             }
                             QGCComboBox {
@@ -491,7 +491,7 @@ FlightMap {
                             QGCCheckBox {
                                 anchors.left: parent.left
                                 anchors.right: parent.right
-                                text: qsTr("Fetch elevation data")
+                                text: qsTr("Скачать данные высот")
                                 checked: QGroundControl.mapEngineManager.fetchElevation
                                 onClicked: {
                                     QGroundControl.mapEngineManager.fetchElevation = checked
@@ -517,7 +517,7 @@ FlightMap {
                                 anchors.right: parent.right
 
                                 QGCLabel {
-                                    text: qsTr("Min/Max Zoom Levels")
+                                    text: qsTr("Мин./макс. масштаб")
                                     font.pointSize: _adjustableFontPointSize
                                     anchors.horizontalCenter: parent.horizontalCenter
                                 }
@@ -612,7 +612,7 @@ FlightMap {
                                     columns: 2
                                     rowSpacing: ScreenTools.isTinyScreen ? 0 : ScreenTools.defaultFontPixelHeight * 0.5
                                     QGCLabel {
-                                        text: qsTr("Tile Count:")
+                                        text: qsTr("Тайлов:")
                                         font.pointSize: _adjustableFontPointSize
                                     }
                                     QGCLabel {
@@ -621,7 +621,7 @@ FlightMap {
                                     }
 
                                     QGCLabel {
-                                        text: qsTr("Est Size:")
+                                        text: qsTr("Оценка размера:")
                                         font.pointSize: _adjustableFontPointSize
                                     }
                                     QGCLabel {
@@ -633,7 +633,7 @@ FlightMap {
                         } // Rectangle - Zoom info
 
                         QGCLabel {
-                            text: qsTr("Too many tiles")
+                            text: qsTr("Слишком много тайлов")
                             visible: _tooManyTiles
                             color: qgcPal.warningText
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -641,7 +641,7 @@ FlightMap {
 
                         QGCLabel {
                             id: duplicateName
-                            text: qsTr("Tile set with this name already exists")
+                            text: qsTr("Набор с таким именем уже есть")
                             visible: false
                             color: qgcPal.warningText
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -652,7 +652,7 @@ FlightMap {
                             spacing: ScreenTools.defaultFontPixelWidth
                             anchors.horizontalCenter: parent.horizontalCenter
                             QGCButton {
-                                text: qsTr("Download")
+                                text: qsTr("Скачать")
                                 width: (addNewSetColumn.width * 0.5) - (addButtonRow.spacing * 0.5)
                                 enabled: !_tooManyTiles && setName.text.length > 0
                                 onClicked: {
@@ -665,7 +665,7 @@ FlightMap {
                                 }
                             }
                             QGCButton {
-                                text: qsTr("Cancel")
+                                text: qsTr("Отмена")
                                 width: (addNewSetColumn.width * 0.5) - (addButtonRow.spacing * 0.5)
                                 onClicked: _map.destroy()
                             }
@@ -698,7 +698,7 @@ FlightMap {
         id: errorDialogComponent
 
         QGCSimpleMessageDialog {
-            title: qsTr("Error Message")
+            title: qsTr("Ошибка")
             text: QGroundControl.mapEngineManager.errorMessage
             buttons: Dialog.Close
         }
@@ -714,10 +714,10 @@ FlightMap {
         id: deleteConfirmationDialogComponent
 
         QGCSimpleMessageDialog {
-            title: qsTr("Confirm Delete")
+            title: qsTr("Подтвердите удаление")
             text: tileSet.defaultSet ?
-                            qsTr("This will delete all tiles INCLUDING the tile sets you have created yourself.\n\nIs this really what you want?") :
-                            qsTr("Delete %1 and all its tiles.\n\nIs this really what you want?").arg(tileSet.name)
+                            qsTr("Будут удалены все тайлы, ВКЛЮЧАЯ созданные вами наборы.\n\nПродолжить?") :
+                            qsTr("Удалить «%1» со всеми тайлами?\n\nПродолжить?").arg(tileSet.name)
             buttons: Dialog.Yes | Dialog.No
 
             onAccepted: {

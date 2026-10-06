@@ -4,42 +4,42 @@
     "QGC.MetaData.Facts": [
         {
             "name": "diskLoggingEnabled",
-            "shortDesc": "Write application log messages to disk in Logs directory.",
+            "shortDesc": "Записывать лог приложения на диск в папку Logs.",
             "type": "bool",
             "default": false,
-            "label": "Enable",
+            "label": "Включить",
             "group": "Disk Logging"
         },
         {
             "name": "diskLoggingMaxFileSizeMB",
-            "shortDesc": "Maximum size of a single log file in megabytes before rotation.",
+            "shortDesc": "Максимальный размер одного файла лога в мегабайтах, после которого начинается новый файл.",
             "type": "uint32",
             "default": 10,
             "mobileDefault": 2,
             "min": 1,
             "max": 100,
-            "label": "Max File Size (MB)",
+            "label": "Макс. размер файла (МБ)",
             "group": "Disk Logging"
         },
         {
             "name": "diskLoggingMaxBackupFiles",
-            "shortDesc": "Number of rotated backup log files to keep.",
+            "shortDesc": "Сколько старых файлов лога хранить.",
             "type": "uint32",
             "default": 5,
             "mobileDefault": 3,
             "min": 0,
             "max": 20,
-            "label": "Max Backup Files",
+            "label": "Макс. число архивных файлов",
             "group": "Disk Logging"
         },
         {
             "name": "saveFormat",
-            "shortDesc": "File format used when saving the application log.",
+            "shortDesc": "Формат файла при сохранении лога приложения.",
             "type": "uint32",
-            "enumStrings": "Text (.txt),CSV (.csv)",
+            "enumStrings": "Текст (.txt),CSV (.csv)",
             "enumValues": "0,1",
             "default": 0,
-            "label": "Save Format",
+            "label": "Формат сохранения",
             "group": "Log Viewer"
         }
     ]

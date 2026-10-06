@@ -44,8 +44,8 @@ Rectangle {
                 font.bold:      true
                 horizontalAlignment: Text.AlignHCenter
                 text:           setupComplete ?
-                    qsTr("Your vehicle configuration summary appears below. Select components on the left to review or fine-tune settings.") :
-                    qsTr("WARNING: Configuration tasks remain before this vehicle is ready to fly. Open the red-marked components on the left to finish setup.")
+                    qsTr("Ниже — сводка настроек судна. Выберите раздел слева, чтобы посмотреть или изменить настройки.") :
+                    qsTr("ВНИМАНИЕ: настройка судна не завершена. Откройте разделы слева, отмеченные красным, и завершите настройку.")
 
                 property bool setupComplete: QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle.autopilotPlugin.setupComplete : false
             }

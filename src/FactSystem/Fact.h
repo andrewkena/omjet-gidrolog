@@ -19,7 +19,7 @@ class Fact : public QObject
     QML_ELEMENT
     Q_MOC_INCLUDE("FactValueSliderListModel.h")
     Q_PROPERTY(int          componentId             READ componentId                                            CONSTANT)
-    Q_PROPERTY(QStringList  bitmaskStrings          READ bitmaskStrings                                         NOTIFY bitmaskStringsChanged)
+    Q_PROPERTY(QStringList  bitmaskStrings          READ bitmaskStringsRu                                       NOTIFY bitmaskStringsChanged)
     Q_PROPERTY(QVariantList bitmaskValues           READ bitmaskValues                                          NOTIFY bitmaskValuesChanged)
     Q_PROPERTY(QStringList  selectedBitmaskStrings  READ selectedBitmaskStrings                                 NOTIFY valueChanged)
     Q_PROPERTY(int          decimalPlaces           READ decimalPlaces                                          CONSTANT)
@@ -28,8 +28,8 @@ class Fact : public QObject
     Q_PROPERTY(QString      defaultValueString      READ cookedDefaultValueString                               CONSTANT)
     Q_PROPERTY(bool         defaultValueAvailable   READ defaultValueAvailable                                  CONSTANT)
     Q_PROPERTY(int          enumIndex               READ enumIndex                  WRITE setEnumIndex          NOTIFY valueChanged)
-    Q_PROPERTY(QStringList  enumStrings             READ enumStrings                                            NOTIFY enumsChanged)
-    Q_PROPERTY(QString      enumStringValue         READ enumStringValue            WRITE setEnumStringValue    NOTIFY valueChanged)
+    Q_PROPERTY(QStringList  enumStrings             READ enumStringsRu                                          NOTIFY enumsChanged)
+    Q_PROPERTY(QString      enumStringValue         READ enumStringValueRu          WRITE setEnumStringValue    NOTIFY valueChanged)
     Q_PROPERTY(QVariantList enumValues              READ enumValues                                             NOTIFY enumsChanged)
     Q_PROPERTY(QString      category                READ category                                               CONSTANT)
     Q_PROPERTY(QString      group                   READ group                                                  CONSTANT)
@@ -106,6 +106,10 @@ public:
     int enumIndex(); // This is not const, since an unknown value can modify the enum lists
     QStringList enumStrings() const;
     QString enumStringValue();         // This is not const, since an unknown value can modify the enum lists
+    // GidroLog: QML-facing variants with Russian names (vehicle parameters only, settings keep originals)
+    QStringList enumStringsRu() const;
+    QStringList bitmaskStringsRu() const;
+    QString enumStringValueRu();
     QVariantList enumValues() const;
     QString category() const;
     QString group() const;

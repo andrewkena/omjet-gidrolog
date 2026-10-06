@@ -3,7 +3,7 @@
     "version": 1,
     "sections": [
         {
-            "title": "Storage",
+            "title": "Хранение",
             "keywords": [
                 "logging",
                 "log",
@@ -18,30 +18,30 @@
             "controls": [
                 {
                     "param": "LOG_BACKEND_TYPE",
-                    "label": "Logging backends",
+                    "label": "Куда писать журнал",
                     "optional": true,
                     "control": "bitmask"
                 },
                 {
                     "param": "LOG_BITMASK",
-                    "label": "Logged data groups",
+                    "label": "Записываемые группы данных",
                     "optional": true,
                     "control": "bitmask"
                 },
                 {
                     "param": "LOG_MAX_FILES",
-                    "label": "Maximum retained log files",
+                    "label": "Макс. число хранимых журналов",
                     "optional": true
                 },
                 {
                     "param": "LOG_FILE_MB_FREE",
-                    "label": "Minimum free space (MB)",
+                    "label": "Мин. свободное место (МБ)",
                     "optional": true
                 }
             ]
         },
         {
-            "title": "Rate Limits",
+            "title": "Ограничения частоты",
             "keywords": [
                 "rate",
                 "hz",
@@ -54,23 +54,23 @@
             "controls": [
                 {
                     "param": "LOG_FILE_RATEMAX",
-                    "label": "Maximum file logging rate (Hz)",
+                    "label": "Макс. частота записи в файл (Гц)",
                     "optional": true
                 },
                 {
                     "param": "LOG_BLK_RATEMAX",
-                    "label": "Maximum block logging rate (Hz)",
+                    "label": "Макс. частота блочной записи (Гц)",
                     "optional": true
                 },
                 {
                     "param": "LOG_MAV_RATEMAX",
-                    "label": "Maximum MAVLink stream rate (Hz)",
+                    "label": "Макс. частота потока MAVLink (Гц)",
                     "optional": true
                 }
             ]
         },
         {
-            "title": "Options",
+            "title": "Параметры",
             "keywords": [
                 "disarmed",
                 "pre-arm",
@@ -83,32 +83,32 @@
             "controls": [
                 {
                     "param": "LOG_DISARMED",
-                    "label": "Log while disarmed",
+                    "label": "Писать журнал, когда судно не запущено",
                     "optional": true,
                     "control": "combobox"
                 },
                 {
                     "param": "LOG_FILE_DSRMROT",
-                    "label": "Rotate log file on disarm/rearm",
+                    "label": "Новый файл журнала при остановке/запуске",
                     "optional": true,
                     "control": "combobox"
                 },
                 {
                     "param": "LOG_REPLAY",
-                    "label": "Log extra data for EKF replay",
+                    "label": "Доп. данные для воспроизведения EKF",
                     "optional": true,
                     "control": "combobox"
                 },
                 {
                     "param": "EK3_LOG_LEVEL",
-                    "label": "EKF3 logging verbosity",
+                    "label": "Подробность журнала EKF3",
                     "optional": true,
                     "control": "combobox",
                     "enumValues": [
-                        { "value": 0, "label": "Full logging" },
-                        { "value": 1, "label": "XKF4 scaled innovations only" },
-                        { "value": 2, "label": "XKF4 and GSF" },
-                        { "value": 3, "label": "Disabled" }
+                        { "value": 0, "label": "Полная запись" },
+                        { "value": 1, "label": "Только XKF4 (масштабированные инновации)" },
+                        { "value": 2, "label": "XKF4 и GSF" },
+                        { "value": 3, "label": "Отключено" }
                     ]
                 }
             ]

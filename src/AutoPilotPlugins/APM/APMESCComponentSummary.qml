@@ -30,19 +30,19 @@ Item {
         spacing: 0
 
         VehicleSummaryRow {
-            labelText: qsTr("Output type")
+            labelText: qsTr("Тип выхода")
             valueText: _motPwmTypeAvailable ? _motPwmType.enumStringValue : ""
             visible: _motPwmTypeAvailable
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("DShot ESC type")
+            labelText: qsTr("Тип ESC DShot")
             valueText: _servoDshotEscAvailable ? _servoDshotEsc.enumStringValue : ""
             visible: _isDshot && _servoDshotEscAvailable
         }
 
         VehicleSummaryRow {
-            labelText: qsTr("DShot output rate")
+            labelText: qsTr("Частота DShot")
             valueText: _servoDshotRateAvailable ? _servoDshotRate.enumStringValue : ""
             visible: _isDshot && _servoDshotRateAvailable
         }

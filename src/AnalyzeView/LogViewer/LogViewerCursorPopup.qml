@@ -84,10 +84,10 @@ Rectangle {
                                     || Qt.locale().timeFormat(Locale.ShortFormat).indexOf("A") >= 0
                         const local = Qt.formatTime(new Date(st.getTime() + control.cursorXValue * 1000),
                                                      use12h ? "h:mm:ss AP" : "HH:mm:ss")
-                        return local + qsTr(" (local)  /  ") + elapsed + qsTr(" (elapsed)")
+                        return local + qsTr(" (местн.)  /  ") + elapsed + qsTr(" (прошло)")
                     }
                 }
-                return elapsed + qsTr(" (elapsed)")
+                return elapsed + qsTr(" (прошло)")
             }
         }
 

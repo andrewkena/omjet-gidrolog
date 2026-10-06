@@ -10,13 +10,13 @@ DECLARE_SETTINGSFACT_NO_FUNC(UnitsSettings, horizontalDistanceUnits)
         // Distance/Area/Speed units settings can't be loaded from json since it creates an infinite loop of meta data loading.
         QStringList     enumStrings;
         QVariantList    enumValues;
-        enumStrings << UnitsSettings::tr("Feet") << UnitsSettings::tr("Meters");
+        enumStrings << QStringLiteral("Футы") << QStringLiteral("Метры");
         enumValues << QVariant::fromValue(static_cast<uint32_t>(HorizontalDistanceUnitsFeet))
                    << QVariant::fromValue(static_cast<uint32_t>(HorizontalDistanceUnitsMeters));
         FactMetaData* metaData = new FactMetaData(FactMetaData::valueTypeUint32, this);
         metaData->setName(horizontalDistanceUnitsName);
-        metaData->setLabel(UnitsSettings::tr("Horizontal Distance"));
-        metaData->setShortDescription(UnitsSettings::tr("Display unit for horizontal distances and ranges."));
+        metaData->setLabel(QStringLiteral("Горизонтальное расстояние"));
+        metaData->setShortDescription(QStringLiteral("Единица измерения горизонтальных расстояний и дальности."));
         metaData->setEnumInfo(enumStrings, enumValues);
 
         HorizontalDistanceUnits defaultHorizontalDistanceUnit = HorizontalDistanceUnitsMeters;
@@ -42,13 +42,13 @@ DECLARE_SETTINGSFACT_NO_FUNC(UnitsSettings, verticalDistanceUnits)
         // Distance/Area/Speed units settings can't be loaded from json since it creates an infinite loop of meta data loading.
         QStringList     enumStrings;
         QVariantList    enumValues;
-        enumStrings << UnitsSettings::tr("Feet") << UnitsSettings::tr("Meters");
+        enumStrings << QStringLiteral("Футы") << QStringLiteral("Метры");
         enumValues << QVariant::fromValue(static_cast<uint32_t>(VerticalDistanceUnitsFeet))
                    << QVariant::fromValue(static_cast<uint32_t>(VerticalDistanceUnitsMeters));
         FactMetaData* metaData = new FactMetaData(FactMetaData::valueTypeUint32, this);
         metaData->setName(verticalDistanceUnitsName);
-        metaData->setLabel(UnitsSettings::tr("Vertical Distance"));
-        metaData->setShortDescription(UnitsSettings::tr("Display unit for altitudes and vertical heights."));
+        metaData->setLabel(QStringLiteral("Вертикальное расстояние"));
+        metaData->setShortDescription(QStringLiteral("Единица измерения высоты и вертикальных расстояний."));
         metaData->setEnumInfo(enumStrings, enumValues);
         VerticalDistanceUnits defaultVerticalAltitudeUnit = VerticalDistanceUnitsMeters;
         switch(QLocale::system().measurementSystem()) {
@@ -73,7 +73,7 @@ DECLARE_SETTINGSFACT_NO_FUNC(UnitsSettings, areaUnits)
         // Distance/Area/Speed units settings can't be loaded from json since it creates an infinite loop of meta data loading.
         QStringList     enumStrings;
         QVariantList    enumValues;
-        enumStrings << UnitsSettings::tr("SquareFeet") << UnitsSettings::tr("SquareMeters") << UnitsSettings::tr("SquareKilometers") << UnitsSettings::tr("Hectares") << UnitsSettings::tr("Acres") << UnitsSettings::tr("SquareMiles");
+        enumStrings << QStringLiteral("Кв. футы") << QStringLiteral("Кв. метры") << QStringLiteral("Кв. километры") << QStringLiteral("Гектары") << QStringLiteral("Акры") << QStringLiteral("Кв. мили");
         enumValues <<
             QVariant::fromValue(static_cast<uint32_t>(AreaUnitsSquareFeet)) <<
             QVariant::fromValue(static_cast<uint32_t>(AreaUnitsSquareMeters)) <<
@@ -83,8 +83,8 @@ DECLARE_SETTINGSFACT_NO_FUNC(UnitsSettings, areaUnits)
             QVariant::fromValue(static_cast<uint32_t>(AreaUnitsSquareMiles));
         FactMetaData* metaData = new FactMetaData(FactMetaData::valueTypeUint32, this);
         metaData->setName(areaUnitsName);
-        metaData->setLabel(UnitsSettings::tr("Area"));
-        metaData->setShortDescription(UnitsSettings::tr("Display unit for area measurements."));
+        metaData->setLabel(QStringLiteral("Площадь"));
+        metaData->setShortDescription(QStringLiteral("Единица измерения площади."));
         metaData->setEnumInfo(enumStrings, enumValues);
 
         AreaUnits defaultAreaUnit = AreaUnitsSquareMeters;
@@ -110,7 +110,7 @@ DECLARE_SETTINGSFACT_NO_FUNC(UnitsSettings, speedUnits)
         // Distance/Area/Speed units settings can't be loaded from json since it creates an infinite loop of meta data loading.
         QStringList     enumStrings;
         QVariantList    enumValues;
-        enumStrings << "Feet/second" << "Meters/second" << "Miles/hour" << "Kilometers/hour" << UnitsSettings::tr("Knots");
+        enumStrings << QStringLiteral("Футы в секунду") << QStringLiteral("Метры в секунду") << QStringLiteral("Мили в час") << QStringLiteral("Километры в час") << QStringLiteral("Узлы");
         enumValues <<
             QVariant::fromValue(static_cast<uint32_t>(SpeedUnitsFeetPerSecond)) <<
             QVariant::fromValue(static_cast<uint32_t>(SpeedUnitsMetersPerSecond)) <<
@@ -119,8 +119,8 @@ DECLARE_SETTINGSFACT_NO_FUNC(UnitsSettings, speedUnits)
             QVariant::fromValue(static_cast<uint32_t>(SpeedUnitsKnots));
         FactMetaData* metaData = new FactMetaData(FactMetaData::valueTypeUint32, this);
         metaData->setName(speedUnitsName);
-        metaData->setLabel(UnitsSettings::tr("Speed"));
-        metaData->setShortDescription(UnitsSettings::tr("Display unit for speed and velocity values."));
+        metaData->setLabel(QStringLiteral("Скорость"));
+        metaData->setShortDescription(QStringLiteral("Единица измерения скорости."));
         metaData->setEnumInfo(enumStrings, enumValues);
 
         SpeedUnits defaultSpeedUnit = SpeedUnitsMetersPerSecond;
@@ -146,12 +146,12 @@ DECLARE_SETTINGSFACT_NO_FUNC(UnitsSettings, temperatureUnits)
         // Units settings can't be loaded from json since it creates an infinite loop of meta data loading.
         QStringList     enumStrings;
         QVariantList    enumValues;
-        enumStrings << UnitsSettings::tr("Celsius") << UnitsSettings::tr("Fahrenheit");
+        enumStrings << QStringLiteral("Градусы Цельсия") << QStringLiteral("Градусы Фаренгейта");
         enumValues << QVariant::fromValue(static_cast<uint32_t>(TemperatureUnitsCelsius)) << QVariant::fromValue(static_cast<uint32_t>(TemperatureUnitsFarenheit));
         FactMetaData* metaData = new FactMetaData(FactMetaData::valueTypeUint32, this);
         metaData->setName(temperatureUnitsName);
-        metaData->setLabel(UnitsSettings::tr("Temperature"));
-        metaData->setShortDescription(UnitsSettings::tr("Display unit for temperature readings."));
+        metaData->setLabel(QStringLiteral("Температура"));
+        metaData->setShortDescription(QStringLiteral("Единица измерения температуры."));
         metaData->setEnumInfo(enumStrings, enumValues);
 
         TemperatureUnits defaultTemperatureUnit = TemperatureUnitsCelsius;
@@ -177,7 +177,7 @@ DECLARE_SETTINGSFACT_NO_FUNC(UnitsSettings, weightUnits)
         // Units settings can't be loaded from json since it creates an infinite loop of meta data loading.
         QStringList     enumStrings;
         QVariantList    enumValues;
-        enumStrings << UnitsSettings::tr("Grams") << UnitsSettings::tr("Kilograms") << UnitsSettings::tr("Ounces") << UnitsSettings::tr("Pounds");
+        enumStrings << QStringLiteral("Граммы") << QStringLiteral("Килограммы") << QStringLiteral("Унции") << QStringLiteral("Фунты");
         enumValues
             << QVariant::fromValue(static_cast<uint32_t>(WeightUnitsGrams))
             << QVariant::fromValue(static_cast<uint32_t>(WeightUnitsKg))
@@ -185,8 +185,8 @@ DECLARE_SETTINGSFACT_NO_FUNC(UnitsSettings, weightUnits)
             << QVariant::fromValue(static_cast<uint32_t>(WeightUnitsLbs));
         FactMetaData* metaData = new FactMetaData(FactMetaData::valueTypeUint32, this);
         metaData->setName(weightUnitsName);
-        metaData->setLabel(UnitsSettings::tr("Weight"));
-        metaData->setShortDescription(UnitsSettings::tr("Weight"));
+        metaData->setLabel(QStringLiteral("Вес"));
+        metaData->setShortDescription(QStringLiteral("Вес"));
         metaData->setEnumInfo(enumStrings, enumValues);
         WeightUnits defaultWeightUnit = WeightUnitsGrams;
         switch(QLocale::system().measurementSystem()) {

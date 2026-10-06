@@ -35,14 +35,14 @@ ColumnLayout {
 
         FactCheckBoxSlider {
             Layout.fillWidth: true
-            text: qsTr("Center stick is zero throttle")
+            text: qsTr("Центр стика — нулевой газ")
             fact: _joystickSettings.throttleModeCenterZero
             visible: fact.userVisible
         }
 
         FactCheckBoxSlider {
             Layout.fillWidth: true
-            text: qsTr("Spring loaded throttle smoothing")
+            text: qsTr("Сглаживание подпружиненного газа")
             fact: _joystickSettings.throttleSmoothing
             visible: fact.userVisible && _joystickSettings.throttleModeCenterZero.rawValue
         }
@@ -55,7 +55,7 @@ ColumnLayout {
 
         FactCheckBoxSlider {
             Layout.fillWidth: true
-            text: qsTr("Negative Thrust")
+            text: qsTr("Обратная тяга")
             fact: _joystickSettings.negativeThrust
             visible: globals.activeVehicle.supports.negativeThrust && fact.userVisible
         }
@@ -63,19 +63,19 @@ ColumnLayout {
         QGCCheckBoxSlider {
             id: advancedSettingsCheckbox
             Layout.fillWidth: true
-            text: qsTr("Advanced Settings")
+            text: qsTr("Дополнительные настройки")
             Component.onCompleted: checked = _anyAdvancedSettingsEnabled
         }
     }
 
     SettingsGroupLayout {
         Layout.fillWidth: true
-        heading: qsTr("Advanced Settings")
+        heading: qsTr("Дополнительные настройки")
         visible: advancedSettingsCheckbox.checked
 
         FactCheckBoxSlider {
             Layout.fillWidth: true
-            text: qsTr("Circle Correction")
+            text: qsTr("Круговая коррекция")
             fact: _joystickSettings.circleCorrection
             visible: fact.userVisible
         }
@@ -99,7 +99,7 @@ ColumnLayout {
             spacing: 0
 
             FactCheckBoxSlider {
-                text: qsTr("Deadband")
+                text: qsTr("Мёртвая зона")
                 fact: _joystickSettings.useDeadband
                 visible: fact.userVisible
             }
@@ -109,7 +109,7 @@ ColumnLayout {
                 Layout.maximumWidth: additionalAxesRcChannelsOverride.x + additionalAxesRcChannelsOverride.width
                 font.pointSize: ScreenTools.smallFontPointSize
                 wrapMode: Text.WordWrap
-                text: qsTr("Deadband can be set during the first step of calibration by gently wiggling each axis. ")
+                text: qsTr("Мёртвую зону можно задать на первом шаге калибровки, слегка покачав каждую ось. ")
             }
         }
 
@@ -117,7 +117,7 @@ ColumnLayout {
             Layout.fillWidth: true
             spacing: ScreenTools.defaultFontPixelWidth / 2
 
-            QGCLabel { text: qsTr("MANUAL_CONTROL Extensions") }
+            QGCLabel { text: qsTr("Расширения MANUAL_CONTROL") }
 
             ColumnLayout {
                 Layout.leftMargin: ScreenTools.defaultFontPixelWidth
@@ -126,14 +126,14 @@ ColumnLayout {
 
                 FactCheckBoxSlider {
                     Layout.fillWidth: true
-                    text: qsTr("Pitch")
+                    text: qsTr("Тангаж")
                     fact: _joystickSettings.enableManualControlPitchExtension
                     visible: fact.userVisible
                 }
 
                 FactCheckBoxSlider {
                     Layout.fillWidth: true
-                    text: qsTr("Roll")
+                    text: qsTr("Крен")
                     fact: _joystickSettings.enableManualControlRollExtension
                     visible: fact.userVisible
                 }
@@ -144,7 +144,7 @@ ColumnLayout {
             Layout.fillWidth: true
             spacing: ScreenTools.defaultFontPixelWidth / 2
 
-            QGCLabel { text: qsTr("Additional Axes") }
+            QGCLabel { text: qsTr("Доп. оси") }
 
             ColumnLayout {
                 Layout.leftMargin: ScreenTools.defaultFontPixelWidth
@@ -156,14 +156,14 @@ ColumnLayout {
 
                     QGCRadioButton {
                         id: additionalAxesManualControl
-                        text: qsTr("Send using MANUAL_CONTROL")
+                        text: qsTr("Отправлять через MANUAL_CONTROL")
                         checked: _joystickSettings.additionalAxesFunction.rawValue == 0
                         onClicked: _joystickSettings.additionalAxesFunction.rawValue = 0
                     }
 
                     QGCRadioButton {
                         id: additionalAxesRcChannelsOverride
-                        text: qsTr("Send using RC_CHANNELS_OVERRIDE")
+                        text: qsTr("Отправлять через RC_CHANNELS_OVERRIDE")
                         checked: _joystickSettings.additionalAxesFunction.rawValue == 1
                         onClicked: _joystickSettings.additionalAxesFunction.rawValue = 1
                     }
@@ -171,42 +171,42 @@ ColumnLayout {
 
                 FactCheckBoxSlider {
                     Layout.fillWidth: true
-                    text: additionalAxesManualControl.checked ? qsTr("Aux1") : qsTr("Channel 5")
+                    text: additionalAxesManualControl.checked ? qsTr("Доп. 1") : qsTr("Канал 5")
                     fact: _joystickSettings.enableAdditionalAxis1
                     visible: fact.userVisible
                 }
 
                 FactCheckBoxSlider {
                     Layout.fillWidth: true
-                    text: additionalAxesManualControl.checked ? qsTr("Aux2") : qsTr("Channel 6")
+                    text: additionalAxesManualControl.checked ? qsTr("Доп. 2") : qsTr("Канал 6")
                     fact: _joystickSettings.enableAdditionalAxis2
                     visible: fact.userVisible
                 }
 
                 FactCheckBoxSlider {
                     Layout.fillWidth: true
-                    text: additionalAxesManualControl.checked ? qsTr("Aux3") : qsTr("Channel 7")
+                    text: additionalAxesManualControl.checked ? qsTr("Доп. 3") : qsTr("Канал 7")
                     fact: _joystickSettings.enableAdditionalAxis3
                     visible: fact.userVisible
                 }
 
                 FactCheckBoxSlider {
                     Layout.fillWidth: true
-                    text: additionalAxesManualControl.checked ? qsTr("Aux4") : qsTr("Channel 8")
+                    text: additionalAxesManualControl.checked ? qsTr("Доп. 4") : qsTr("Канал 8")
                     fact: _joystickSettings.enableAdditionalAxis4
                     visible: fact.userVisible
                 }
 
                 FactCheckBoxSlider {
                     Layout.fillWidth: true
-                    text: additionalAxesManualControl.checked ? qsTr("Aux5") : qsTr("Channel 9")
+                    text: additionalAxesManualControl.checked ? qsTr("Доп. 5") : qsTr("Канал 9")
                     fact: _joystickSettings.enableAdditionalAxis5
                     visible: fact.userVisible
                 }
 
                 FactCheckBoxSlider {
                     Layout.fillWidth: true
-                    text: additionalAxesManualControl.checked ? qsTr("Aux6") : qsTr("Channel 10")
+                    text: additionalAxesManualControl.checked ? qsTr("Доп. 6") : qsTr("Канал 10")
                     fact: _joystickSettings.enableAdditionalAxis6
                     visible: fact.userVisible
                 }

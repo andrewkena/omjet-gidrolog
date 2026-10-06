@@ -19,7 +19,7 @@ SetupPage {
             spacing: ScreenTools.defaultFontPixelHeight * 0.75
 
             readonly property string scriptRoot: "/APM/scripts/"
-            readonly property var luaNameFilters: [ qsTr("Lua Scripts (*.lua)"), qsTr("All Files (*)") ]
+            readonly property var luaNameFilters: [ qsTr("Скрипты Lua (*.lua)"), qsTr("Все файлы (*)") ]
             readonly property Fact scriptingEnabledFact: factController.getParameterFact(-1, "SCR_ENABLE", false)
 
             readonly property var filteredEntries: {
@@ -83,7 +83,7 @@ SetupPage {
                     if (error.length > 0) {
                         statusText.text = error
                     } else {
-                        statusText.text = qsTr("Upload succeeded: %1").arg(remotePath)
+                        statusText.text = qsTr("Загрузка выполнена: %1").arg(remotePath)
                         refreshDirectoryList()
                     }
                 }
@@ -92,7 +92,7 @@ SetupPage {
                     if (error.length > 0) {
                         statusText.text = error
                     } else {
-                        statusText.text = qsTr("Download succeeded: %1").arg(filePath)
+                        statusText.text = qsTr("Скачивание выполнено: %1").arg(filePath)
                     }
                 }
 
@@ -100,7 +100,7 @@ SetupPage {
                     if (error.length > 0) {
                         statusText.text = error
                     } else {
-                        statusText.text = qsTr("Delete succeeded: %1").arg(remotePath)
+                        statusText.text = qsTr("Удаление выполнено: %1").arg(remotePath)
                         refreshDirectoryList()
                     }
                 }
@@ -113,7 +113,7 @@ SetupPage {
             QGCPalette { id: qgcPal; colorGroupEnabled: true }
 
             FactCheckBoxSlider {
-                text: qsTr("Enable Scripting")
+                text: qsTr("Включить скрипты")
                 fact: scriptingEnabledFact
                 enabled: scriptingEnabledFact !== null
             }
@@ -132,7 +132,7 @@ SetupPage {
                 enabled: !ftpController.busy && scriptingEnabledFact && scriptingEnabledFact.rawValue
 
                 QGCButton {
-                    text: qsTr("Upload")
+                    text: qsTr("Загрузить")
                     iconSource: "/res/Upload.svg"
                     enabled: !ftpController.busy
                     onClicked: {
@@ -168,7 +168,7 @@ SetupPage {
                                 fillItem: parent
                                 onClicked: {
                                     downloadDialog.defaultSuffix = "lua"
-                                    downloadDialog.title = qsTr("Download %1").arg(modelData)
+                                    downloadDialog.title = qsTr("Скачать %1").arg(modelData)
                                     downloadDialog.fileToDownload = modelData
                                     downloadDialog.folder = QGroundControl.settingsManager.appSettings.missionSavePath
                                     downloadDialog.openForLoad()
@@ -199,12 +199,12 @@ SetupPage {
                             QGCMouseArea {
                                 fillItem: parent
                                 onClicked: {
-                                    var confirm = qsTr("Are you sure you want to delete the script \"%1\"? This action cannot be undone.").arg(modelData)
-                                    QGroundControl.showMessageDialog(scriptingPage, qsTr("Delete Lua Script"), confirm, Dialog.Ok | Dialog.Cancel, function() {
+                                    var confirm = qsTr("Удалить скрипт \"%1\"? Действие нельзя отменить.").arg(modelData)
+                                    QGroundControl.showMessageDialog(scriptingPage, qsTr("Удаление скрипта Lua"), confirm, Dialog.Ok | Dialog.Cancel, function() {
                                         var remotePath = root.fullRemotePath(modelData)
                                         if (!ftpController.deleteFile(remotePath)) {
-                                            var deleteError = ftpController.errorString.length > 0 ? ftpController.errorString : qsTr("Delete failed")
-                                            QGroundControl.showMessageDialog(scriptingPage, qsTr("Lua Delete"), deleteError)
+                                            var deleteError = ftpController.errorString.length > 0 ? ftpController.errorString : qsTr("Удаление не удалось")
+                                            QGroundControl.showMessageDialog(scriptingPage, qsTr("Удаление Lua"), deleteError)
                                         }
                                     })
                                 }
@@ -219,7 +219,7 @@ SetupPage {
                 spacing: ScreenTools.defaultFontPixelHeight * 0.5
 
                 QGCButton {
-                    text: qsTr("Cancel Operation")
+                    text: qsTr("Отменить операцию")
                     visible: ftpController.busy
                     onClicked: ftpController.cancelActiveOperation()
                 }
@@ -234,7 +234,7 @@ SetupPage {
 
             QGCFileDialog {
                 id: uploadDialog
-                title: qsTr("Select Lua script to upload")
+                title: qsTr("Выберите скрипт Lua для загрузки")
                 nameFilters: root.luaNameFilters
 
                 onAcceptedForLoad: (file) => {
@@ -252,8 +252,8 @@ SetupPage {
                     }
                     var remotePath = root.fullRemotePath(fileName)
                     if (!ftpController.uploadFile(file, remotePath)) {
-                        var uploadError = ftpController.errorString.length > 0 ? ftpController.errorString : qsTr("Upload failed")
-                        QGroundControl.showMessageDialog(scriptingPage, qsTr("Lua Upload"), uploadError)
+                        var uploadError = ftpController.errorString.length > 0 ? ftpController.errorString : qsTr("Загрузка не удалась")
+                        QGroundControl.showMessageDialog(scriptingPage, qsTr("Загрузка Lua"), uploadError)
                     }
                     close()
                 }
@@ -261,7 +261,7 @@ SetupPage {
 
             QGCFileDialog {
                 id: downloadDialog
-                title: qsTr("Save Lua Script")
+                title: qsTr("Сохранение скрипта Lua")
                 nameFilters: root.luaNameFilters
                 selectFolder: true
 
@@ -273,8 +273,8 @@ SetupPage {
                         return
                     }
                     if (!ftpController.downloadFile(root.fullRemotePath(fileToDownload), folder, fileToDownload)) {
-                        var downloadError = ftpController.errorString.length > 0 ? ftpController.errorString : qsTr("Download failed")
-                        QGroundControl.showMessageDialog(scriptingPage, qsTr("Lua Download"), downloadError)
+                        var downloadError = ftpController.errorString.length > 0 ? ftpController.errorString : qsTr("Скачивание не удалось")
+                        QGroundControl.showMessageDialog(scriptingPage, qsTr("Скачивание Lua"), downloadError)
                     }
                     close()
                 }
@@ -288,7 +288,7 @@ SetupPage {
 
                 QGCLabel {
                     anchors.centerIn: parent
-                    text: qsTr("Scripting is not supported by this version of firmware.")
+                    text: qsTr("Скрипты не поддерживаются этой версией прошивки.")
                     wrapMode: Text.Wrap
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter

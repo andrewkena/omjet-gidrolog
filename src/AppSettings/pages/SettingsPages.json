@@ -27,6 +27,7 @@
             "name": "ADSB Server",
             "qml": "ADSBServerSettings.qml",
             "icon": "qrc:/InstrumentValueIcons/airplane.svg",
+            "visible": "false",
             "pageDefinition": "ADSBVehicleManager.SettingsUI.json"
         },
         {
@@ -63,13 +64,14 @@
             "name": "PX4 Log Transfer",
             "qml": "PX4LogTransferSettings.qml",
             "icon": "qrc:/InstrumentValueIcons/inbox-download.svg",
-            "visible": "QGroundControl.corePlugin.options.showPX4LogTransferOptions && QGroundControl.px4ProFirmwareSupported && (QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle.px4Firmware : true)",
+            "visible": "false",
             "pageDefinition": "PX4LogTransfer.SettingsUI.json"
         },
         {
             "name": "Remote ID",
             "qml": "RemoteIDSettings.qml",
             "icon": "qrc:/qmlimages/RidIconManNoID.svg",
+            "visible": "false",
             "pageDefinition": "RemoteID.SettingsUI.json"
         },
         {

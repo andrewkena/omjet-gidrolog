@@ -65,7 +65,7 @@ SetupPage {
                 }
 
                 QGCCheckBox {
-                    text: qsTr("Enable")
+                    text: qsTr("Включить")
                     checked: joystickManager.activeJoystickEnabledForActiveVehicle
                     enabled: activeJoystickCalibrated
 
@@ -74,13 +74,13 @@ SetupPage {
 
                 QGCLabel {
                     font.pointSize: ScreenTools.smallFontPointSize
-                    text: qsTr("Not currently available")
+                    text: qsTr("Сейчас недоступно")
                     visible: !activeJoystick
                 }
 
                 QGCLabel {
                     id: calibrationRequiredLabel
-                    text: activeJoystickCalibrated ? qsTr("Calibrated") : qsTr("Requires Calibration")
+                    text: activeJoystickCalibrated ? qsTr("Откалиброван") : qsTr("Требуется калибровка")
                     enabled: !activeJoystickCalibrated
                 }
             }
@@ -126,8 +126,8 @@ SetupPage {
                             }
                             QGroundControl.showMessageDialog(
                                         root,
-                                        qsTr("Enable Joystick"),
-                                        qsTr("%1 calibration is complete. Enable it now?").arg(_activeJoystick.name),
+                                        qsTr("Включить джойстик"),
+                                        qsTr("Калибровка %1 завершена. Включить его сейчас?").arg(_activeJoystick.name),
                                         Dialog.Yes | Dialog.No,
                                         function() { joystickManager.activeJoystickEnabledForActiveVehicle = true });
                         }
@@ -145,12 +145,12 @@ SetupPage {
                                 Layout.fillWidth: true
 
                                 QGCTabButton {
-                                    text: qsTr("Buttons")
+                                    text: qsTr("Кнопки")
                                     checked: true
                                 }
 
                                 QGCTabButton {
-                                    text: qsTr("Settings")
+                                    text: qsTr("Настройки")
                                     checked: false
                                 }
                             }
@@ -188,7 +188,7 @@ SetupPage {
         QGCLabel {
             width: availableWidth
             height: availableHeight
-            text: qsTr("No joysticks or gamepads detected.")
+            text: qsTr("Джойстики и геймпады не обнаружены.")
             wrapMode: Text.WordWrap
         }
     }

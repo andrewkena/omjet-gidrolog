@@ -12,7 +12,7 @@ public:
     QStringList setupCompleteChangedTriggerList() const final { return QStringList(); }
 
     QString name() const final { return _name; }
-    QString description() const final { return tr("Configure battery monitoring and capacity parameters."); }
+    QString description() const final { return QStringLiteral("Настройка контроля батарей и их ёмкости."); }
     QString vehicleConfigJson() const final;
     QString iconResource() const final { return QStringLiteral("/qmlimages/Battery.svg"); }
     bool requiresSetup() const final { return false; }
@@ -22,5 +22,5 @@ public:
     bool allowSetupWhileArmed() const final { return true; }
 
 private:
-    const QString _name = tr("Power");
+    const QString _name = QStringLiteral("Питание");
 };

@@ -148,7 +148,7 @@ Item {
         anchors.fill: parent
         logParser: control.logParser
         xAxisShowLocalTime: control.xAxisShowLocalTime
-        yAxisTitle: qsTr("Alt (m)")
+        yAxisTitle: qsTr("Высота (м)")
         popupYOffset: ScreenTools.defaultFontPixelHeight * 0.4
 
         // ---- Chart-specific popup rows ----
@@ -162,17 +162,17 @@ Item {
         RowLayout {
             spacing: ScreenTools.defaultFontPixelWidth * 0.3
 
-            QGCLabel { text: qsTr("Current") }
+            QGCLabel { text: qsTr("Текущее") }
             QGCLabel { text: isNaN(_markerAltValue) ? "—" : _markerAltValue.toFixed(1) + " m"; font.bold: true }
 
             Item { visible: _hasAltRange; width: ScreenTools.defaultFontPixelWidth * 0.5 }
 
-            QGCLabel { visible: _hasAltRange; text: qsTr("Min") }
+            QGCLabel { visible: _hasAltRange; text: qsTr("Мин.") }
             QGCLabel { visible: _hasAltRange; text: _altMin.toFixed(1) + " m"; font.bold: true }
 
             Item { visible: _hasAltRange; width: ScreenTools.defaultFontPixelWidth * 0.5 }
 
-            QGCLabel { visible: _hasAltRange; text: qsTr("Max") }
+            QGCLabel { visible: _hasAltRange; text: qsTr("Макс.") }
             QGCLabel { visible: _hasAltRange; text: _altMax.toFixed(1) + " m"; font.bold: true }
         }
     }

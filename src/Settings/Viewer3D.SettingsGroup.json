@@ -4,58 +4,58 @@
     "QGC.MetaData.Facts": [
         {
             "name": "enabled",
-            "shortDesc": "Enable 3D terrain and building visualization alongside the 2D map.",
+            "shortDesc": "Показывать 3D-рельеф и здания вместе с 2D-картой.",
             "type": "bool",
             "default": false,
-            "label": "Enable the 3D viewer",
+            "label": "Включить 3D-экран",
             "keywords": "3d view,3d map,enable 3d"
         },
         {
             "name": "mapProvider",
-            "shortDesc": "Data source for 3D map terrain and building information.",
+            "shortDesc": "Источник данных о рельефе и зданиях для 3D-карты.",
             "type": "uint32",
             "enumStrings": "OpenStreetMap",
             "enumValues": "0",
             "default": 0,
-            "label": "3D map data provider",
+            "label": "Источник данных 3D-карты",
             "keywords": "3d map"
         },
         {
             "name": "osmFilePath",
-            "shortDesc": "Path to an offline OpenStreetMap file for 3D terrain rendering.",
+            "shortDesc": "Путь к офлайн-файлу OpenStreetMap для 3D-отображения.",
             "type": "string",
             "default": "",
-            "label": "Path to the OSM file for the 3D viewer.",
+            "label": "Файл OSM для 3D-экрана",
             "keywords": "osm,openstreetmap,3d data"
         },
         {
             "name": "buildingLevelHeight",
-            "shortDesc": "Average floor-to-floor height used for 3D building visualization.",
+            "shortDesc": "Средняя высота этажа для отображения 3D-зданий.",
             "type": "double",
             "units": "vertical m",
             "min": 0.5,
             "max": 20,
             "default": 3,
-            "label": "Average Height for each level of the buildings",
+            "label": "Средняя высота этажа зданий",
             "keywords": "building height,3d data"
         },
         {
             "name": "altitudeBias",
-            "shortDesc": "Vertical offset for vehicle rendering in the 3D viewer.",
+            "shortDesc": "Смещение по высоте при отображении судна на 3D-экране.",
             "type": "double",
             "units": "vertical m",
             "min": -1000,
             "max": 1000,
             "default": 0,
-            "label": "Altitude bias for vehicles in the 3D View",
+            "label": "Смещение высоты судна на 3D-экране",
             "keywords": "altitude bias,3d data"
         },
         {
             "name": "keepSceneAlive",
-            "shortDesc": "Keep the 3D scene loaded in memory when switching back to fly view. Disable on memory-constrained devices.",
+            "shortDesc": "Не выгружать 3D-сцену из памяти при возврате на основной экран. Отключите на устройствах с малым объёмом памяти.",
             "type": "bool",
             "default": true,
-            "label": "Keep 3D scene alive when exiting 3D view",
+            "label": "Сохранять 3D-сцену при выходе из 3D-экрана",
             "keywords": "3d view,memory,scene,alive"
         }
     ]

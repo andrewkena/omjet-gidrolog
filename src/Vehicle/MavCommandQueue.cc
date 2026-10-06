@@ -1,5 +1,6 @@
 #include "MavCommandQueue.h"
 
+#include <QtCore/QHash>
 #include <QtCore/QTimer>
 
 #include "FirmwarePlugin.h"
@@ -96,6 +97,55 @@ void MavCommandQueue::sendCommandIntWithHandler(const MavCmdAckHandlerInfo_t* ac
 }
 
 namespace {
+
+// GidroLog: Russian names for commands shown in error messages
+QString _gidroLogCommandStr(MAV_CMD command)
+{
+    static const QHash<QString, QString> ru = {
+        { QStringLiteral("MAV_CMD_DO_SET_HOME"), QStringLiteral("Установка точки возврата") },
+        { QStringLiteral("MAV_CMD_COMPONENT_ARM_DISARM"), QStringLiteral("Запуск/остановка") },
+        { QStringLiteral("MAV_CMD_DO_SET_MODE"), QStringLiteral("Смена режима") },
+        { QStringLiteral("MAV_CMD_NAV_RETURN_TO_LAUNCH"), QStringLiteral("Возврат") },
+        { QStringLiteral("MAV_CMD_DO_REPOSITION"), QStringLiteral("Перемещение в точку") },
+        { QStringLiteral("MAV_CMD_MISSION_START"), QStringLiteral("Начало задания") },
+        { QStringLiteral("MAV_CMD_DO_CHANGE_SPEED"), QStringLiteral("Изменение скорости") },
+        { QStringLiteral("MAV_CMD_DO_SET_SERVO"), QStringLiteral("Управление сервоканалом") },
+        { QStringLiteral("MAV_CMD_DO_SET_RELAY"), QStringLiteral("Управление реле") },
+        { QStringLiteral("MAV_CMD_DO_REPEAT_SERVO"), QStringLiteral("Повтор сервоканала") },
+        { QStringLiteral("MAV_CMD_DO_REPEAT_RELAY"), QStringLiteral("Повтор реле") },
+        { QStringLiteral("MAV_CMD_PREFLIGHT_CALIBRATION"), QStringLiteral("Калибровка") },
+        { QStringLiteral("MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN"), QStringLiteral("Перезагрузка") },
+        { QStringLiteral("MAV_CMD_REQUEST_MESSAGE"), QStringLiteral("Запрос сообщения") },
+        { QStringLiteral("MAV_CMD_SET_MESSAGE_INTERVAL"), QStringLiteral("Настройка частоты сообщений") },
+        { QStringLiteral("MAV_CMD_DO_MOTOR_TEST"), QStringLiteral("Проверка моторов") },
+        { QStringLiteral("MAV_CMD_NAV_LOITER_UNLIM"), QStringLiteral("Удержание позиции") },
+        { QStringLiteral("MAV_CMD_DO_SET_ROI_LOCATION"), QStringLiteral("Точка интереса") },
+        { QStringLiteral("MAV_CMD_DO_FLIGHTTERMINATION"), QStringLiteral("Аварийное завершение") },
+        { QStringLiteral("MAV_CMD_DO_PAUSE_CONTINUE"), QStringLiteral("Пауза/продолжение") },
+        { QStringLiteral("MAV_CMD_CONDITION_YAW"), QStringLiteral("Поворот на курс") },
+        { QStringLiteral("MAV_CMD_DO_SET_MISSION_CURRENT"), QStringLiteral("Смена текущей точки задания") },
+        { QStringLiteral("MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES"), QStringLiteral("Запрос возможностей автопилота") },
+        { QStringLiteral("MAV_CMD_DO_SET_GLOBAL_ORIGIN"), QStringLiteral("Задание начала координат") },
+        { QStringLiteral("MAV_CMD_DO_AUX_FUNCTION"), QStringLiteral("Вспомогательная функция") },
+        { QStringLiteral("MAV_CMD_DO_SET_REVERSE"), QStringLiteral("Задний ход") },
+        { QStringLiteral("MAV_CMD_REQUEST_PROTOCOL_VERSION"), QStringLiteral("Запрос версии протокола") },
+        { QStringLiteral("MAV_CMD_DO_SEND_BANNER"), QStringLiteral("Запрос информации о прошивке") },
+        { QStringLiteral("MAV_CMD_START_RX_PAIR"), QStringLiteral("Привязка приёмника") },
+        { QStringLiteral("MAV_CMD_DO_GUIDED_LIMITS"), QStringLiteral("Ограничения режима Guided") },
+        { QStringLiteral("MAV_CMD_NAV_WAYPOINT"), QStringLiteral("Путевая точка") },
+        { QStringLiteral("MAV_CMD_DO_JUMP"), QStringLiteral("Переход к точке задания") },
+        { QStringLiteral("MAV_CMD_DO_SET_CAM_TRIGG_DIST"), QStringLiteral("Съёмка по расстоянию") },
+        { QStringLiteral("MAV_CMD_DO_DIGICAM_CONTROL"), QStringLiteral("Управление камерой") },
+        { QStringLiteral("MAV_CMD_DO_GIMBAL_MANAGER_PITCHYAW"), QStringLiteral("Управление подвесом") },
+    };
+    const QString rawName = MissionCommandTree::instance()->rawName(command);
+    const QString ruName  = ru.value(rawName);
+    if (!ruName.isEmpty()) {
+        return QStringLiteral("%1 (%2)").arg(ruName, rawName);
+    }
+    const QString friendlyName = MissionCommandTree::instance()->friendlyName(command);
+    return friendlyName.isEmpty() ? rawName : QStringLiteral("%1 (%2)").arg(friendlyName, rawName);
+}
 
 struct LambdaFallbackHandlerData {
     Vehicle*              vehicle;
@@ -265,7 +315,8 @@ QString MavCommandQueue::_formatCommand(MAV_CMD command, float param1)
 {
     QString rawName = MissionCommandTree::instance()->rawName(command);
     QString friendlyName = MissionCommandTree::instance()->friendlyName(command);
-    QString commandStr = friendlyName.isEmpty() ? rawName : QStringLiteral("%1 (%2)").arg(friendlyName, rawName);
+    QString commandStr = _gidroLogCommandStr(command);   // GidroLog
+    Q_UNUSED(rawName); Q_UNUSED(friendlyName);
 
     if (command == MAV_CMD_REQUEST_MESSAGE || command == MAV_CMD_SET_MESSAGE_INTERVAL) {
         const mavlink_message_info_t* info = mavlink_get_message_info_by_id(static_cast<int>(param1));
@@ -305,7 +356,7 @@ void MavCommandQueue::sendWorker(bool commandInt, bool showError,
             emit commandResult(_vehicle->id(), targetCompId, command, MAV_RESULT_FAILED, failureCode);
         }
         if (showError) {
-            QGC::showAppMessage(tr("Unable to send command: %1.").arg(compIdAll ? tr("Internal error - MAV_COMP_ID_ALL not supported") : tr("Waiting on previous response to same command.")));
+            QGC::showAppMessage(QStringLiteral("Не удалось отправить команду: %1.").arg(compIdAll ? QStringLiteral("внутренняя ошибка — MAV_COMP_ID_ALL не поддерживается") : QStringLiteral("ожидается ответ на предыдущую такую же команду")));
         }
         return;
     }
@@ -325,7 +376,7 @@ void MavCommandQueue::sendWorker(bool commandInt, bool showError,
         }
 
         if (showError) {
-            QGC::showAppMessage(tr("Unable to send command: Vehicle is not connected."));
+            QGC::showAppMessage(QStringLiteral("Не удалось отправить команду: судно не подключено."));
         }
         return;
     }
@@ -385,7 +436,7 @@ void MavCommandQueue::_sendFromList(int index)
             emit commandResult(_vehicle->id(), commandEntry.targetCompId, commandEntry.command, MAV_RESULT_FAILED, MavCmdResultFailureNoResponseToCommand);
         }
         if (commandEntry.showError) {
-            QGC::showAppMessage(tr("Vehicle did not respond to command: %1").arg(friendlyName));
+            QGC::showAppMessage(QStringLiteral("Судно не ответило на команду: %1").arg(_gidroLogCommandStr(commandEntry.command)));
         }
         return;
     }
@@ -481,20 +532,21 @@ void MavCommandQueue::showCommandAckError(const mavlink_command_ack_t& ack)
 {
     QString rawName      = MissionCommandTree::instance()->rawName(static_cast<MAV_CMD>(ack.command));
     QString friendlyName = MissionCommandTree::instance()->friendlyName(static_cast<MAV_CMD>(ack.command));
-    QString commandStr   = friendlyName.isEmpty() ? rawName : QStringLiteral("%1 (%2)").arg(friendlyName, rawName);
+    QString commandStr   = _gidroLogCommandStr(static_cast<MAV_CMD>(ack.command));   // GidroLog
+    Q_UNUSED(rawName); Q_UNUSED(friendlyName);
 
     switch (ack.result) {
     case MAV_RESULT_TEMPORARILY_REJECTED:
-        QGC::showAppMessage(tr("%1 command temporarily rejected").arg(commandStr));
+        QGC::showAppMessage(QStringLiteral("Команда «%1» временно отклонена бортом").arg(commandStr));
         break;
     case MAV_RESULT_DENIED:
-        QGC::showAppMessage(tr("%1 command denied").arg(commandStr));
+        QGC::showAppMessage(QStringLiteral("Команда «%1» отклонена бортом").arg(commandStr));
         break;
     case MAV_RESULT_UNSUPPORTED:
-        QGC::showAppMessage(tr("%1 command not supported").arg(commandStr));
+        QGC::showAppMessage(QStringLiteral("Команда «%1» не поддерживается бортом").arg(commandStr));
         break;
     case MAV_RESULT_FAILED:
-        QGC::showAppMessage(tr("%1 command failed").arg(commandStr));
+        QGC::showAppMessage(QStringLiteral("Команда «%1» не выполнена").arg(commandStr));
         break;
     default:
         // Do nothing

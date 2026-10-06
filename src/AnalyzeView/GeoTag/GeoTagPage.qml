@@ -9,7 +9,7 @@ import QGroundControl.Controls
 AnalyzePage {
     id:                 geoTagPage
     pageComponent:      pageComponent
-    pageDescription:    qsTr("Tag images from a survey mission with GPS coordinates from your flight log.")
+    pageDescription:    qsTr("Привязка снимков съёмки к координатам GPS из лога.")
 
     readonly property real _margin: ScreenTools.defaultFontPixelWidth
 
@@ -54,7 +54,7 @@ AnalyzePage {
                             spacing: _margin / 2
 
                             QGCLabel {
-                                text:               qsTr("Geotagging in progress...")
+                                text:               qsTr("Идёт геопривязка...")
                                 font.bold:          true
                             }
 
@@ -81,13 +81,13 @@ AnalyzePage {
                         Layout.fillWidth:       true
                         text: {
                             if (GeoTagController.taggedCount > 0 && !GeoTagController.inProgress) {
-                                let msg = qsTr("Successfully tagged %1 images").arg(GeoTagController.taggedCount)
+                                let msg = qsTr("Привязано снимков: %1").arg(GeoTagController.taggedCount)
                                 let details = []
                                 if (GeoTagController.skippedCount > 0) {
-                                    details.push(qsTr("%1 skipped").arg(GeoTagController.skippedCount))
+                                    details.push(qsTr("%1 пропущено").arg(GeoTagController.skippedCount))
                                 }
                                 if (GeoTagController.failedCount > 0) {
-                                    details.push(qsTr("%1 failed").arg(GeoTagController.failedCount))
+                                    details.push(qsTr("%1 с ошибкой").arg(GeoTagController.failedCount))
                                 }
                                 if (details.length > 0) {
                                     msg += " (" + details.join(", ") + ")"
@@ -138,7 +138,7 @@ AnalyzePage {
                         }
 
                         QGCLabel {
-                            text:       qsTr("Select Flight Log")
+                            text:       qsTr("Выберите лог")
                             font.bold:  true
                         }
                     }
@@ -148,14 +148,14 @@ AnalyzePage {
                         spacing: _margin
 
                         QGCButton {
-                            text:               qsTr("Browse...")
+                            text:               qsTr("Обзор...")
                             enabled:            !GeoTagController.inProgress
                             onClicked:          openLogFile.openForLoad()
 
                             QGCFileDialog {
                                 id:             openLogFile
-                                title:          qsTr("Select Flight Log")
-                                nameFilters:    [qsTr("Flight logs (*.ulg *.bin)"), qsTr("ULog (*.ulg)"), qsTr("DataFlash (*.bin)"), qsTr("All Files (*)")]
+                                title:          qsTr("Выберите лог")
+                                nameFilters:    [qsTr("Логи (*.ulg *.bin)"), qsTr("ULog (*.ulg)"), qsTr("DataFlash (*.bin)"), qsTr("Все файлы (*)")]
                                 defaultSuffix:  "ulg"
                                 onAcceptedForLoad: (file) => {
                                     GeoTagController.logFile = file
@@ -166,7 +166,7 @@ AnalyzePage {
 
                         QGCLabel {
                             Layout.fillWidth:   true
-                            text:               GeoTagController.logFile ? GeoTagController.logFile : qsTr("No file selected")
+                            text:               GeoTagController.logFile ? GeoTagController.logFile : qsTr("Файл не выбран")
                             elide:              Text.ElideMiddle
                             opacity:            GeoTagController.logFile ? 1.0 : 0.5
                         }
@@ -208,7 +208,7 @@ AnalyzePage {
                         }
 
                         QGCLabel {
-                            text:       qsTr("Select Image Folder")
+                            text:       qsTr("Выберите папку со снимками")
                             font.bold:  true
                         }
                     }
@@ -218,13 +218,13 @@ AnalyzePage {
                         spacing: _margin
 
                         QGCButton {
-                            text:               qsTr("Browse...")
+                            text:               qsTr("Обзор...")
                             enabled:            !GeoTagController.inProgress
                             onClicked:          selectImageDir.openForLoad()
 
                             QGCFileDialog {
                                 id:             selectImageDir
-                                title:          qsTr("Select Image Folder")
+                                title:          qsTr("Выберите папку со снимками")
                                 selectFolder:   true
                                 onAcceptedForLoad: (file) => {
                                     GeoTagController.imageDirectory = file
@@ -235,7 +235,7 @@ AnalyzePage {
 
                         QGCLabel {
                             Layout.fillWidth:   true
-                            text:               GeoTagController.imageDirectory ? GeoTagController.imageDirectory : qsTr("No folder selected")
+                            text:               GeoTagController.imageDirectory ? GeoTagController.imageDirectory : qsTr("Папка не выбрана")
                             elide:              Text.ElideMiddle
                             opacity:            GeoTagController.imageDirectory ? 1.0 : 0.5
                         }
@@ -277,7 +277,7 @@ AnalyzePage {
                         }
 
                         QGCLabel {
-                            text:       qsTr("Output Folder (Optional)")
+                            text:       qsTr("Папка для результата (необязательно)")
                             font.bold:  true
                         }
                     }
@@ -287,13 +287,13 @@ AnalyzePage {
                         spacing: _margin
 
                         QGCButton {
-                            text:               qsTr("Browse...")
+                            text:               qsTr("Обзор...")
                             enabled:            !GeoTagController.inProgress
                             onClicked:          selectDestDir.openForLoad()
 
                             QGCFileDialog {
                                 id:             selectDestDir
-                                title:          qsTr("Select Output Folder")
+                                title:          qsTr("Выберите папку для результата")
                                 selectFolder:   true
                                 onAcceptedForLoad: (file) => {
                                     GeoTagController.saveDirectory = file
@@ -310,7 +310,7 @@ AnalyzePage {
                                 } else if (GeoTagController.imageDirectory) {
                                     return GeoTagController.imageDirectory + "/TAGGED"
                                 }
-                                return qsTr("Default: /TAGGED subfolder")
+                                return qsTr("По умолчанию: подпапка /TAGGED")
                             }
                             elide:              Text.ElideMiddle
                             opacity:            GeoTagController.saveDirectory ? 1.0 : 0.5
@@ -335,7 +335,7 @@ AnalyzePage {
                     spacing:            _margin
 
                     QGCLabel {
-                        text:       qsTr("Advanced Options")
+                        text:       qsTr("Дополнительные параметры")
                         font.bold:  true
                     }
 
@@ -344,7 +344,7 @@ AnalyzePage {
                         spacing: _margin
 
                         QGCLabel {
-                            text: qsTr("Time Offset (seconds):")
+                            text: qsTr("Сдвиг времени (с):")
                         }
 
                         QGCTextField {
@@ -359,7 +359,7 @@ AnalyzePage {
 
                         QGCLabel {
                             Layout.fillWidth:   true
-                            text:               qsTr("Adjust if camera clock differs from flight log")
+                            text:               qsTr("Поправьте, если часы камеры расходятся с логом")
                             opacity:            0.7
                             font.pointSize:     ScreenTools.smallFontPointSize
                         }
@@ -371,7 +371,7 @@ AnalyzePage {
 
                         QGCCheckBox {
                             id:         previewCheckbox
-                            text:       qsTr("Preview mode (don't write files)")
+                            text:       qsTr("Предпросмотр (без записи файлов)")
                             checked:    GeoTagController.previewMode
                             enabled:    !GeoTagController.inProgress
                             onClicked:  GeoTagController.previewMode = checked
@@ -379,7 +379,7 @@ AnalyzePage {
 
                         QGCLabel {
                             Layout.fillWidth:   true
-                            text:               qsTr("Verify time offset before committing")
+                            text:               qsTr("Проверьте сдвиг времени перед записью")
                             opacity:            0.7
                             font.pointSize:     ScreenTools.smallFontPointSize
                         }
@@ -393,11 +393,11 @@ AnalyzePage {
                 Layout.preferredWidth:  ScreenTools.defaultFontPixelWidth * 20
                 text: {
                     if (GeoTagController.inProgress) {
-                        return qsTr("Cancel")
+                        return qsTr("Отмена")
                     } else if (GeoTagController.previewMode) {
-                        return qsTr("Preview")
+                        return qsTr("Предпросмотр")
                     } else {
-                        return qsTr("Start Tagging")
+                        return qsTr("Начать привязку")
                     }
                 }
                 enabled:                (GeoTagController.logFile && GeoTagController.imageDirectory) || GeoTagController.inProgress
@@ -429,7 +429,7 @@ AnalyzePage {
                         spacing: _margin
 
                         QGCLabel {
-                            text:       qsTr("Images (%1)").arg(GeoTagController.imageModel.count)
+                            text:       qsTr("Снимки (%1)").arg(GeoTagController.imageModel.count)
                             font.bold:  true
                         }
 
@@ -442,27 +442,27 @@ AnalyzePage {
                             Row {
                                 spacing: _margin / 4
                                 Rectangle { width: 10; height: 10; radius: 2; color: qgcPal.text; opacity: 0.5 }
-                                QGCLabel { text: qsTr("Pending"); font.pointSize: ScreenTools.smallFontPointSize }
+                                QGCLabel { text: qsTr("Ожидание"); font.pointSize: ScreenTools.smallFontPointSize }
                             }
                             Row {
                                 spacing: _margin / 4
                                 Rectangle { width: 10; height: 10; radius: 2; color: qgcPal.colorBlue }
-                                QGCLabel { text: qsTr("Processing"); font.pointSize: ScreenTools.smallFontPointSize }
+                                QGCLabel { text: qsTr("Обработка"); font.pointSize: ScreenTools.smallFontPointSize }
                             }
                             Row {
                                 spacing: _margin / 4
                                 Rectangle { width: 10; height: 10; radius: 2; color: qgcPal.colorGreen }
-                                QGCLabel { text: qsTr("Tagged"); font.pointSize: ScreenTools.smallFontPointSize }
+                                QGCLabel { text: qsTr("Привязано"); font.pointSize: ScreenTools.smallFontPointSize }
                             }
                             Row {
                                 spacing: _margin / 4
                                 Rectangle { width: 10; height: 10; radius: 2; color: qgcPal.colorOrange }
-                                QGCLabel { text: qsTr("Skipped"); font.pointSize: ScreenTools.smallFontPointSize }
+                                QGCLabel { text: qsTr("Пропущено"); font.pointSize: ScreenTools.smallFontPointSize }
                             }
                             Row {
                                 spacing: _margin / 4
                                 Rectangle { width: 10; height: 10; radius: 2; color: qgcPal.colorRed }
-                                QGCLabel { text: qsTr("Failed"); font.pointSize: ScreenTools.smallFontPointSize }
+                                QGCLabel { text: qsTr("Ошибка"); font.pointSize: ScreenTools.smallFontPointSize }
                             }
                         }
                     }

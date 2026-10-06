@@ -50,6 +50,30 @@ Rectangle {
         return !!_expandedComponents[compIndex]
     }
 
+    // GidroLog: Russian names for configuration components and their sections
+    readonly property var _ruMenuMap: ({
+        "ESC": qsTr("Регуляторы (ESC)"), "Failsafes": qsTr("Аварийные режимы"), "Flight Modes": qsTr("Режимы"),
+        "Flight Safety": qsTr("Безопасность"), "Safety": qsTr("Безопасность"), "Frame": qsTr("Корпус"), "Gimbal": qsTr("Подвес"),
+        "Logging": qsTr("Логи"), "Motors": qsTr("Моторы"), "Power": qsTr("Питание"), "Radio": qsTr("Пульт"),
+        "Remote Support": qsTr("Удалённая поддержка"), "Scripting": qsTr("Скрипты"), "Servo Outputs": qsTr("Выходы серво"),
+        "Sensors": qsTr("Датчики"), "Joystick": qsTr("Джойстик"), "Camera": qsTr("Камера"), "Tuning": qsTr("Настройка регуляторов"),
+        "Lights": qsTr("Освещение"), "Battery": qsTr("Батарея"), "Batteries": qsTr("Батареи"), "Battery Monitor": qsTr("Батарея"),
+        "Battery 1": qsTr("Батарея 1"), "Battery 2": qsTr("Батарея 2"), "Radio Failsafe": qsTr("Потеря пульта"),
+        "Throttle Failsafe": qsTr("Потеря газа"), "GCS Failsafe": qsTr("Потеря наземной станции"), "Battery Failsafe": qsTr("Разряд батареи"),
+        "EKF Failsafe": qsTr("Отказ EKF"), "Crash Check": qsTr("Обнаружение аварии"), "Geofence": qsTr("Забор Безопасности"),
+        "GeoFence": qsTr("Забор Безопасности"), "Arming": qsTr("Запуск (арм)"), "Arming Checks": qsTr("Предстартовые проверки"),
+        "Return to Launch": qsTr("Возврат"), "RTL": qsTr("Возврат"), "Log": qsTr("Лог"), "Logs": qsTr("Логи"), "General": qsTr("Общие"),
+        "Advanced": qsTr("Дополнительно"), "Voltage": qsTr("Напряжение"), "Current": qsTr("Ток"), "Compass": qsTr("Компас"),
+        "Accelerometer": qsTr("Акселерометр"), "Level Horizon": qsTr("Горизонт"), "Gyroscope": qsTr("Гироскоп"), "Gyro": qsTr("Гироскоп"),
+        "Barometer": qsTr("Барометр"), "Airspeed": qsTr("Датчик скорости"), "Rangefinder": qsTr("Дальномер / эхолот"),
+        "Optical Flow": qsTr("Оптический поток"), "Channels": qsTr("Каналы"), "Calibration": qsTr("Калибровка"),
+        "Summary": qsTr("Сводка"), "Parameters": qsTr("Параметры"), "Firmware": qsTr("Прошивка")
+    })
+
+    function _ruMenu(name) {
+        return _ruMenuMap[name] !== undefined ? _ruMenuMap[name] : name
+    }
+
     /// Translated display name for a section ID. JSON-driven components translate via the JSON
     /// filename context; hand-coded components provide sectionDisplayName().
     function _sectionDisplayName(component, sectionId) {
@@ -360,7 +384,7 @@ Rectangle {
             id:                 searchField
             objectName:         "vehicleConfig_searchField"
             Layout.fillWidth:   true
-            placeholderText:    qsTr("Search configuration...")
+            placeholderText:    qsTr("Поиск по настройкам...")
             visible:            _fullParameterVehicleAvailable
 
             onTextChanged: {
@@ -387,7 +411,7 @@ Rectangle {
                     objectName:         "vehicleConfig_summary"
                     icon.source:        "/qmlimages/VehicleSummaryIcon.png"
                     checked:            vehicleConfigView._selectedSpecial === "summary"
-                    text:               qsTr("Summary")
+                    text:               qsTr("Сводка")
                     Layout.fillWidth:   true
                     visible:            vehicleConfigView._searchQuery.trim() === ""
 
@@ -431,7 +455,7 @@ Rectangle {
                             objectName:         "vehicleConfig_comp_" + compColumn.compName.replace(/ /g, "")
                             icon.source:        compColumn.comp ? compColumn.comp.iconResource : ""
                             setupComplete:      compColumn.comp ? compColumn.comp.setupComplete : true
-                            text:               compColumn.compName
+                            text:               vehicleConfigView._ruMenu(compColumn.compName)   // GidroLog
                             expandable:         compColumn.hasSections
                             expanded:           compColumn.isExpanded
                             checked:            compColumn.isSelected && vehicleConfigView._selectedSectionIndex === -1
@@ -514,7 +538,7 @@ Rectangle {
                                     }
 
                                     QGCLabel {
-                                        text:  vehicleConfigView._sectionDisplayName(compColumn.comp, modelData)
+                                        text:  vehicleConfigView._ruMenu(vehicleConfigView._sectionDisplayName(compColumn.comp, modelData))
                                         color: sectionBtn.textColor
                                         font.pointSize: ScreenTools.defaultFontPointSize * 0.9
                                         horizontalAlignment: Text.AlignLeft
@@ -534,7 +558,7 @@ Rectangle {
                 ConfigButton {
                     id:                 opticalFlowButton
                     visible:            _activeVehicle ? _activeVehicle.flowImageIndex > 0 : false
-                    text:               qsTr("Optical Flow")
+                    text:               qsTr("Оптический поток")
                     Layout.fillWidth:   true
                     checked:            vehicleConfigView._selectedSpecial === "opticalflow"
                     onClicked:          showPanel("opticalflow", "qrc:/qml/QGroundControl/VehicleSetup/OpticalFlowSensor.qml")
@@ -553,7 +577,7 @@ Rectangle {
                                         !_activeVehicle.usingHighLatencyLink &&
                                         _corePlugin.showAdvancedUI &&
                                         vehicleConfigView._searchQuery.trim() === ""
-                    text:               qsTr("Parameters")
+                    text:               qsTr("Параметры")
                     Layout.fillWidth:   true
                     icon.source:        "/qmlimages/subMenuButtonImage.png"
                     checked:            vehicleConfigView._selectedSpecial === "parameters"
@@ -566,7 +590,7 @@ Rectangle {
                     icon.source:        "/qmlimages/FirmwareUpgradeIcon.png"
                     visible:            !ScreenTools.isMobile && _corePlugin.options.showFirmwareUpgrade &&
                                         vehicleConfigView._searchQuery.trim() === ""
-                    text:               qsTr("Firmware")
+                    text:               qsTr("Прошивка")
                     Layout.fillWidth:   true
                     checked:            vehicleConfigView._selectedSpecial === "firmware"
 

@@ -17,13 +17,13 @@ QString APMFlightSafetyComponent::description() const
 {
     switch (_vehicle->vehicleType()) {
     case MAV_TYPE_SUBMARINE:
-        return tr("Configure Return to Launch, geofence, and arming checks.");
+        return QStringLiteral("Настройка возврата, геозоны и предстартовых проверок.");
     case MAV_TYPE_GROUND_ROVER:
-        return tr("Configure Return to Launch, geofence, and arming checks.");
+        return QStringLiteral("Настройка возврата, геозоны и предстартовых проверок.");
     case MAV_TYPE_FIXED_WING:
-        return tr("Configure Return to Launch, geofence, and arming checks.");
+        return QStringLiteral("Настройка возврата, геозоны и предстартовых проверок.");
     default:
-        return tr("Configure Return to Launch, geofence, and arming checks.");
+        return QStringLiteral("Настройка возврата, геозоны и предстартовых проверок.");
     }
 }
 

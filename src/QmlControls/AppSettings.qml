@@ -201,7 +201,7 @@ Rectangle {
             id:                 searchField
             objectName:         "settings_searchField"
             Layout.fillWidth:   true
-            placeholderText:    qsTr("Search settings...")
+            placeholderText:    qsTr("Поиск по настройкам...")
 
             onTextChanged: {
                 settingsView._searchQuery = text

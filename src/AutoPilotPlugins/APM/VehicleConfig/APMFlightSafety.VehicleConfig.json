@@ -31,7 +31,7 @@
     },
     "sections": [
         {
-            "title": "Return to Launch",
+            "title": "Возврат",
             "keywords": [
                 "rtl",
                 "return home",
@@ -45,16 +45,16 @@
             "controls": [
                 {
                     "param": "RTL_ALT_M",
-                    "label": "Return at specified altitude:",
+                    "label": "Возврат на заданной высоте:",
                     "control": "radiogroup",
                     "options": [
                         {
-                            "label": "Return at current altitude",
+                            "label": "Возврат на текущей высоте",
                             "value": "_rtlAltParamValueCurrentAltitude",
                             "checked": "_rtlAltFact.value === _rtlAltParamValueCurrentAltitude"
                         },
                         {
-                            "label": "Return at specified altitude",
+                            "label": "Возврат на заданной высоте",
                             "value": "_rtlAltParamValueDefaultSpecified",
                             "checked": "_rtlAltFact.value !== _rtlAltParamValueCurrentAltitude"
                         }
@@ -62,12 +62,12 @@
                 },
                 {
                     "param": "RTL_ALT_M",
-                    "label": "Return altitude",
+                    "label": "Высота возврата",
                     "enableWhen": "_rtlAltFact && _rtlAltFact.value !== _rtlAltParamValueCurrentAltitude"
                 },
                 {
                     "param": "RTL_LOIT_TIME",
-                    "label": "Loiter above Home",
+                    "label": "Ожидание над точкой возврата",
                     "control": "toggleCheckbox",
                     "toggleCheckbox": {
                         "checked": "_rtlLoitTimeFact.value > 0",
@@ -77,21 +77,21 @@
                 },
                 {
                     "param": "RTL_LOIT_TIME",
-                    "label": "Loiter time",
+                    "label": "Время ожидания",
                     "enableWhen": "_rtlLoitTimeFact && _rtlLoitTimeFact.value > 0"
                 },
                 {
                     "param": "RTL_ALT_FINAL_M",
-                    "label": "Final land stage altitude"
+                    "label": "Высота финального этапа посадки"
                 },
                 {
                     "param": "LAND_SPD_MS",
-                    "label": "Final land stage descent speed"
+                    "label": "Скорость снижения на финальном этапе"
                 }
             ]
         },
         {
-            "title": "Return to Launch",
+            "title": "Возврат",
             "keywords": [
                 "rtl",
                 "return home",
@@ -105,17 +105,17 @@
             "controls": [
                 {
                     "param": "RTL_ALTITUDE",
-                    "label": "Return altitude:",
+                    "label": "Высота возврата:",
                     "optional": true,
                     "control": "radiogroup",
                     "options": [
                         {
-                            "label": "Return at current altitude",
+                            "label": "Возврат на текущей высоте",
                             "value": "_planeRtlAltParamValueCurrentAltitude",
                             "checked": "_planeRtlAltFact && _planeRtlAltFact.value < 0"
                         },
                         {
-                            "label": "Return at specified altitude",
+                            "label": "Возврат на заданной высоте",
                             "value": "_planeRtlAltParamValueDefaultSpecified",
                             "checked": "_planeRtlAltFact && _planeRtlAltFact.value >= 0"
                         }
@@ -123,31 +123,31 @@
                 },
                 {
                     "param": "RTL_ALTITUDE",
-                    "label": "Return altitude",
+                    "label": "Высота возврата",
                     "optional": true,
                     "enableWhen": "_planeRtlAltFact && _planeRtlAltFact.value >= 0"
                 },
                 {
                     "param": "RTL_RADIUS",
-                    "label": "Loiter radius",
+                    "label": "Радиус удержания",
                     "optional": true
                 },
                 {
                     "control": "label",
-                    "label": "0 = use Waypoint Loiter Radius (WP_LOITER_RAD), negative = counter-clockwise",
+                    "label": "0 — использовать WP_LOITER_RAD, отрицательное — против часовой стрелки",
                     "indent": true,
                     "smallFont": true
                 },
                 {
                     "param": "RTL_AUTOLAND",
-                    "label": "Auto land after RTL",
+                    "label": "Автопосадка после возврата",
                     "optional": true,
                     "control": "combobox"
                 }
             ]
         },
         {
-            "title": "GeoFence",
+            "title": "Геозона",
             "keywords": [
                 "geofence",
                 "boundary",
@@ -163,75 +163,75 @@
             "controls": [
                 {
                     "param": "FENCE_ENABLE",
-                    "label": "Enabled",
+                    "label": "Включено",
                     "control": "checkbox"
                 },
                 {
                     "param": "FENCE_TYPE",
-                    "label": "Maximum Altitude",
+                    "label": "Максимальная высота",
                     "control": "bitmaskCheckbox",
                     "bitMask": 1,
                     "showWhen": "_fenceEnabled"
                 },
                 {
                     "param": "FENCE_ALT_MAX",
-                    "label": "Maximum altitude",
+                    "label": "Максимальная высота",
                     "showWhen": "_fenceEnabled && _fenceType && (_fenceType.rawValue & 1)"
                 },
                 {
                     "param": "FENCE_TYPE",
-                    "label": "Minimum Altitude",
+                    "label": "Минимальная высота",
                     "control": "bitmaskCheckbox",
                     "bitMask": 8,
                     "showWhen": "_fenceEnabled"
                 },
                 {
                     "param": "FENCE_ALT_MIN",
-                    "label": "Minimum altitude",
+                    "label": "Минимальная высота",
                     "optional": true,
                     "showWhen": "_fenceEnabled && _fenceType && (_fenceType.rawValue & 8)"
                 },
                 {
                     "param": "FENCE_TYPE",
-                    "label": "Circle centered on Home",
+                    "label": "Круг с центром в точке возврата",
                     "control": "bitmaskCheckbox",
                     "bitMask": 2,
                     "showWhen": "_fenceEnabled"
                 },
                 {
                     "param": "FENCE_RADIUS",
-                    "label": "Circle radius",
+                    "label": "Радиус круга",
                     "showWhen": "_fenceEnabled && _fenceType && (_fenceType.rawValue & 2)"
                 },
                 {
                     "param": "FENCE_TYPE",
-                    "label": "Inclusion/Exclusion Circles+Polygons",
+                    "label": "Разрешённые/запрещённые круги и полигоны",
                     "control": "bitmaskCheckbox",
                     "bitMask": 4,
                     "showWhen": "_fenceEnabled"
                 },
                 {
                     "param": "FENCE_MARGIN",
-                    "label": "Fence margin",
+                    "label": "Запас до границы",
                     "showWhen": "_fenceEnabled"
                 },
                 {
                     "param": "FENCE_AUTOENABLE",
-                    "label": "Auto-enable",
+                    "label": "Автовключение",
                     "optional": true,
                     "control": "combobox",
                     "showWhen": "_fenceEnabled"
                 },
                 {
                     "param": "FENCE_ACTION",
-                    "label": "Breach action",
+                    "label": "Действие при нарушении",
                     "control": "combobox",
                     "showWhen": "_fenceEnabled"
                 }
             ]
         },
         {
-            "title": "GeoFence",
+            "title": "Геозона",
             "keywords": [
                 "geofence",
                 "boundary",
@@ -247,74 +247,74 @@
             "controls": [
                 {
                     "param": "FENCE_ENABLE",
-                    "label": "Enabled",
+                    "label": "Включено",
                     "control": "checkbox"
                 },
                 {
                     "param": "FENCE_TYPE",
-                    "label": "Maximum Altitude",
+                    "label": "Максимальная высота",
                     "control": "bitmaskCheckbox",
                     "bitMask": 1,
                     "showWhen": "_fenceEnabled"
                 },
                 {
                     "param": "FENCE_ALT_MAX",
-                    "label": "Maximum altitude",
+                    "label": "Максимальная высота",
                     "showWhen": "_fenceEnabled && _fenceType && (_fenceType.rawValue & 1)"
                 },
                 {
                     "param": "FENCE_TYPE",
-                    "label": "Minimum Altitude",
+                    "label": "Минимальная высота",
                     "control": "bitmaskCheckbox",
                     "bitMask": 8,
                     "showWhen": "_fenceEnabled"
                 },
                 {
                     "param": "FENCE_ALT_MIN",
-                    "label": "Minimum altitude",
+                    "label": "Минимальная высота",
                     "optional": true,
                     "showWhen": "_fenceEnabled && _fenceType && (_fenceType.rawValue & 8)"
                 },
                 {
                     "param": "FENCE_TYPE",
-                    "label": "Circle centered on Home",
+                    "label": "Круг с центром в точке возврата",
                     "control": "bitmaskCheckbox",
                     "bitMask": 2,
                     "showWhen": "_fenceEnabled"
                 },
                 {
                     "param": "FENCE_RADIUS",
-                    "label": "Circle radius",
+                    "label": "Радиус круга",
                     "showWhen": "_fenceEnabled && _fenceType && (_fenceType.rawValue & 2)"
                 },
                 {
                     "param": "FENCE_TYPE",
-                    "label": "Inclusion/Exclusion Circles+Polygons",
+                    "label": "Разрешённые/запрещённые круги и полигоны",
                     "control": "bitmaskCheckbox",
                     "bitMask": 4,
                     "showWhen": "_fenceEnabled"
                 },
                 {
                     "param": "FENCE_MARGIN",
-                    "label": "Fence margin",
+                    "label": "Запас до границы",
                     "showWhen": "_fenceEnabled"
                 },
                 {
                     "param": "FENCE_AUTOENABLE",
-                    "label": "Auto-enable",
+                    "label": "Автовключение",
                     "optional": true,
                     "control": "combobox",
                     "showWhen": "_fenceEnabled"
                 },
                 {
                     "param": "FENCE_ACTION",
-                    "label": "Breach action",
+                    "label": "Действие при нарушении",
                     "control": "combobox",
                     "showWhen": "_fenceEnabled"
                 },
                 {
                     "param": "FENCE_RET_ALT",
-                    "label": "Custom return altitude",
+                    "label": "Своя высота возврата",
                     "optional": true,
                     "control": "toggleCheckbox",
                     "indent": true,
@@ -327,14 +327,14 @@
                 },
                 {
                     "param": "FENCE_RET_ALT",
-                    "label": "Return altitude",
+                    "label": "Высота возврата",
                     "optional": true,
                     "indent": true,
                     "showWhen": "_fenceEnabled && _fenceActionIsRtl && _fenceRetAlt && _fenceRetAlt.value > 0"
                 },
                 {
                     "param": "FENCE_RET_RALLY",
-                    "label": "Return to nearest rally point",
+                    "label": "Возврат в ближайший резервный порт",
                     "optional": true,
                     "control": "checkbox",
                     "indent": true,
@@ -343,7 +343,7 @@
             ]
         },
         {
-            "title": "Arming Checks",
+            "title": "Предстартовые проверки",
             "keywords": [
                 "arming",
                 "pre-arm",
@@ -353,12 +353,12 @@
             "controls": [
                 {
                     "control": "label",
-                    "label": "Warning: Skipping arming checks can lead to loss of Vehicle control.",
+                    "label": "Внимание: пропуск предстартовых проверок может привести к потере управления судном.",
                     "warning": true
                 },
                 {
                     "param": "ARMING_CHECK",
-                    "label": "Arming checks",
+                    "label": "Предстартовые проверки",
                     "control": "bitmask",
                     "optional": true,
                     "firstEntryIsAll": true,
@@ -366,7 +366,7 @@
                 },
                 {
                     "param": "ARMING_SKIPCHK",
-                    "label": "Skip arming checks",
+                    "label": "Пропускаемые проверки",
                     "control": "bitmask",
                     "optional": true,
                     "showWhen": "!_armingCheck && _armingSkipCheck"

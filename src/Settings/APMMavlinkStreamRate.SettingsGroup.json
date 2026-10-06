@@ -3,78 +3,78 @@
     "fileType": "FactMetaData",
     "translateKeys": "StreamRateEnumStrings",
     "QGC.MetaData.Defines": {
-        "StreamRateEnumStrings": "Controlled By Vehicle,0 hz,1 hz,2 hz,3 hz,4 hz,5 hz,6 hz,7 hz,8 hz,9 hz,10 hz,50 hz,100 hz",
+        "StreamRateEnumStrings": "Задаётся бортом,0 Гц,1 Гц,2 Гц,3 Гц,4 Гц,5 Гц,6 Гц,7 Гц,8 Гц,9 Гц,10 Гц,50 Гц,100 Гц",
         "StreamRateEnumValues": "-1,0,1,2,3,4,5,6,7,8,9,10,50,100"
     },
     "QGC.MetaData.Facts": [
         {
             "name": "streamRateRawSensors",
-            "shortDesc": "Frequency (Hz) for receiving raw sensor data from ArduPilot vehicles.",
+            "shortDesc": "Частота (Гц) приёма сырых данных датчиков от ArduPilot.",
             "type": "int32",
             "enumStrings": "QGC.MetaData.Defines.StreamRateEnumStrings",
             "enumValues": "QGC.MetaData.Defines.StreamRateEnumValues",
             "default": 2,
-            "label": "Raw Sensors",
+            "label": "Сырые данные датчиков",
             "keywords": "stream rate,raw sensors"
         },
         {
             "name": "streamRateExtendedStatus",
-            "shortDesc": "Frequency (Hz) for receiving extended status data from ArduPilot vehicles.",
+            "shortDesc": "Частота (Гц) приёма расширенного статуса от ArduPilot.",
             "type": "int32",
             "enumStrings": "QGC.MetaData.Defines.StreamRateEnumStrings",
             "enumValues": "QGC.MetaData.Defines.StreamRateEnumValues",
             "default": 2,
-            "label": "Extended Status",
+            "label": "Расширенный статус",
             "keywords": "stream rate"
         },
         {
             "name": "streamRateRCChannels",
-            "shortDesc": "Frequency (Hz) for receiving RC channel data from ArduPilot vehicles.",
+            "shortDesc": "Частота (Гц) приёма данных каналов пульта от ArduPilot.",
             "type": "int32",
             "enumStrings": "QGC.MetaData.Defines.StreamRateEnumStrings",
             "enumValues": "QGC.MetaData.Defines.StreamRateEnumValues",
             "default": 2,
-            "label": "RC Channels",
+            "label": "Каналы пульта",
             "keywords": "stream rate,rc channels"
         },
         {
             "name": "streamRatePosition",
-            "shortDesc": "Frequency (Hz) for receiving vehicle position data from ArduPilot vehicles.",
+            "shortDesc": "Частота (Гц) приёма данных о позиции судна от ArduPilot.",
             "type": "int32",
             "enumStrings": "QGC.MetaData.Defines.StreamRateEnumStrings",
             "enumValues": "QGC.MetaData.Defines.StreamRateEnumValues",
             "default": 3,
-            "label": "Position",
+            "label": "Позиция",
             "keywords": "stream rate,position rate"
         },
         {
             "name": "streamRateExtra1",
-            "shortDesc": "Frequency (Hz) for receiving extra1 telemetry from ArduPilot vehicles.",
+            "shortDesc": "Частота (Гц) приёма телеметрии Extra 1 от ArduPilot.",
             "type": "int32",
             "enumStrings": "QGC.MetaData.Defines.StreamRateEnumStrings",
             "enumValues": "QGC.MetaData.Defines.StreamRateEnumValues",
             "default": 10,
-            "label": "Extra 1",
+            "label": "Доп. 1",
             "keywords": "stream rate"
         },
         {
             "name": "streamRateExtra2",
-            "shortDesc": "Frequency (Hz) for receiving extra2 telemetry from ArduPilot vehicles.",
+            "shortDesc": "Частота (Гц) приёма телеметрии Extra 2 от ArduPilot.",
             "type": "int32",
             "enumStrings": "QGC.MetaData.Defines.StreamRateEnumStrings",
             "enumValues": "QGC.MetaData.Defines.StreamRateEnumValues",
             "default": 10,
-            "label": "Extra 2",
+            "label": "Доп. 2",
             "keywords": "stream rate"
         },
         {
             "name": "streamRateExtra3",
-            "shortDesc": "Frequency (Hz) for receiving extra3 telemetry from ArduPilot vehicles.",
+            "shortDesc": "Частота (Гц) приёма телеметрии Extra 3 от ArduPilot.",
             "type": "int32",
             "enumStrings": "QGC.MetaData.Defines.StreamRateEnumStrings",
             "enumValues": "QGC.MetaData.Defines.StreamRateEnumValues",
             "default": 3,
-            "label": "Extra 3",
+            "label": "Доп. 3",
             "keywords": "stream rate"
         }
     ]

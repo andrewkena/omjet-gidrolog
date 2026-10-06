@@ -7,7 +7,7 @@ import QGroundControl.Controls
 
 QGCPopupDialog {
     id:         popupDialog
-    title:      qsTr("Calculate Amps per Volt")
+    title:      qsTr("Расчёт ампер на вольт")
     buttons:    Dialog.Close
 
     property int  batteryIndex: 0
@@ -26,14 +26,14 @@ QGCPopupDialog {
         QGCLabel {
             Layout.preferredWidth:  gridLayout.width
             wrapMode:               Text.WordWrap
-            text:                   qsTr("Measure current draw using an external current meter and enter the value below. Click Calculate to set the new amps per volt value.")
+            text:                   qsTr("Измерьте ток внешним амперметром и введите значение ниже. Нажмите «Рассчитать», чтобы задать новое значение ампер на вольт.")
         }
 
         QGCLabel {
             Layout.preferredWidth:  gridLayout.width
             wrapMode:               Text.WordWrap
             visible:                !_batteryFactGroup || _batteryFactGroup.current.value === 0
-            text:                   qsTr("Vehicle current telemetry is not available. Connect to a vehicle with a powered battery to enable automatic calculation.")
+            text:                   qsTr("Нет телеметрии тока. Подключитесь к судну с включённой батареей для автоматического расчёта.")
             color:                  qgcPal.warningText
         }
 
@@ -41,11 +41,11 @@ QGCPopupDialog {
             id:         gridLayout
             columns:    2
 
-            QGCLabel { text: qsTr("Measured current:") }
+            QGCLabel { text: qsTr("Измеренный ток:") }
             QGCTextField { id: measuredCurrent; numericValuesOnly: true }
 
             QGCLabel {
-                text:    qsTr("Vehicle current:")
+                text:    qsTr("Ток по данным судна:")
                 visible: _batteryFactGroup && _batteryFactGroup.current.value !== 0
             }
             QGCLabel {
@@ -53,12 +53,12 @@ QGCPopupDialog {
                 visible: _batteryFactGroup && _batteryFactGroup.current.value !== 0
             }
 
-            QGCLabel { text: qsTr("Amps per volt:") }
+            QGCLabel { text: qsTr("Ампер на вольт:") }
             FactLabel { fact: batParams.battAmpPerVolt }
         }
 
         QGCButton {
-            text:    qsTr("Calculate And Set")
+            text:    qsTr("Рассчитать и задать")
             enabled: _batteryFactGroup && _batteryFactGroup.current.value !== 0
 
             onClicked: {

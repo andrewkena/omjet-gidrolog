@@ -179,7 +179,7 @@ SetupPage {
             QGCPalette { id: ggcPal; colorGroupEnabled: true }
 
             QGCCheckBox {
-                text:       qsTr("Enable Follow Me")
+                text:       qsTr("Включить следование")
                 checked:    _followEnabled.rawValue == 1
                 onClicked: {
                     if (checked) {
@@ -198,7 +198,7 @@ SetupPage {
 
             QGCLabel {
                 id:         vehicleParamRefreshLabel
-                text:       qsTr("Waiting for Vehicle to update")
+                text:       qsTr("Ожидание обновления от судна")
                 visible:    false
             }
 
@@ -210,12 +210,12 @@ SetupPage {
                 QGCLabel {
                     anchors.left:   parent.left
                     anchors.right:  parent.right
-                    text:           qsTr("The vehicle parameters required for follow me are currently set in a way which is not supported. Using follow with this setup may lead to unpredictable/hazardous results.")
+                    text:           qsTr("Параметры судна для следования заданы в неподдерживаемой конфигурации. Следование с такими настройками может привести к непредсказуемым и опасным последствиям.")
                     wrapMode:       Text.WordWrap
                 }
 
                 QGCButton {
-                    text:       qsTr("Reset To Supported Settings")
+                    text:       qsTr("Сбросить на поддерживаемые настройки")
                     onClicked:  _setFollowMeParamDefaults()
                 }
             }
@@ -226,19 +226,19 @@ SetupPage {
                 visible:            _showMainSetup
 
                 QGCGroupBox {
-                    title:            qsTr("Follow Me Settings")
+                    title:            qsTr("Настройки следования")
 
                     GridLayout {
                         columns:        2
                         rowSpacing:     ScreenTools.defaultFontPixelWidth
                         columnSpacing:  ScreenTools.defaultFontPixelWidth
 
-                        QGCLabel { text: qsTr("Vehicle Position") }
+                        QGCLabel { text: qsTr("Положение судна") }
                         QGCComboBox {
                             id:                  followPositionCombo
                             sizeToContents:      true
                             Layout.maximumWidth: _comboWidth
-                            model:              [ qsTr("Maintain Current Offsets"), qsTr("Specify Offsets")]
+                            model:              [ qsTr("Сохранять текущие смещения"), qsTr("Задать смещения")]
 
                             onActivated: (index) => {
                                 if (index == 0) {
@@ -251,7 +251,7 @@ SetupPage {
                         }
 
                         QGCLabel {
-                            text:       qsTr("Point Vehicle")
+                            text:       qsTr("Направление судна")
                             visible:    !_roverFirmware
                         }
                         QGCComboBox {
@@ -262,19 +262,19 @@ SetupPage {
                             visible:                !_roverFirmware
                             onActivated: (index) => { _followYawBehavior.rawValue = rgValues[index] }
 
-                            property var rgText:    [ qsTr("Maintain current vehicle orientation"), qsTr("Point at ground station location"), qsTr("Same direction as ground station movement") ]
+                            property var rgText:    [ qsTr("Сохранять текущий курс"), qsTr("Нос на наземную станцию"), qsTr("По направлению движения станции") ]
                             property var rgValues:  [ _followYawBehaviorNone, _followYawBehaviorFace, _followYawBehaviorFlight ]
                         }
 
                         QGCLabel {
                             Layout.columnSpan:  2
                             Layout.alignment:   Qt.AlignHCenter
-                            text:               qsTr("Vehicle Offsets")
+                            text:               qsTr("Смещения судна")
                             visible:            !_followMaintain
                         }
 
                         QGCLabel {
-                            text:    qsTr("Angle")
+                            text:    qsTr("Угол")
                             visible: !_followMaintain
                         }
                         FactTextField {
@@ -285,7 +285,7 @@ SetupPage {
                         }
 
                         QGCLabel {
-                            text:    qsTr("Distance")
+                            text:    qsTr("Расстояние")
                             visible: !_followMaintain
                         }
                         FactTextField {
@@ -296,7 +296,7 @@ SetupPage {
                         }
 
                         QGCLabel {
-                            text:    qsTr("Height")
+                            text:    qsTr("Высота")
                             visible: !_roverFirmware && !_followMaintain
                         }
                         FactTextField {
@@ -338,7 +338,7 @@ SetupPage {
                         anchors.horizontalCenter:   parent.horizontalCenter
                         anchors.topMargin:          parent.height / 4
                         anchors.top:                parent.top
-                        text:                       qsTr("Click in the graphic to change angle")
+                        text:                       qsTr("Щёлкните по схеме, чтобы изменить угол")
                         opacity:                    0.5
                     }
 

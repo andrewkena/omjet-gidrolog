@@ -130,7 +130,7 @@
         },
         {
             "name": "audioVolume",
-            "shortDesc": "Controls the volume level for voice notifications.",
+            "shortDesc": "Громкость голосовых оповещений.",
             "longDesc": "Sets the voice notification volume percentage.",
             "type": "double",
             "default": 100.0,
@@ -139,7 +139,7 @@
             "decimalPlaces": 1,
             "userMin": 0.0,
             "userMax": 100.0,
-            "label": "Voice Notification Volume",
+            "label": "Громкость голосовых оповещений",
             "keywords": "audio,volume,sound,voice,notifications"
         },
         {
@@ -224,7 +224,7 @@
             "shortDesc": "Switches between light and dark color schemes for different lighting conditions.",
             "longDesc": "The color scheme for the user interface.",
             "type": "uint32",
-            "enumStrings": "Indoor,Outdoor",
+            "enumStrings": "Тёмная,Светлая",
             "enumValues": "1,0",
             "default": 0,
             "label": "Color Scheme",
@@ -305,11 +305,11 @@
         },
         {
             "name": "customURL",
-            "shortDesc": "URL pattern with {x}, {y}, {z} substitutions for a custom map tile server.",
+            "shortDesc": "Шаблон адреса с подстановками {x}, {y}, {z} для своего сервера тайлов.",
             "longDesc": "URL for X Y Z map with {x} {y} {z} or {zoom} substitutions. Eg: https://basemaps.linz.govt.nz/v1/tiles/aerial/EPSG:3857/{z}/{x}/{y}.png?api=d01ev80nqcjxddfvc6amyvkk1ka",
             "type": "string",
             "default": "",
-            "label": "Server URL",
+            "label": "Адрес сервера",
             "keywords": "custom map,wms,tile url"
         },
         {

@@ -10,10 +10,10 @@
     },
     "groups": [
         {
-            "heading": "Video Source",
+            "heading": "Источник видео",
             "keywords": ["video source", "camera", "stream"],
             "enableWhen": "!autoStreamConfig",
-            "headingDescription": "autoStreamConfig ? qsTr(\"MAVLink camera stream is automatically configured\") : \"\"",
+            "headingDescription": "autoStreamConfig ? qsTr(\"Поток камеры MAVLink настроен автоматически\") : \"\"",
             "controls": [
                 {
                     "setting": "videoSettings.videoSource",
@@ -22,7 +22,7 @@
             ]
         },
         {
-            "heading": "Connection",
+            "heading": "Подключение",
             "keywords": ["rtsp", "tcp", "udp", "mpegts", "video url", "stream url"],
             "showWhen": "!sourceDisabled && !autoStreamConfig",
             "controls": [
@@ -41,7 +41,7 @@
             ]
         },
         {
-            "heading": "Settings",
+            "heading": "Параметры",
             "keywords": ["aspect ratio", "low latency", "decoder", "hardware decode", "disable when disarmed", "gpu", "zero-copy"],
             "showWhen": "!sourceDisabled",
             "controls": [
@@ -74,7 +74,7 @@
             ]
         },
         {
-            "heading": "Local Video Storage",
+            "heading": "Локальное хранение видео",
             "keywords": ["record", "recording format", "mp4", "mkv", "storage limit", "video file"],
             "showWhen": "!sourceDisabled",
             "controls": [

@@ -19,26 +19,26 @@ SettingsGroupLayout {
     readonly property SettingsFact _instanceFact: root._settings.correctionSourceInstance as SettingsFact
     readonly property int _source: root._settings.correctionSource.rawValue
     readonly property var _streams: {
-        const streams = [{ instanceId: "", label: qsTr("Automatic within source") }];
+        const streams = [{ instanceId: "", label: qsTr("Автоматически внутри источника") }];
         for (const source of root.corrections.sourceInstances) {
             if (source.source === root._source && !streams.some(stream => stream.instanceId === source.instanceId)) {
                 streams.push({
                     instanceId: source.instanceId,
-                    label: source.usable ? source.instanceId : qsTr("No fresh corrections: %1").arg(source.instanceId)
+                    label: source.usable ? source.instanceId : qsTr("Нет свежих поправок: %1").arg(source.instanceId)
                 });
             }
         }
         if (!streams.some(stream => stream.instanceId === root._selectedInstance)) {
             streams.push({
                 instanceId: root._selectedInstance,
-                label: qsTr("Unavailable: %1").arg(root._selectedInstance)
+                label: qsTr("Недоступно: %1").arg(root._selectedInstance)
             });
         }
         return streams;
     }
 
-    heading: qsTr("Correction Routing")
-    headingDescription: qsTr("Selects streams for vehicle links only. NTRIP UDP forwarding uses the NTRIP stream independently.")
+    heading: qsTr("Маршрутизация поправок")
+    headingDescription: qsTr("Выбирает потоки только для каналов бортов. Пересылка NTRIP по UDP использует поток NTRIP независимо.")
     objectName: "correctionRoutingSettings"
     visible: root._settings.userVisible && root._sourceFact && root._sourceFact.userVisible
 
@@ -61,10 +61,10 @@ SettingsGroupLayout {
         objectName: "correctionRoutingDescription"
         text: {
             if (root._source === GPSCorrectionSettings.Automatic)
-                return qsTr("Uses one fresh stream, preferring the local base station, then NTRIP, then UDP.");
+                return qsTr("Использует один свежий поток: сначала локальная база, затем NTRIP, затем UDP.");
             if (root._source === GPSCorrectionSettings.All)
-                return qsTr("Forwards all fresh streams to vehicles. Corrections from different base stations may be mixed.");
-            return qsTr("Uses only the chosen source category, without fallback to other categories. Automatic within source chooses a fresh stream in that category; a pinned stream waits if unavailable.");
+                return qsTr("Передаёт бортам все свежие потоки. Поправки разных баз могут смешиваться.");
+            return qsTr("Использует только выбранную категорию источника, без перехода на другие. «Автоматически внутри источника» выбирает свежий поток этой категории; закреплённый поток ждёт, если недоступен.");
         }
         wrapMode: Text.WordWrap
     }
@@ -74,7 +74,7 @@ SettingsGroupLayout {
 
         comboBoxPreferredWidth: ScreenTools.defaultFontPixelWidth * 30
         currentValue: root._selectedInstance
-        label: qsTr("Stream")
+        label: qsTr("Поток")
         model: root._streams
         objectName: "correctionStream"
         textRole: "label"

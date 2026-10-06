@@ -48,13 +48,13 @@ SetupPage {
             spacing: _margins
 
             QGCLabel {
-                text:     qsTr("Configure ArduPilot servo outputs.")
+                text:     qsTr("Настройка сервовыходов ArduPilot.")
                 wrapMode: Text.WordWrap
                 width:    parent.width
             }
 
             QGCGroupBox {
-                title: qsTr("Servo Outputs")
+                title: qsTr("Сервовыходы")
 
                 GridLayout {
                     columns:       7
@@ -64,16 +64,16 @@ SetupPage {
                     // --- Headers (all explicitly in row 0) -----------------
                     QGCLabel { text: "";         Layout.row: 0; Layout.column: 0; Layout.alignment: Qt.AlignHCenter }
                     QGCLabel {
-                        text: qsTr("Position")
+                        text: qsTr("Положение")
                         Layout.row: 0
                         Layout.column: 1
                         Layout.alignment: Qt.AlignHCenter
                     }
-                    QGCLabel { text: qsTr("Function");      Layout.row: 0; Layout.column: 2; Layout.alignment: Qt.AlignHCenter }
-                    QGCLabel { text: qsTr("Min");           Layout.row: 0; Layout.column: 3; Layout.alignment: Qt.AlignHCenter }
-                    QGCLabel { text: qsTr("Trim");          Layout.row: 0; Layout.column: 4; Layout.alignment: Qt.AlignHCenter }
-                    QGCLabel { text: qsTr("Max");           Layout.row: 0; Layout.column: 5; Layout.alignment: Qt.AlignHCenter }
-                    QGCLabel { text: qsTr("Reversed");      Layout.row: 0; Layout.column: 6; Layout.alignment: Qt.AlignHCenter }
+                    QGCLabel { text: qsTr("Функция");      Layout.row: 0; Layout.column: 2; Layout.alignment: Qt.AlignHCenter }
+                    QGCLabel { text: qsTr("Мин");           Layout.row: 0; Layout.column: 3; Layout.alignment: Qt.AlignHCenter }
+                    QGCLabel { text: qsTr("Триммер");          Layout.row: 0; Layout.column: 4; Layout.alignment: Qt.AlignHCenter }
+                    QGCLabel { text: qsTr("Макс");           Layout.row: 0; Layout.column: 5; Layout.alignment: Qt.AlignHCenter }
+                    QGCLabel { text: qsTr("Реверс");      Layout.row: 0; Layout.column: 6; Layout.alignment: Qt.AlignHCenter }
 
                     // --- Column 0: Servo number ----------------------------
                     Repeater {

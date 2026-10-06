@@ -10,7 +10,7 @@ import QGroundControl.FactControls
 SetupPage {
     id:             firmwarePage
     pageComponent:  firmwarePageComponent
-    pageName:       qsTr("Firmware")
+    pageName:       qsTr("Прошивка")
     showAdvanced:   globals.activeVehicle && globals.activeVehicle.apmFirmware
 
     Component {
@@ -26,15 +26,15 @@ SetupPage {
             // a better way to highlight them, or use less highlights.
 
             // User visible strings
-            readonly property string title:             qsTr("Firmware Setup") // Popup dialog title
+            readonly property string title:             qsTr("Прошивка") // Popup dialog title
             readonly property string highlightPrefix:   "<font color=\"" + qgcPal.warningText + "\">"
             readonly property string highlightSuffix:   "</font>"
-            readonly property string welcomeText:       qsTr("%1 can upgrade the firmware on Pixhawk devices and SiK Radios.").arg(QGroundControl.appName)
-            readonly property string welcomeTextSingle: qsTr("Update the autopilot firmware to the latest version")
-            readonly property string plugInText:        highlightPrefix + qsTr("Plug in your device") + highlightSuffix + qsTr(" via USB, then select it below and press ") + highlightPrefix + qsTr("Flash") + highlightSuffix + "."
-            readonly property string unplugReplugText:  highlightPrefix + qsTr("Now unplug your device and plug it back in to enter bootloader mode.") + highlightSuffix
-            readonly property string flashFailText:     qsTr("If upgrade failed, make sure to connect ") + highlightPrefix + qsTr("directly") + highlightSuffix + qsTr(" to a powered USB port on your computer, not through a USB hub. ") +
-                                                        qsTr("Also make sure you are only powered via USB ") + highlightPrefix + qsTr("not battery") + highlightSuffix + "."
+            readonly property string welcomeText:       qsTr("Программа может обновить прошивку автопилота Pixhawk и радиомодемов SiK.").arg(QGroundControl.appName)
+            readonly property string welcomeTextSingle: qsTr("Обновить прошивку автопилота до последней версии")
+            readonly property string plugInText:        highlightPrefix + qsTr("Подключите устройство") + highlightSuffix + qsTr(" по USB, выберите его ниже и нажмите ") + highlightPrefix + qsTr("Прошить") + highlightSuffix + "."
+            readonly property string unplugReplugText:  highlightPrefix + qsTr("Отключите устройство и подключите снова, чтобы войти в режим загрузчика.") + highlightSuffix
+            readonly property string flashFailText:     qsTr("Если прошить не удалось, подключите ") + highlightPrefix + qsTr("напрямую") + highlightSuffix + qsTr(" к USB-порту компьютера, не через хаб. ") +
+                                                        qsTr("Питание должно идти только по USB, ") + highlightPrefix + qsTr("не от батареи") + highlightSuffix + "."
 
             readonly property int _defaultFimwareTypePX4:   12
             readonly property int _defaultFimwareTypeAPM:   3
@@ -100,7 +100,7 @@ SetupPage {
                 }
                 var knownCount = _recognizedBoardCount()
                 if (knownCount > 1 && _lastKnownCount <= 1) {
-                    statusTextArea.append(highlightPrefix + qsTr("Multiple devices detected. Make sure to select the correct one from the list.") + highlightSuffix)
+                    statusTextArea.append(highlightPrefix + qsTr("Найдено несколько устройств. Выберите нужное в списке.") + highlightSuffix)
                 }
                 _lastKnownCount = knownCount
                 var ports = controller.availablePorts
@@ -155,13 +155,13 @@ SetupPage {
 
                 onBoardGone: {
                     if (_flashStarted) {
-                        statusTextArea.append(highlightPrefix + qsTr("Device disconnected — waiting for it to reappear in bootloader mode...") + highlightSuffix)
+                        statusTextArea.append(highlightPrefix + qsTr("Устройство отключено — ждём его появления в режиме загрузчика...") + highlightSuffix)
                     }
                 }
 
                 onBoardFound: {
                     if (_flashStarted) {
-                        statusTextArea.append(highlightPrefix + qsTr("Found device") + highlightSuffix + ": " + controller.boardType + " (" + controller.boardPort + ")")
+                        statusTextArea.append(highlightPrefix + qsTr("Найдено устройство") + highlightSuffix + ": " + controller.boardType + " (" + controller.boardPort + ")")
                         if (QGroundControl.multiVehicleManager.activeVehicle) {
                             QGroundControl.multiVehicleManager.activeVehicle.vehicleLinkManager.autoDisconnect = true
                         }
@@ -192,15 +192,15 @@ SetupPage {
 
                 QGCPopupDialog {
                     id:         firmwareSelectDialog
-                    title:      qsTr("Firmware Setup")
+                    title:      qsTr("Прошивка")
                     buttons:    Dialog.Ok | Dialog.Cancel
 
                     property bool showFirmwareTypeSelection:    _advanced.checked
 
                     QGCFileDialog {
                         id:                 customFirmwareDialog
-                        title:              qsTr("Select Firmware File")
-                        nameFilters:        [qsTr("Firmware Files (*.px4 *.apj *.bin *.ihx)"), qsTr("All Files (*)")]
+                        title:              qsTr("Выберите файл прошивки")
+                        nameFilters:        [qsTr("Файлы прошивки (*.px4 *.apj *.bin *.ihx)"), qsTr("Все файлы (*)")]
                         folder:             QGroundControl.settingsManager.appSettings.logSavePath
                         onAcceptedForLoad: (file) => {
                             controller.flashFirmwareUrl(file)
@@ -270,19 +270,19 @@ SetupPage {
                                 } else {
                                     if (controller.apmFirmwareNames.length === 0) {
                                         // Not ready yet, or no firmware available
-                                        QGroundControl.showMessageDialog(firmwarePage, firmwareSelectDialog.title, qsTr("Either firmware list is still downloading, or no firmware is available for current selection."))
+                                        QGroundControl.showMessageDialog(firmwarePage, firmwareSelectDialog.title, qsTr("Список прошивок ещё загружается или для выбранного нет прошивки."))
                                         firmwareSelectDialog.preventClose = true
                                         return
                                     }
                                     if (ardupilotFirmwareSelectionCombo.currentIndex == -1) {
-                                        QGroundControl.showMessageDialog(firmwarePage, firmwareSelectDialog.title, qsTr("You must choose a board type."))
+                                        QGroundControl.showMessageDialog(firmwarePage, firmwareSelectDialog.title, qsTr("Выберите тип платы."))
                                         firmwareSelectDialog.preventClose = true
                                         return
                                     }
 
                                     var firmwareUrl = controller.apmFirmwareUrls[ardupilotFirmwareSelectionCombo.currentIndex]
                                     if (firmwareUrl == "") {
-                                        QGroundControl.showMessageDialog(firmwarePage, firmwareSelectDialog.title, qsTr("No firmware was found for the current selection."))
+                                        QGroundControl.showMessageDialog(firmwarePage, firmwareSelectDialog.title, qsTr("Для выбранного прошивка не найдена."))
                                         firmwareSelectDialog.preventClose = true
                                         return
                                     }
@@ -300,7 +300,7 @@ SetupPage {
                     }
 
                     function reject() {
-                        statusTextArea.append(highlightPrefix + qsTr("Upgrade cancelled") + highlightSuffix)
+                        statusTextArea.append(highlightPrefix + qsTr("Обновление отменено") + highlightSuffix)
                         controller.cancel()
                         close()
                     }
@@ -309,19 +309,19 @@ SetupPage {
                         id: firmwareBuildTypeList
 
                         ListElement {
-                            text:           qsTr("Standard Version (stable)")
+                            text:           qsTr("Стабильная версия (stable)")
                             firmwareType:   FirmwareUpgradeController.StableFirmware
                         }
                         ListElement {
-                            text:           qsTr("Beta Testing (beta)")
+                            text:           qsTr("Бета-версия (beta)")
                             firmwareType:   FirmwareUpgradeController.BetaFirmware
                         }
                         ListElement {
-                            text:           qsTr("Developer Build (master)")
+                            text:           qsTr("Сборка разработчиков (master)")
                             firmwareType:   FirmwareUpgradeController.DeveloperFirmware
                         }
                         ListElement {
-                            text:           qsTr("Custom firmware file...")
+                            text:           qsTr("Свой файл прошивки...")
                             firmwareType:   FirmwareUpgradeController.CustomFirmware
                         }
                     }
@@ -330,11 +330,11 @@ SetupPage {
                         id: singleFirmwareModeTypeList
 
                         ListElement {
-                            text:           qsTr("Standard Version")
+                            text:           qsTr("Стабильная версия")
                             firmwareType:   FirmwareUpgradeController.StableFirmware
                         }
                         ListElement {
-                            text:           qsTr("Custom firmware file...")
+                            text:           qsTr("Свой файл прошивки...")
                             firmwareType:   FirmwareUpgradeController.CustomFirmware
                         }
                     }
@@ -348,8 +348,8 @@ SetupPage {
                             wrapMode:           Text.WordWrap
                             text:               (_singleFirmwareMode || !QGroundControl.apmFirmwareSupported) ? _singleFirmwareLabel : _pixhawkLabel
 
-                            readonly property string _pixhawkLabel:          qsTr("Detected Pixhawk board. You can select from the following flight stacks:")
-                            readonly property string _singleFirmwareLabel:   qsTr("Press Ok to upgrade your vehicle.")
+                            readonly property string _pixhawkLabel:          qsTr("Найдена плата Pixhawk. Выберите прошивку:")
+                            readonly property string _singleFirmwareLabel:   qsTr("Нажмите OK, чтобы обновить прошивку.")
                         }
 
                         Column {
@@ -416,20 +416,20 @@ SetupPage {
                         QGCLabel {
                             Layout.fillWidth:   true
                             wrapMode:           Text.WordWrap
-                            text:               qsTr("Downloading list of available firmwares...")
+                            text:               qsTr("Загрузка списка прошивок...")
                             visible:            controller.downloadingFirmwareList
                         }
 
                         QGCLabel {
                             Layout.fillWidth:   true
                             wrapMode:           Text.WordWrap
-                            text:               qsTr("No Firmware Available")
+                            text:               qsTr("Нет доступных прошивок")
                             visible:            !controller.downloadingFirmwareList && (QGroundControl.apmFirmwareSupported && controller.apmFirmwareNames.length === 0)
                         }
 
                         QGCCheckBox {
                             id:         _advanced
-                            text:       qsTr("Advanced settings")
+                            text:       qsTr("Дополнительные настройки")
                             checked:    false
 
                             onClicked: {
@@ -443,8 +443,8 @@ SetupPage {
                             Layout.fillWidth:   true
                             wrapMode:           Text.WordWrap
                             visible:            showFirmwareTypeSelection
-                            text:               _singleFirmwareMode ?  qsTr("Select the standard version or one from the file system (previously downloaded):") :
-                                                                      qsTr("Select which version of the above flight stack you would like to install:")
+                            text:               _singleFirmwareMode ?  qsTr("Выберите стабильную версию или файл на диске (скачанный ранее):") :
+                                                                      qsTr("Выберите версию прошивки для установки:")
                         }
 
                         QGCComboBox {
@@ -459,18 +459,18 @@ SetupPage {
                                 controller.selectedFirmwareBuildType = fwType
                                 if (fwType === FirmwareUpgradeController.BetaFirmware) {
                                     firmwareWarningMessageVisible = true
-                                    firmwareVersionWarningLabel.text = qsTr("WARNING: BETA FIRMWARE. ") +
-                                            qsTr("This firmware version is ONLY intended for beta testers. ") +
-                                            qsTr("Although it has received FLIGHT TESTING, it represents actively changed code. ") +
-                                            qsTr("Do NOT use for normal operation.")
+                                    firmwareVersionWarningLabel.text = qsTr("ВНИМАНИЕ: БЕТА-ПРОШИВКА. ") +
+                                            qsTr("Эта версия предназначена ТОЛЬКО для тестировщиков. ") +
+                                            qsTr("Хотя она прошла испытания, код активно меняется. ") +
+                                            qsTr("НЕ используйте её в обычной работе.")
                                 } else if (fwType === FirmwareUpgradeController.DeveloperFirmware) {
                                     firmwareWarningMessageVisible = true
-                                    firmwareVersionWarningLabel.text = qsTr("WARNING: CONTINUOUS BUILD FIRMWARE. ") +
-                                            qsTr("This firmware has NOT BEEN FLIGHT TESTED. ") +
-                                            qsTr("It is only intended for DEVELOPERS. ") +
-                                            qsTr("Run bench tests without props first. ") +
-                                            qsTr("Do NOT fly this without additional safety precautions. ") +
-                                            qsTr("Follow the forums actively when using it.")
+                                    firmwareVersionWarningLabel.text = qsTr("ВНИМАНИЕ: НЕСТАБИЛЬНАЯ СБОРКА. ") +
+                                            qsTr("Эта прошивка НЕ ИСПЫТАНА. ") +
+                                            qsTr("Она только для РАЗРАБОТЧИКОВ. ") +
+                                            qsTr("Сначала проверьте на стенде без винтов. ") +
+                                            qsTr("НЕ используйте без дополнительных мер безопасности. ") +
+                                            qsTr("Следите за форумами при её использовании.")
                                 } else {
                                     firmwareWarningMessageVisible = false
                                 }
@@ -529,13 +529,13 @@ SetupPage {
                 QGCLabel {
                     id:         portLabel
                     visible:    _flashStarted
-                    text:       qsTr("Flashing - %1").arg(_selectedDisplayName)
+                    text:       qsTr("Прошивка — %1").arg(_selectedDisplayName)
                     elide:      Text.ElideRight
                 }
 
                 QGCButton {
                     id:         flashButton
-                    text:       qsTr("Flash")
+                    text:       qsTr("Прошить")
                     visible:    !_flashStarted
                     enabled:    portCombo.currentIndex >= 0 && controller.availablePorts.length > 0
                     onClicked: {
@@ -557,7 +557,7 @@ SetupPage {
 
                 QGCButton {
                     id:         cancelButton
-                    text:       qsTr("Cancel")
+                    text:       qsTr("Отмена")
                     visible:    _flashStarted
                     enabled:    _cancellable
                     onClicked: {
@@ -565,7 +565,7 @@ SetupPage {
                         _flashStarted = false
                         _cancellable = true
                         _selectedDisplayName = ""
-                        statusTextArea.append(highlightPrefix + qsTr("Cancelled. Select a port and press Flash to try again.") + highlightSuffix)
+                        statusTextArea.append(highlightPrefix + qsTr("Отменено. Выберите порт и нажмите «Прошить» ещё раз.") + highlightSuffix)
                     }
                 }
             }
@@ -578,7 +578,7 @@ SetupPage {
 
             QGCButton {
                 id:         flashBootloaderButton
-                text:       qsTr("Flash ChibiOS Bootloader")
+                text:       qsTr("Прошить загрузчик ChibiOS")
                 visible:    firmwarePage.advanced
                 onClicked:  globals.activeVehicle.flashBootloader()
             }

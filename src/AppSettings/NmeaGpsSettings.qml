@@ -19,7 +19,7 @@ SettingsGroupLayout {
     readonly property bool _serialSource: root._autoConnectSettings.nmeaSource.rawValue === AutoConnectSettings.NmeaSourceSerial
 
     LabelledFactComboBox {
-        label: qsTr("Source")
+        label: qsTr("Источник")
         fact: root._autoConnectSettings.nmeaSource
     }
 
@@ -27,9 +27,9 @@ SettingsGroupLayout {
         id: nmeaPortCombo
         objectName: "nmeaPortCombo"
         visible: root._serialSource
-        label: qsTr("Device")
+        label: qsTr("Устройство")
 
-        model: root._serialPorts.length > 0 ? root._serialPorts : [qsTr("<none available>")]
+        model: root._serialPorts.length > 0 ? root._serialPorts : [qsTr("<нет доступных>")]
         currentIndex: root._serialPorts.length > 0
                       ? root._serialPorts.indexOf(root._autoConnectSettings.autoConnectNmeaPort.valueString) : 0
         enabled: root._serialPorts.length > 0
@@ -45,9 +45,9 @@ SettingsGroupLayout {
         id: nmeaBaudCombo
         objectName: "nmeaBaudCombo"
         visible: root._serialSource
-        label: qsTr("Baudrate")
+        label: qsTr("Скорость порта")
 
-        readonly property string _customLabel:  qsTr("Custom")
+        readonly property string _customLabel:  qsTr("Другая")
         readonly property bool   isCustomBaud:  currentText === _customLabel
 
         onActivated: (index) => {
@@ -77,7 +77,7 @@ SettingsGroupLayout {
         spacing: ScreenTools.defaultFontPixelWidth
 
         QGCLabel {
-            text:               qsTr("Custom Baud Rate")
+            text:               qsTr("Своя скорость порта")
             Layout.fillWidth:   true
         }
         QGCTextField {
@@ -97,7 +97,7 @@ SettingsGroupLayout {
 
     LabelledFactTextField {
         visible: root._autoConnectSettings.nmeaSource.rawValue === AutoConnectSettings.NmeaSourceUdp
-        label: qsTr("NMEA stream UDP port")
+        label: qsTr("UDP-порт потока NMEA")
         fact: root._autoConnectSettings.nmeaUdpPort
     }
 
@@ -105,24 +105,24 @@ SettingsGroupLayout {
         visible: root._health !== null
         Layout.fillWidth: true
         wrapMode: Text.WordWrap
-        text: root._positionManager.nmeaReceiving ? qsTr("Receiving NMEA data")
-              : root._positionManager.nmeaHasData ? qsTr("NMEA stream idle")
-              : root._serialSource ? qsTr("Waiting for NMEA data") : qsTr("Listening for NMEA UDP data")
+        text: root._positionManager.nmeaReceiving ? qsTr("Приём данных NMEA")
+              : root._positionManager.nmeaHasData ? qsTr("Поток NMEA простаивает")
+              : root._serialSource ? qsTr("Ожидание данных NMEA") : qsTr("Ожидание данных NMEA по UDP")
     }
 
     QGCLabel {
         visible: root._health !== null
         Layout.fillWidth: true
         wrapMode: Text.WordWrap
-        text: root._health && root._health.usable ? qsTr("Position usable") : qsTr("Waiting for a usable fix")
+        text: root._health && root._health.usable ? qsTr("Координаты пригодны") : qsTr("Ожидание пригодного решения")
     }
 
     QGCLabel {
         visible: root._health !== null
         Layout.fillWidth: true
         wrapMode: Text.WordWrap
-        text: qsTr("Satellites: %1 in use, %2 in view")
-            .arg(root._health && root._health.satellitesInUseCount >= 0 ? root._health.satellitesInUseCount : qsTr("Unknown"))
-            .arg(root._health && root._health.satellitesInViewCount >= 0 ? root._health.satellitesInViewCount : qsTr("Unknown"))
+        text: qsTr("Спутники: используется %1, видно %2")
+            .arg(root._health && root._health.satellitesInUseCount >= 0 ? root._health.satellitesInUseCount : qsTr("неизвестно"))
+            .arg(root._health && root._health.satellitesInViewCount >= 0 ? root._health.satellitesInViewCount : qsTr("неизвестно"))
     }
 }

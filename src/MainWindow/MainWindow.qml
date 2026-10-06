@@ -29,6 +29,8 @@ ApplicationWindow {
         property int sirenThreshold:    1700    // PWM (us) at/above which the siren is on
         property int beaconChannel:     0
         property int beaconThreshold:   1700
+        property int estopChannel:      -1      // RC channel of the motor emergency stop switch, -1 = auto (RCx_OPTION = 31), 0 = none
+        property int estopThreshold:    1700
     }
     visible:    true
     title:      "ОМДЖЕТ ГидроЛог " + Qt.application.version.replace(/^v/, "") + "_" + Qt.formatDate(new Date(), "dd.MM.yyyy")  // GidroLog: window title
