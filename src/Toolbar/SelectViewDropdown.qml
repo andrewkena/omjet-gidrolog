@@ -136,7 +136,8 @@ ToolIndicatorPage {
                     id: versionLabel
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignHCenter
-                    text: qsTr("Версия %1").arg(QGroundControl.appName)
+                    // GidroLog: version as in the window title, then author, then build date
+                    text: "ОМДЖЕТ ГидроЛог " + Qt.application.version.replace(/^v/, "")
                     font.pointSize: ScreenTools.smallFontPointSize
                     wrapMode: QGCLabel.WordWrap
                 }
@@ -144,7 +145,7 @@ ToolIndicatorPage {
                 QGCLabel {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignHCenter
-                    text: QGroundControl.qgcVersion
+                    text: "Andrew Kena"
                     font.pointSize: ScreenTools.smallFontPointSize
                     wrapMode: QGCLabel.WrapAnywhere
                 }
@@ -152,10 +153,13 @@ ToolIndicatorPage {
                 QGCLabel {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignHCenter
-                    text: QGroundControl.qgcAppDate
+                    // "2026-10-01T02:34:14+0000" -> "01.10.2026"
+                    text: {
+                        const d = String(QGroundControl.qgcAppDate).substring(0, 10).split("-")
+                        return d.length === 3 ? d[2] + "." + d[1] + "." + d[0] : QGroundControl.qgcAppDate
+                    }
                     font.pointSize: ScreenTools.smallFontPointSize
                     wrapMode: QGCLabel.WrapAnywhere
-                    visible: QGroundControl.qgcDailyBuild
 
                     QGCMouseArea {
                         anchors.topMargin: -(parent.y - versionLabel.y)

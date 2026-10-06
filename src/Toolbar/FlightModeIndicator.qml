@@ -148,7 +148,8 @@ Item {
 
             Repeater {
                 id:     modeRepeater
-                model:  activeVehicle ? activeVehicle.flightModes : []
+                // GidroLog: only the boat modes are offered
+                model:  activeVehicle ? activeVehicle.flightModes.filter(m => [ "Manual", "Acro", "Steering", "Hold", "Loiter", "Auto", "RTL", "Smart RTL", "SmartRTL", "Guided" ].indexOf(m) !== -1) : []
 
                 RowLayout {
                     spacing: ScreenTools.defaultFontPixelWidth

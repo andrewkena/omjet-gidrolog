@@ -35,7 +35,7 @@ Item {
 
             QGCLabel {
                 text:           qsTr("Глубина, м")
-                font.pointSize: ScreenTools.smallFontPointSize
+                font.pointSize: ScreenTools.smallFontPointSize * 1.5   // GidroLog: captions 1.5x
             }
 
             RowLayout {
@@ -99,7 +99,7 @@ Item {
 
             QGCLabel {
                 text:           intervalSlider.value > 60 ? qsTr("Подписи глубины: выкл") : qsTr("Подписи глубины: каждые %1 с").arg(intervalSlider.value)
-                font.pointSize: ScreenTools.smallFontPointSize
+                font.pointSize: ScreenTools.smallFontPointSize * 1.5   // GidroLog: captions 1.5x
             }
 
             QGCSlider {

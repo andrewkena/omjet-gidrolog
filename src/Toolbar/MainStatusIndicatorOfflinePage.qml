@@ -27,10 +27,10 @@ ToolIndicatorPage {
 
     contentComponent: Component {
         SettingsGroupLayout {
-            heading: qsTr("Select Link to Connect")
+            heading: qsTr("Выберите канал связи")
 
             QGCLabel {
-                text:       qsTr("No Links Configured")
+                text:       qsTr("Каналы связи не настроены")
                 visible:    noLinks
             }
 
@@ -39,7 +39,7 @@ ToolIndicatorPage {
 
                 delegate: QGCButton {
                     Layout.fillWidth:   true
-                    text:               object.name + (object.link ? " (" + qsTr("Connected") + ")" : "")
+                    text:               object.name + (object.link ? " (" + qsTr("подключено") + ")" : "")
                     visible:            !object.dynamic
                     enabled:            !object.link
                     autoExclusive:      true
@@ -59,8 +59,8 @@ ToolIndicatorPage {
 
             SettingsGroupLayout {
                 LabelledButton {
-                    label:      qsTr("Communication Links")
-                    buttonText: qsTr("Configure")
+                    label:      qsTr("Каналы связи")
+                    buttonText: qsTr("Настроить")
 
                     onClicked: {
                         // Untranslated page key from SettingsPages.json — do not qsTr()
@@ -71,7 +71,7 @@ ToolIndicatorPage {
             }
 
             SettingsGroupLayout {
-                heading:        qsTr("AutoConnect")
+                heading:        qsTr("Автоподключение")
                 visible:        autoConnectSettings.userVisible
 
                 Repeater {
@@ -85,7 +85,7 @@ ToolIndicatorPage {
                         autoConnectSettings.autoConnectRTKGPS,
                     ]
 
-                    property var names: [ qsTr("Pixhawk"), qsTr("SiK Radio"), qsTr("LibrePilot"), qsTr("UDP"), qsTr("RTK") ]
+                    property var names: [ qsTr("Pixhawk"), qsTr("Радиомодем SiK"), qsTr("LibrePilot"), qsTr("UDP"), qsTr("RTK") ]
 
                     FactCheckBoxSlider {
                         Layout.fillWidth:   true

@@ -239,7 +239,7 @@ FlightMap {
             depthMarkersModel.append({
                 lat:        coord.latitude,
                 lon:        coord.longitude,
-                depthText:  sounder.depth.valueString + " " + (sounder.depth.units === "m" ? "м" : (sounder.depth.units === "ft" ? "фт" : sounder.depth.units)),
+                depthText:  sounder.depth.valueString + " " + sounder.depth.units,   // GidroLog: units already Russian (Fact.units)
                 healthy:    sounder.depthHealthy.rawValue !== 0
             })
         }

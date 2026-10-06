@@ -23,13 +23,13 @@ public:
     /// Converts from user specified distance unit to meters
     Q_INVOKABLE QVariant appSettingsHorizontalDistanceUnitsToMeters(const QVariant& distance) const { return FactMetaData::appSettingsHorizontalDistanceUnitsToMeters(distance); }
 
-    QString appSettingsHorizontalDistanceUnitsString(void) const { return FactMetaData::appSettingsHorizontalDistanceUnitsString(); }
+    QString appSettingsHorizontalDistanceUnitsString(void) const { return FactMetaData::gidroLogRuUnits(FactMetaData::appSettingsHorizontalDistanceUnitsString()); }
 
     /// Converts from meters to the user specified horizontal distance unit with units appended, e.g. "16.4 ft".
     /// Keeps the converted value and units label paired so they can never disagree.
     Q_INVOKABLE QString metersToAppSettingsHorizontalDistanceUnitsString(const QVariant& meters, int decimalPlaces = 1) const
     {
-        return QStringLiteral("%1 %2").arg(FactMetaData::metersToAppSettingsHorizontalDistanceUnits(meters).toDouble(), 0, 'f', decimalPlaces).arg(FactMetaData::appSettingsHorizontalDistanceUnitsString());
+        return QStringLiteral("%1 %2").arg(FactMetaData::metersToAppSettingsHorizontalDistanceUnits(meters).toDouble(), 0, 'f', decimalPlaces).arg(FactMetaData::gidroLogRuUnits(FactMetaData::appSettingsHorizontalDistanceUnitsString()));
     }
 
     /// Converts from meters to the user specified distance unit
@@ -38,13 +38,13 @@ public:
     /// Converts from user specified distance unit to meters
     Q_INVOKABLE QVariant appSettingsVerticalDistanceUnitsToMeters(const QVariant& distance) const { return FactMetaData::appSettingsVerticalDistanceUnitsToMeters(distance); }
 
-    QString appSettingsVerticalDistanceUnitsString(void) const { return FactMetaData::appSettingsVerticalDistanceUnitsString(); }
+    QString appSettingsVerticalDistanceUnitsString(void) const { return FactMetaData::gidroLogRuUnits(FactMetaData::appSettingsVerticalDistanceUnitsString()); }
 
     /// Converts from meters to the user specified vertical distance unit with units appended, e.g. "16.4 ft".
     /// Keeps the converted value and units label paired so they can never disagree.
     Q_INVOKABLE QString metersToAppSettingsVerticalDistanceUnitsString(const QVariant& meters, int decimalPlaces = 1) const
     {
-        return QStringLiteral("%1 %2").arg(FactMetaData::metersToAppSettingsVerticalDistanceUnits(meters).toDouble(), 0, 'f', decimalPlaces).arg(FactMetaData::appSettingsVerticalDistanceUnitsString());
+        return QStringLiteral("%1 %2").arg(FactMetaData::metersToAppSettingsVerticalDistanceUnits(meters).toDouble(), 0, 'f', decimalPlaces).arg(FactMetaData::gidroLogRuUnits(FactMetaData::appSettingsVerticalDistanceUnitsString()));
     }
 
     /// Converts from grams to the user specified weight unit
@@ -53,7 +53,7 @@ public:
     /// Converts from user specified weight unit to grams
     Q_INVOKABLE QVariant appSettingsWeightUnitsToGrams(const QVariant& distance) const { return FactMetaData::appSettingsWeightUnitsToGrams(distance); }
 
-    QString appSettingsWeightUnitsString(void) const { return FactMetaData::appSettingsWeightUnitsString(); }
+    QString appSettingsWeightUnitsString(void) const { return FactMetaData::gidroLogRuUnits(FactMetaData::appSettingsWeightUnitsString()); }
 
     /// Converts from square meters to the user specified area unit
     Q_INVOKABLE QVariant squareMetersToAppSettingsAreaUnits(const QVariant& meters) const { return FactMetaData::squareMetersToAppSettingsAreaUnits(meters); }
@@ -61,7 +61,7 @@ public:
     /// Converts from user specified area unit to square meters
     Q_INVOKABLE QVariant appSettingsAreaUnitsToSquareMeters(const QVariant& area) const { return FactMetaData::appSettingsAreaUnitsToSquareMeters(area); }
 
-    QString appSettingsAreaUnitsString(void) const { return FactMetaData::appSettingsAreaUnitsString(); }
+    QString appSettingsAreaUnitsString(void) const { return FactMetaData::gidroLogRuUnits(FactMetaData::appSettingsAreaUnitsString()); }
 
     /// Converts from meters/second to the user specified speed unit
     Q_INVOKABLE QVariant metersSecondToAppSettingsSpeedUnits(const QVariant& metersSecond) const { return FactMetaData::metersSecondToAppSettingsSpeedUnits(metersSecond); }
@@ -70,7 +70,7 @@ public:
     Q_INVOKABLE QVariant appSettingsSpeedUnitsToMetersSecond(const QVariant& speed) const { return FactMetaData::appSettingsSpeedUnitsToMetersSecond(speed); }
 
     /// Returns the string for speed units which has configued by user
-    QString appSettingsSpeedUnitsString() { return FactMetaData::appSettingsSpeedUnitsString(); }
+    QString appSettingsSpeedUnitsString() { return FactMetaData::gidroLogRuUnits(FactMetaData::appSettingsSpeedUnitsString()); }
 
     Q_INVOKABLE double degreesToRadians(double degrees) { return qDegreesToRadians(degrees); }
     Q_INVOKABLE double radiansToDegrees(double radians) { return qRadiansToDegrees(radians); }

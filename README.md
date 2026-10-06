@@ -3,7 +3,7 @@
 Наземная станция управления автономными гидрографическими катерами на ArduPilot (ArduRover, режим лодки) с эхолотом Dayu M36.
 Форк [QGroundControl](https://github.com/mavlink/qgroundcontrol), отдельный от OMJET AERO.
 
-- **Версия:** 0.1.0
+- **Версия:** 0.1.2
 - **Автор:** Andrew Kena
 - **Организация:** OMJET
 - **Основа:** QGroundControl `master` (5.2.0-dev, коммит `128517c`, 29.09.2026)
@@ -36,9 +36,9 @@
 | Техническое имя CMake | `OMJETGidroLog` | `QGC_PROJECT_NAME` |
 | Организация | `OMJET` (`omjet.aero`) | `QGC_ORG_NAME`, `QGC_ORG_DOMAIN` |
 | Android-пакет | `com.omjet.gidrolog` | `QGC_PACKAGE_NAME` |
-| Версия | `0.1.0` | `QGC_GIDROLOG_VERSION` (вместо git-тегов QGC, см. `cmake/modules/Git.cmake`) |
+| Версия | `0.1.2` | `QGC_GIDROLOG_VERSION` (вместо git-тегов QGC, см. `cmake/modules/Git.cmake`) |
 | Автор / копирайт | `Andrew Kena`; `Copyright (c) <год> Andrew Kena, OMJET` | `QGC_APP_AUTHOR`, `QGC_APP_COPYRIGHT` |
-| Заголовок окна | `ОМДЖЕТ ГидроЛог 0.1.0_ДД.ММ.ГГГГ` | `src/MainWindow/MainWindow.qml` (дата берётся при запуске) |
+| Заголовок окна | `ОМДЖЕТ ГидроЛог 0.1.2_ДД.ММ.ГГГГ` | `src/MainWindow/MainWindow.qml` (дата берётся при запуске) |
 
 **Иконка приложения** — синяя плашка «ОМДЖЕТ ГидроЛог» с катером. Где используется:
 
@@ -47,6 +47,10 @@
 - Android: обычные и адаптивные `mipmap-*`, фон `#0D5AB0`;
 - macOS и Linux;
 - исходник 1024 px: `resources/GidroLogIcon_1024.png`.
+
+**Меню Q, внизу:** «ОМДЖЕТ ГидроЛог 0.1.2» (версия как в заголовке окна), ниже «Andrew Kena», ниже дата сборки ДД.ММ.ГГГГ (`src/Toolbar/SelectViewDropdown.qml`).
+
+**Единицы измерения — по-русски везде:** `Fact.units` в QML отдаёт `displayUnits()` = `FactMetaData::gidroLogRuUnits(cookedUnits())` (м, м/с, км/ч, уз, с, мс, мкс, °, В, А, мА·ч, °C, дБм, Гц, Па, кг…). Строки единиц из `QGroundControl.unitsConversion` тоже переводятся. C++-код по-прежнему работает с английскими `cookedUnits()`.
 
 ### Верхняя панель (тулбар)
 
@@ -207,6 +211,7 @@
 | Статус в тулбаре | Готов, Не готов, Запущен, На ходу, Нет связи, Не подключено — нажмите, чтобы подключиться; окно статуса (Запустить / Остановить / Принудительный запуск, Сообщения борта, Состояние датчиков…) | `src/Toolbar/MainStatusIndicator.qml` |
 | Батарея | Батарея 1, Состояние (Норма / Низкий заряд / Критический / Аварийный…), Осталось времени («00 ч 00 мин 09 с»), Остаток заряда, Напряжение В, Израсходовано мА·ч, Температура °C; блок «Отображение батареи» | `src/Toolbar/BatteryIndicator.qml` |
 | Телеметрия | Состояние телеметрии, Сигнал на пульте / на борту, Ошибки приёма, Исправлено ошибок, Буфер передачи, Шум на пульте / на борту, дБм | `src/Toolbar/TelemetryRSSIIndicator.qml` |
+| Окно подключения | Выберите канал связи, Каналы связи не настроены, Каналы связи → Настроить, Автоподключение, Радиомодем SiK | `src/Toolbar/MainStatusIndicatorOfflinePage.qml` |
 | GPS / RTK | GPS борта, Статус RTK GPS, Настройки RTK GPS — все поля, режимы и пояснения | `src/Toolbar/GPSIndicatorPage.qml`, `GPSReceiverSettings.qml` |
 | Выпадающие списки фактов | Только предупреждение, Возврат (RTL), Удержание (Hold), Умный возврат (SmartRTL), Аварийное завершение, Проценты / Напряжение… (словарь `_gidroLogEnumRu`) | `src/FactSystem/FactControls/FactComboBox.qml` |
 | Сообщения борта | ~130 правил ArduPilot | `MainWindow.qml` → `gidroLogTranslateMessage()` |
@@ -214,7 +219,7 @@
 | Старт задания | «Начать задание», «Начать выполнение текущего задания» | `src/FlyView/GuidedActionsController.qml` |
 | Раздел «Задание» | см. выше | `src/PlanView/*.qml`, `src/Toolbar/PlanViewToolBar.qml`, `src/FlightMap/MapItems/QGCMapPolygonVisuals.qml`, `QGCMapPolylineVisuals.qml` |
 
-Что ещё на английском: названия команд в списке выбора команды (▼), единицы некоторых фактов (`secs`), «All» в списке RTK-приёмников, голосовые оповещения и список сообщений в окне статуса.
+Что ещё на английском: названия команд в списке выбора команды (▼), «All» в списке RTK-приёмников, голосовые оповещения и список сообщений в окне статуса.
 
 ---
 
@@ -350,6 +355,8 @@ git switch gidrolog; git merge master
 | `src/QmlControls/QGCToolBarButton.qml`, `HorizontalFactValueGrid.qml`, `CameraTriggerIcon.qml` | PNG-логотип, разделители нижней панели, красные точки затвора |
 | `src/QmlControls/SelectableControl.qml` | свойство `allowSelection` (выключить выбор варианта) |
 | `src/FactSystem/FactControls/FactComboBox.qml` | перевод значений выпадающих списков |
+| `src/FactSystem/Fact.h`, `FactMetaData.h/.cc`, `src/QmlControls/QmlUnitsConversion.h` | единицы измерения по-русски (`gidroLogRuUnits`, `displayUnits`) |
+| `src/Toolbar/MainStatusIndicatorOfflinePage.qml` | перевод окна подключения |
 | `src/FirmwarePlugin/FirmwarePlugin.cc`, `APM/ArduRoverFirmwarePlugin.h` | убраны индикаторы; значок катера |
 | `src/FlyView/FlyViewWidgetLayer.qml` | скрыта левая панель; размещение панелей и линейки |
 | `src/FlyView/FlyViewTopRightColumnLayout.qml` | убрана панель камеры |

@@ -57,19 +57,19 @@ ColumnLayout {
         columns:            2
         enabled:            missionItem.cameraCalc.distanceMode === QGroundControl.AltitudeFrameCalcAboveTerrain
 
-        QGCLabel { text: qsTr("Tolerance") }
+        QGCLabel { text: qsTr("Допуск") }
         FactTextField {
             fact:               missionItem.terrainAdjustTolerance
             Layout.fillWidth:   true
         }
 
-        QGCLabel { text: qsTr("Max Climb Rate") }
+        QGCLabel { text: qsTr("Макс. скорость подъёма") }
         FactTextField {
             fact:               missionItem.terrainAdjustMaxClimbRate
             Layout.fillWidth:   true
         }
 
-        QGCLabel { text: qsTr("Max Descent Rate") }
+        QGCLabel { text: qsTr("Макс. скорость спуска") }
         FactTextField {
             fact:               missionItem.terrainAdjustMaxDescentRate
             Layout.fillWidth:   true

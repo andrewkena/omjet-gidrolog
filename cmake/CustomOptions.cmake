@@ -27,7 +27,7 @@ set(QGC_PROJECT_NAME
 )
 # GidroLog: own version numbering (bump here for each release)
 set(QGC_GIDROLOG_VERSION
-    "0.1.0"
+    "0.1.2"
     CACHE STRING "OMJET GidroLog version (major.minor.patch)" FORCE
 )
 set(QGC_APP_AUTHOR

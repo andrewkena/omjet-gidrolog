@@ -49,7 +49,7 @@ class Fact : public QObject
     Q_PROPERTY(bool         qgcRebootRequired       READ qgcRebootRequired                                      CONSTANT)
     Q_PROPERTY(QString      shortDescription        READ shortDescription                                       CONSTANT)
     Q_PROPERTY(QString      label                   READ label                                                  CONSTANT)
-    Q_PROPERTY(QString      units                   READ cookedUnits                                            CONSTANT)
+    Q_PROPERTY(QString      units                   READ displayUnits                                           CONSTANT)   // GidroLog: Russian units in QML
     Q_PROPERTY(QVariant     value                   READ cookedValue                WRITE setCookedValue        NOTIFY valueChanged)
     Q_PROPERTY(QVariant     rawValue                READ rawValue                   WRITE setRawValue           NOTIFY rawValueChanged)
     Q_PROPERTY(bool         valueEqualsDefault      READ valueEqualsDefault                                     NOTIFY valueChanged)
@@ -129,6 +129,7 @@ public:
     QString shortDescription() const;
     FactMetaData::ValueType_t type() const { return _type; }
     QString cookedUnits() const;
+    QString displayUnits() const { return FactMetaData::gidroLogRuUnits(cookedUnits()); }   ///< GidroLog: cookedUnits() in Russian, for QML
     QString rawUnits() const;
     QString invalidValueString(int decimalPlaces) const;
     QString invalidValueString() const { return invalidValueString(decimalPlaces()); }

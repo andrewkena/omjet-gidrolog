@@ -24,14 +24,14 @@ Rectangle {
     property var    transectValuesComponent:        undefined
     property var    presetsTransectValuesComponent: undefined
 
-    readonly property string _internalError: qsTr("Internal Error")
+    readonly property string _internalError: qsTr("Внутренняя ошибка")
 
     property var    _missionItem:               missionItem
     property real   _margin:                    ScreenTools.defaultFontPixelWidth / 2
     property real   _fieldWidth:                ScreenTools.defaultFontPixelWidth * 10.5
     property var    _vehicle:                   QGroundControl.multiVehicleManager.activeVehicle ? QGroundControl.multiVehicleManager.activeVehicle : QGroundControl.multiVehicleManager.offlineEditingVehicle
     property real   _cameraMinTriggerInterval:  _missionItem.cameraCalc.minTriggerInterval.rawValue
-    property string _doneAdjusting:             qsTr("Done")
+    property string _doneAdjusting:             qsTr("Готово")
     property bool   _presetsAvailable:          _missionItem.presetNames.length !== 0
 
     function polygonCaptureStarted() {
@@ -87,7 +87,7 @@ Rectangle {
 
                 QGCLabel {
                     Layout.fillWidth:   true
-                    text:               qsTr("WARNING: Photo interval is below minimum interval (%1 secs) supported by camera.").arg(_cameraMinTriggerInterval.toFixed(1))
+                    text:               qsTr("ВНИМАНИЕ: интервал съёмки меньше минимального для камеры (%1 с).").arg(_cameraMinTriggerInterval.toFixed(1))
                     wrapMode:           Text.WordWrap
                     color:              qgcPal.warningText
                     visible:            _missionItem.cameraShots > 0 && _cameraMinTriggerInterval !== 0 && _cameraMinTriggerInterval > _missionItem.timeBetweenShots
@@ -97,9 +97,9 @@ Rectangle {
                     Layout.fillWidth:               true
                     cameraCalc:                     _missionItem.cameraCalc
                     vehicleFlightIsFrontal:         true
-                    distanceToSurfaceLabel:         qsTr("Altitude")
-                    frontalDistanceLabel:           qsTr("Trigger Dist")
-                    sideDistanceLabel:              qsTr("Spacing")
+                    distanceToSurfaceLabel:         qsTr("Высота")
+                    frontalDistanceLabel:           qsTr("Шаг съёмки")
+                    sideDistanceLabel:              qsTr("Расстояние между галсами")
                 }
 
                 SectionHeader {
@@ -118,7 +118,7 @@ Rectangle {
 
                 QGCButton {
                     Layout.alignment:   Qt.AlignHCenter
-                    text:               qsTr("Rotate Entry Point")
+                    text:               qsTr("Сменить точку входа")
                     onClicked:          _missionItem.rotateEntryPoint()
                     visible:            transectValuesHeader.checked
                 }
@@ -126,7 +126,7 @@ Rectangle {
                 SectionHeader {
                     id:                 statsHeader
                     Layout.fillWidth:   true
-                    text:               qsTr("Statistics")
+                    text:               qsTr("Статистика")
                 }
 
                 TransectStyleComplexItemStats {
@@ -158,7 +158,7 @@ Rectangle {
 
                 QGCLabel {
                     Layout.fillWidth:   true
-                    text:               qsTr("Presets")
+                    text:               qsTr("Шаблоны")
                     wrapMode:           Text.WordWrap
                 }
 
@@ -173,14 +173,14 @@ Rectangle {
 
                     QGCButton {
                         Layout.fillWidth:   true
-                        text:               qsTr("Apply Preset")
+                        text:               qsTr("Применить шаблон")
                         enabled:            _missionItem.presetNames.length != 0
                         onClicked:          _missionItem.loadPreset(presetCombo.textAt(presetCombo.currentIndex))
                     }
 
                     QGCButton {
                         Layout.fillWidth:   true
-                        text:               qsTr("Delete Preset")
+                        text:               qsTr("Удалить шаблон")
                         enabled:            _missionItem.presetNames.length != 0
                         onClicked:          deletePresetDialogFactory.open({ presetName: presetCombo.textAt(presetCombo.currentIndex) })
 
@@ -194,8 +194,8 @@ Rectangle {
                             id: deletePresetDialog
 
                             QGCSimpleMessageDialog {
-                                title:      qsTr("Delete Preset")
-                                text:       qsTr("Are you sure you want to delete '%1' preset?").arg(presetName)
+                                title:      qsTr("Удалить шаблон")
+                                text:       qsTr("Удалить шаблон «%1»?").arg(presetName)
                                 buttons:    Dialog.Yes | Dialog.No
 
                                 property string presetName
@@ -211,7 +211,7 @@ Rectangle {
                 QGCButton {
                     Layout.alignment:   Qt.AlignCenter
                     Layout.fillWidth:   true
-                    text:               qsTr("Save Settings As New Preset")
+                    text:               qsTr("Сохранить настройки как шаблон")
                     onClicked:          savePresetDialogFactory.open()
                 }
 
@@ -233,7 +233,7 @@ Rectangle {
                 SectionHeader {
                     id:                 presetsStatsHeader
                     Layout.fillWidth:   true
-                    text:               qsTr("Statistics")
+                    text:               qsTr("Статистика")
                 }
 
                 TransectStyleComplexItemStats {
@@ -254,7 +254,7 @@ Rectangle {
 
             QGCPopupDialog {
                 id:         popupDialog
-                title:      qsTr("Save Preset")
+                title:      qsTr("Сохранить шаблон")
                 buttons:    Dialog.Save | Dialog.Cancel
 
                 onAccepted: {
@@ -271,28 +271,28 @@ Rectangle {
 
                     QGCLabel {
                         Layout.fillWidth:   true
-                        text:               qsTr("Save the current settings as a named preset.")
+                        text:               qsTr("Сохранить текущие настройки как именованный шаблон.")
                         wrapMode:           Text.WordWrap
                     }
 
                     QGCLabel {
-                        text: qsTr("Preset Name")
+                        text: qsTr("Имя шаблона")
                     }
 
                     QGCTextField {
                         id:                 presetNameField
                         Layout.fillWidth:   true
-                        placeholderText:    qsTr("Enter preset name")
+                        placeholderText:    qsTr("Введите имя шаблона")
 
                         Component.onCompleted:  validateText(presetNameField.text)
                         onTextChanged:          validateText(text)
 
                         function validateText(text) {
                             if (text.trim() === "") {
-                                nameError.text = qsTr("Preset name cannot be blank.")
+                                nameError.text = qsTr("Имя шаблона не может быть пустым.")
                                 popupDialog.acceptButtonEnabled = false
                             } else if (text.includes("/")) {
-                                nameError.text = qsTr("Preset name cannot include the \"/\" character.")
+                                nameError.text = qsTr("Имя шаблона не может содержать символ \"/\".")
                                 popupDialog.acceptButtonEnabled = false
                             } else {
                                 nameError.text = ""

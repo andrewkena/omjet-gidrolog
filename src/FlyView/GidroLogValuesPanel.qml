@@ -151,7 +151,7 @@ Item {
                     Layout.fillWidth:       true
                     horizontalAlignment:    Text.AlignHCenter
                     text:                   modelData.label
-                    font.pointSize:         ScreenTools.smallFontPointSize
+                    font.pointSize:         ScreenTools.smallFontPointSize * 1.5   // GidroLog: captions 1.5x
                 }
 
                 // Value + units, centered as one group on the backing
@@ -366,7 +366,7 @@ Item {
         }
         const units = fact.units
         // Distance: switch to km past 1000 m when user units are metres
-        if (kind === "distance" && units === "m" && fact.value >= 1000) {
+        if (kind === "distance" && (units === "m" || units === "м") && fact.value >= 1000) {
             return { value: (fact.value / 1000).toFixed(2), units: cyrillicUnits("km") }
         }
         return { value: fact.valueString, units: cyrillicUnits(units) }

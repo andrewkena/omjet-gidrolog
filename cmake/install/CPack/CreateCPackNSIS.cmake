@@ -34,7 +34,7 @@ if(CMAKE_CROSSCOMPILING)
 else()
     set(_qgc_nsis_arch "${_qgc_nsis_target_arch}")
 endif()
-set(CPACK_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}-installer-${_qgc_nsis_arch}")
+set(CPACK_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}-${PROJECT_VERSION}-installer-${_qgc_nsis_arch}") # GidroLog: version in file name
 set(CPACK_PACKAGE_INSTALL_REGISTRY_KEY "${CMAKE_PROJECT_NAME}")
 # Custom shortcut commands below create both launch modes; suppress CPack's
 # default executable shortcut so the normal shortcut is not duplicated.
@@ -232,10 +232,10 @@ string(CONFIGURE "${_qgc_nsis_delete_icons}" CPACK_NSIS_DELETE_ICONS_EXTRA @ONLY
 set(CPACK_NSIS_COMPRESSOR "/SOLID /FINAL lzma")
 set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL OFF)
 set(CPACK_NSIS_MODIFY_PATH OFF)
-set(CPACK_NSIS_DISPLAY_NAME "${CMAKE_PROJECT_NAME}")
+set(CPACK_NSIS_DISPLAY_NAME "${QGC_APP_NAME} ${PROJECT_VERSION}") # GidroLog
 set(CPACK_NSIS_PACKAGE_NAME "${CMAKE_PROJECT_NAME} ${CMAKE_SYSTEM_PROCESSOR} ${CMAKE_PROJECT_VERSION}")
 set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\${CMAKE_PROJECT_NAME}.exe")
-set(CPACK_NSIS_HELP_LINK "https://qgroundcontrol.com/#resources")
+set(CPACK_NSIS_HELP_LINK "https://github.com/andrewkena/omjet-gidrolog") # GidroLog
 set(CPACK_NSIS_URL_INFO_ABOUT "${CPACK_PACKAGE_HOMEPAGE_URL}")
 set(CPACK_NSIS_CONTACT "${CPACK_PACKAGE_CONTACT}")
 set(CPACK_NSIS_UNINSTALL_NAME "${CMAKE_PROJECT_NAME}-Uninstall")
@@ -243,7 +243,9 @@ set(CPACK_NSIS_UNINSTALL_NAME "${CMAKE_PROJECT_NAME}-Uninstall")
 # ----------------------------------------------------------------------------
 # Installer UI Customization
 # ----------------------------------------------------------------------------
-set(CPACK_NSIS_MUI_HEADERIMAGE "${QGC_WINDOWS_INSTALL_HEADER_PATH}")
+# GidroLog: NSIS File needs Windows separators for the header bitmap ("D:/.../x.bmp -> no files found")
+file(TO_NATIVE_PATH "${QGC_WINDOWS_INSTALL_HEADER_PATH}" _qgc_nsis_header_native)
+set(CPACK_NSIS_MUI_HEADERIMAGE "${_qgc_nsis_header_native}")
 set(CPACK_NSIS_MANIFEST_DPI_AWARE ON)
 set(CPACK_NSIS_IGNORE_LICENSE_PAGE ON)
 

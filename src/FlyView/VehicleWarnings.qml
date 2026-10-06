@@ -24,7 +24,7 @@ Rectangle {
             visible:                    _noGPSLockVisible
             color:                      "black"
             font.pointSize:             ScreenTools.largeFontPointSize
-            text:                       qsTr("No GPS Lock for Vehicle")
+            text:                       qsTr("Нет устойчивого сигнала позиционирования")
         }
 
         QGCLabel {
@@ -43,7 +43,7 @@ Rectangle {
             wrapMode:                   Text.WordWrap
             color:                      "black"
             font.pointSize:             ScreenTools.largeFontPointSize
-            text:                       qsTr("The vehicle has failed a pre-arm check. In order to arm the vehicle, resolve the failure.")
+            text:                       qsTr("Борт не прошёл предстартовую проверку. Чтобы запустить, устраните причину.")
         }
     }
 }

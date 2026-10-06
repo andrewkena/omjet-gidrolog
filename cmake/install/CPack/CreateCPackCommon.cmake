@@ -23,7 +23,7 @@ set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "${PROJECT_DESCRIPTION}")
 set(CPACK_PACKAGE_HOMEPAGE_URL "${PROJECT_HOMEPAGE_URL}")
 # Generic maintainer contact; DEB/RPM generators inherit this when their own
 # maintainer field is unset (CPackDeb warns without it).
-set(CPACK_PACKAGE_CONTACT "Dronecode <dev@dronecode.org>")
+set(CPACK_PACKAGE_CONTACT "Andrew Kena, OMJET") # GidroLog
 
 # ----------------------------------------------------------------------------
 # Package Files and Directories

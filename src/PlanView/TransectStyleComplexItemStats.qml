@@ -12,15 +12,15 @@ Grid {
     columns:        2
     columnSpacing:  ScreenTools.defaultFontPixelWidth
 
-    QGCLabel { text: qsTr("Survey Area") }
+    QGCLabel { text: qsTr("Площадь съёмки") }
     QGCLabel { text: QGroundControl.unitsConversion.squareMetersToAppSettingsAreaUnits(missionItem.coveredArea).toFixed(2) + " " + QGroundControl.unitsConversion.appSettingsAreaUnitsString }
 
-    QGCLabel { text: qsTr("Photo Count") }
+    QGCLabel { text: qsTr("Кадров") }
     QGCLabel { text: missionItem.cameraShots }
 
-    QGCLabel { text: qsTr("Photo Interval") }
-    QGCLabel { text: missionItem.timeBetweenShots.toFixed(1) + " " + qsTr("secs") }
+    QGCLabel { text: qsTr("Интервал съёмки") }
+    QGCLabel { text: missionItem.timeBetweenShots.toFixed(1) + " " + qsTr("с") }
 
-    QGCLabel { text: qsTr("Trigger Distance") }
+    QGCLabel { text: qsTr("Шаг съёмки") }
     QGCLabel { text: missionItem.cameraCalc.adjustedFootprintFrontal.valueString + " " + missionItem.cameraCalc.adjustedFootprintFrontal.units }
 }
